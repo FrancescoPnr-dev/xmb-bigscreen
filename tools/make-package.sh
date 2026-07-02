@@ -6,7 +6,7 @@ set -e
 cd "$(dirname "$0")/.."
 
 ver=$(grep -o '"Version": *"[^"]*"' metadata.json | cut -d'"' -f4)
-out="xmb-dashboard-$ver.plasmoid"
+out="xmb-bigscreen-$ver.plasmoid"
 rm -f "$out"
 zip -rq "$out" metadata.json contents/ LICENSES/
 echo "$out"

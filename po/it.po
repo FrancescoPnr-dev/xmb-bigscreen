@@ -1,8 +1,8 @@
-# Italian translation of the XMB Dashboard plasmoid.
+# Italian translation of the XMB BigScreen plasmoid.
 # Francesco Panarese <FrancescoPnr-dev@proton.me>, 2026.
 msgid ""
 msgstr ""
-"Project-Id-Version: plasma_applet_org.kde.plasma.xmbdashboard\n"
+"Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-02 19:57+0200\n"
 "PO-Revision-Date: 2026-07-02 12:00+0200\n"

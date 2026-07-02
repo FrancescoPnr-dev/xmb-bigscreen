@@ -108,7 +108,7 @@ Window {
 
     // Unique title matched by the KWin "keep above" rule (install-kwin-rule.sh), so the
     // overlay stays above a revealing auto-hide panel.
-    title: "XMB Dashboard"
+    title: "XMB BigScreen"
     width: Screen.width
     height: Screen.height
     color: "transparent"

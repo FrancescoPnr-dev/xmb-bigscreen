@@ -1,10 +1,12 @@
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-☕-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/francescopnr)
 ❤️
 
-# XMB Dashboard
+# XMB BigScreen
 
-A fullscreen app launcher for KDE Plasma 6, inspired by the PlayStation 3 / PSP
-**XrossMediaBar**. 
+A console-like fullscreen launcher for KDE Plasma, inspired by the PlayStation 3 / PSP
+**XrossMediaBar** — built for the living room: TV, couch and gamepad, with Plasma
+Bigscreen as the target shell. Born as an independent fork of
+[XMB Dashboard](https://github.com/FrancescoPnr-dev/xmb-dashboard). 
 Navigable by keyboard, controller, mouse wheel and mouse edges, with the classic wave
 background, type-to-search and subtle sounds.
 
@@ -41,7 +43,7 @@ background, type-to-search and subtle sounds.
 
 > **Recommended:** install the [YAMIS](https://store.kde.org/p/2303161) monochrome
 > icon theme first (KDE Store, GPL-3.0, by DIRN) and set it in *System Settings →
-> Colors & Themes → Icons*. XMB Dashboard is designed around its clean adaptive
+> Colors & Themes → Icons*. XMB BigScreen is designed around its clean adaptive
 > look, and the whole cross stays visually coherent. (Thanks DIRN, awesome set) 
 
 From the folder containing `metadata.json`:
@@ -52,7 +54,7 @@ kpackagetool6 --type Plasma/Applet --install .
 # update after changes
 kpackagetool6 --type Plasma/Applet --upgrade .
 # remove
-kpackagetool6 --type Plasma/Applet --remove org.kde.plasma.xmbdashboard
+kpackagetool6 --type Plasma/Applet --remove org.kde.plasma.xmbbigscreen
 ```
 
 Then add it from *Add Widgets…* and click its panel icon to open the dashboard.

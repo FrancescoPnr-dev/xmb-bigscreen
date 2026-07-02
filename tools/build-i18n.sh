@@ -5,7 +5,7 @@
 set -e
 cd "$(dirname "$0")/.."
 
-DOMAIN=plasma_applet_org.kde.plasma.xmbdashboard
+DOMAIN=plasma_applet_org.kde.plasma.xmbbigscreen
 
 find contents -name "*.qml" | sort | xargs xgettext --from-code=UTF-8 -C \
     -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3 -ktr:1 -ktranslate:1 \
