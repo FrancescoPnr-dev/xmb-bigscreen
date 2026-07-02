@@ -33,6 +33,6 @@ jobs:
       - name: Build package and check contents
         run: |
           ./tools/make-package.sh
-          if unzip -l xmb-dashboard-*.plasmoid | grep -qE " (tools|po)/| README| REUSE"; then
+          if unzip -l xmb-bigscreen-*.plasmoid | grep -qE " (tools|po)/| README| REUSE"; then
             echo "dev files leaked into the package" && exit 1
           fi

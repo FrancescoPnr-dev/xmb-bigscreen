@@ -107,7 +107,7 @@ PlasmoidItem {
                 anchors.fill: parent
                 // Bundled monochrome XMB icon by default; a custom panelIcon overrides it.
                 source: Plasmoid.configuration.panelIcon === "" || Plasmoid.configuration.panelIcon === "applications-all"
-                    ? Qt.resolvedUrl("../icons/xmb-dashboard.svg") : Plasmoid.icon
+                    ? Qt.resolvedUrl("../icons/xmb-bigscreen.svg") : Plasmoid.icon
                 active: mouseArea.containsMouse
             }
 
