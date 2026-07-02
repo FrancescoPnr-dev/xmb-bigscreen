@@ -1,0 +1,26 @@
+# Cartella di lavoro di Claude Code (non parte del widget, può contenere dati personali)
+.claude/
+
+# Log e file temporanei
+*.log
+*~
+*.bak
+*.swp
+*.tmp
+xmb-log.txt
+
+# File di sistema
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+.kateconfig
+*.kate-swp
+
+# Artefatti di pacchettizzazione del plasmoide
+*.plasmoid
+*.zip
+*.tar.gz
+build/

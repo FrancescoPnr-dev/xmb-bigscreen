@@ -1,0 +1,30 @@
+version = 1
+
+# Files that cannot carry an SPDX header comment (JSON, binaries, generated).
+
+[[annotations]]
+path = ["metadata.json", "README.md", ".gitignore", ".gitattributes", "contents/icons/xmb-dashboard.svg"]
+SPDX-FileCopyrightText = "2026 Francesco Panarese"
+SPDX-License-Identifier = "GPL-3.0-only"
+
+[[annotations]]
+path = ["contents/sounds/ambient-loop.wav", "contents/sounds/nav-tick.wav"]
+SPDX-FileCopyrightText = "2026 Francesco Panarese"
+SPDX-License-Identifier = "GPL-3.0-only"
+
+# Translations: po sources and the compiled catalogs shipped with the widget.
+[[annotations]]
+path = ["po/**", "contents/locale/**"]
+SPDX-FileCopyrightText = "2026 Francesco Panarese"
+SPDX-License-Identifier = "GPL-3.0-only"
+
+# Baked shaders, compiled from the ported .frag/.vert sources.
+[[annotations]]
+path = [
+    "contents/ui/shaders/xmbgradient.frag.qsb",
+    "contents/ui/shaders/xmbparticles.frag.qsb",
+    "contents/ui/shaders/xmbwave.frag.qsb",
+    "contents/ui/shaders/xmbwave.vert.qsb",
+]
+SPDX-FileCopyrightText = ["2025 Mart (https://github.com/linkev/PlayStation-3-XMB, MIT)", "2026 Francesco Panarese"]
+SPDX-License-Identifier = "GPL-3.0-only AND MIT"

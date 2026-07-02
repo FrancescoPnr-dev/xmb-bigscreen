@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 Francesco Panarese
+SPDX-License-Identifier: GPL-3.0-only
+-->
+<!-- KConfigXT schema: each <entry> is available in QML as Plasmoid.configuration.<name>. -->
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+                          http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+    <kcfgfile name=""/>
+
+    <group name="General">
+        <!-- Darkness of the fullscreen overlay (0 = transparent, 1 = opaque black). -->
+        <entry name="backgroundOpacity" type="Double">
+            <default>1.0</default>
+        </entry>
+
+        <!-- Icon size (px) of the selected category on the horizontal bar. -->
+        <entry name="categoryIconSize" type="Int">
+            <default>112</default>
+        </entry>
+
+        <!-- Icon size (px) of the selected app in the vertical column. -->
+        <entry name="appIconSize" type="Int">
+            <default>56</default>
+        </entry>
+
+        <!-- Horizontal position of the fixed cross intersection, as a
+             fraction of the screen width (0.30 = classic PS3 center-left). -->
+        <entry name="intersectionXFraction" type="Double">
+            <default>0.30</default>
+        </entry>
+
+        <!-- Themed icon name for the panel button; empty = bundled XMB logo. -->
+        <entry name="panelIcon" type="String">
+            <default></default>
+        </entry>
+
+        <!-- Clock: time 0 = system, 1 = 12h, 2 = 24h; date 0 = system, 1 = dd/mm, 2 = mm/dd. -->
+        <entry name="clockTimeFormat" type="Int">
+            <default>0</default>
+        </entry>
+        <entry name="clockDateFormat" type="Int">
+            <default>0</default>
+        </entry>
+        <entry name="clockShowDate" type="Bool">
+            <default>true</default>
+        </entry>
+
+        <!-- Reveal bar edge: 0 = top, 1 = bottom. -->
+        <entry name="topBarPosition" type="Int">
+            <default>0</default>
+        </entry>
+
+        <!-- Dashboard language override; empty = system language. -->
+        <entry name="language" type="String">
+            <default></default>
+        </entry>
+
+        <!-- Display names of categories the user chose to hide from the bar. -->
+        <entry name="hiddenCategories" type="StringList">
+            <default></default>
+        </entry>
+
+        <!-- Favourite app IDs, via the kicker favourites model — same as Kickoff. -->
+        <entry name="favorites" type="StringList">
+            <default></default>
+        </entry>
+
+        <!-- ===== Category-bar mouse "hot zone" feel ===== -->
+
+        <!-- Width of the LEFT edge hot zone, as a fraction of screen width. -->
+        <entry name="hotZoneFractionLeft" type="Double">
+            <default>0.15</default>
+        </entry>
+
+        <!-- Width of the RIGHT edge hot zone, as a fraction of screen width. -->
+        <entry name="hotZoneFractionRight" type="Double">
+            <default>0.15</default>
+        </entry>
+
+        <!-- Scroll speed (px/sec) just inside the hot-zone threshold (fine control). -->
+        <entry name="minScrollSpeed" type="Int">
+            <default>1500</default>
+        </entry>
+
+        <!-- Scroll speed (px/sec) at the extreme screen edge (fastest). -->
+        <entry name="maxScrollSpeed" type="Int">
+            <default>2600</default>
+        </entry>
+
+        <!-- Duration (ms) of the snap-to-nearest animation when leaving the hot zone. -->
+        <entry name="snapDuration" type="Int">
+            <default>220</default>
+        </entry>
+
+        <!-- Magnetic "glue" strength near category centres (0 = none .. ~1 = strong). -->
+        <entry name="magneticStrength" type="Double">
+            <default>0.7</default>
+        </entry>
+
+        <!-- Height (px) of the band around the category row where the edge hot zones are active. -->
+        <entry name="hotZoneBandHeight" type="Int">
+            <default>200</default>
+        </entry>
+
+        <!-- Disable Plasma's screen-edge actions while the dashboard is open (restored on close). -->
+        <entry name="manageScreenEdges" type="Bool">
+            <default>false</default>
+        </entry>
+
+        <!-- XMB wave background (ShaderEffect port of linkev/PlayStation-3-XMB); defaults
+             mirror the demo. -->
+
+        <!-- Wave -->
+        <entry name="waveFlowSpeed" type="Double"><default>0.45</default></entry>
+        <entry name="waveBandAmplitude" type="Double"><default>0.2</default></entry>
+        <entry name="waveHeightScale" type="Double"><default>0.5</default></entry>
+        <entry name="waveSoftClip" type="Double"><default>0.22</default></entry>
+        <entry name="waveTension" type="Double"><default>0.12</default></entry>
+        <entry name="waveFresnelPower" type="Double"><default>4.0</default></entry>
+        <entry name="waveFresnelScale" type="Double"><default>0.5</default></entry>
+        <entry name="waveOpacity" type="Double"><default>0.7</default></entry>
+        <entry name="waveBrightness" type="Double"><default>0.98</default></entry>
+        <entry name="waveRowCount" type="Int"><default>200</default></entry>
+
+        <!-- waveColorMonth: 0 = Automatic (current month), 1..12 = forced month, 13 =
+             Custom (RGB below). Defaults to Custom PS3 blue. -->
+        <entry name="waveColorMonth" type="Int"><default>13</default></entry>
+        <entry name="waveColorR" type="Int"><default>37</default></entry>
+        <entry name="waveColorG" type="Int"><default>89</default></entry>
+        <entry name="waveColorB" type="Int"><default>179</default></entry>
+        <entry name="waveGradientTopMul" type="Double"><default>0.09</default></entry>
+        <entry name="waveGradientBotMul" type="Double"><default>0.62</default></entry>
+
+        <!-- Particles -->
+        <entry name="waveParticlesEnabled" type="Bool"><default>true</default></entry>
+        <entry name="waveParticleCount" type="Int"><default>2000</default></entry>
+        <entry name="waveParticleOpacity" type="Double"><default>1.0</default></entry>
+        <entry name="waveParticleFlowSpeed" type="Double"><default>0.8</default></entry>
+
+        <!-- navSoundMode: 0 = bundled tick, 1 = custom file (navSoundFile), 2 = off.
+             The PS3 sound is not shipped; point the custom file at your own copy. -->
+        <entry name="navSoundMode" type="Int"><default>0</default></entry>
+        <entry name="navSoundFile" type="String"><default></default></entry>
+        <entry name="navSoundVolume" type="Double"><default>0.5</default></entry>
+
+        <!-- Looping ambient pad under the dashboard, fading in/out. Original, not Sony.
+             ambientSoundMode: 0 = bundled loop, 1 = custom file (ambientSoundFile), 2 = off. -->
+        <entry name="ambientSoundMode" type="Int"><default>0</default></entry>
+        <entry name="ambientSoundFile" type="String"><default></default></entry>
+        <entry name="ambientSoundVolume" type="Double"><default>0.5</default></entry>
+    </group>
+</kcfg>
