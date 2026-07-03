@@ -1,0 +1,9 @@
+#!/bin/sh
+# SPDX-FileCopyrightText: 2026 Francesco Panarese
+# SPDX-License-Identifier: GPL-3.0-only
+
+# Reuse Bigscreen's environment, then load our shell instead of the native one.
+. plasma-bigscreen-common-env
+export PLASMA_DEFAULT_SHELL=org.kde.plasma.xmbbigscreen
+
+startplasma-wayland --xwayland --libinput --exit-with-session=/usr/lib/startplasma-waylandsession

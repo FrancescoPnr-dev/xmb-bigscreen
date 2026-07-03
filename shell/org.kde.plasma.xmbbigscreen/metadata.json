@@ -1,0 +1,17 @@
+{
+    "KPackageStructure": "Plasma/Shell",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Francesco Panarese",
+                "Email": "FrancescoPnr-dev@proton.me"
+            }
+        ],
+        "Description": "XMB homescreen shell for Plasma Bigscreen",
+        "Id": "org.kde.plasma.xmbbigscreen",
+        "License": "GPL-3.0-only",
+        "Name": "XMB BigScreen"
+    },
+    "X-Plasma-APIVersion": "2",
+    "X-Plasma-FallbackPackage": "org.kde.plasma.bigscreen"
+}
