@@ -1,29 +1,14 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// Plasmoid entry point: a panel button that toggles the fullscreen Dashboard.
+// Containment entry point: the XMB homescreen that fills the Bigscreen shell.
 import QtQuick
-import QtQuick.Layouts
 import org.kde.plasma.plasmoid
-import org.kde.kirigami as Kirigami
 
-PlasmoidItem {
+ContainmentItem {
     id: root
 
-    // We show the button inline and never use a Plasma popup.
-    preferredRepresentation: fullRepresentation
-    fullRepresentation: buttonComponent
-
-    Plasmoid.icon: Plasmoid.configuration.panelIcon || "applications-all"
-
-    Component.onCompleted: {
-        // Without this Plasma eats the click to toggle a popup and our handlers never fire.
-        if (Plasmoid.hasOwnProperty("activationTogglesExpanded")) {
-            Plasmoid.activationTogglesExpanded = false
-        }
-    }
-
     Dashboard {
-        id: dashboard
+        anchors.fill: parent
         appletInterface: root
         favorites: Plasmoid.configuration.favorites
         backgroundOpacity: Plasmoid.configuration.backgroundOpacity
@@ -38,7 +23,6 @@ PlasmoidItem {
         snapDuration: Plasmoid.configuration.snapDuration
         magneticStrength: Plasmoid.configuration.magneticStrength
         hotZoneBandHeight: Plasmoid.configuration.hotZoneBandHeight
-        manageScreenEdges: Plasmoid.configuration.manageScreenEdges
 
         // XMB wave background (port of linkev/PlayStation-3-XMB)
         waveFlowSpeed: Plasmoid.configuration.waveFlowSpeed
@@ -79,57 +63,5 @@ PlasmoidItem {
 
         topBarPosition: Plasmoid.configuration.topBarPosition
         uiLanguage: Plasmoid.configuration.language
-    }
-
-    // Keyboard / global-shortcut activation.
-    Connections {
-        target: Plasmoid
-        function onActivated() {
-            console.log("XMB: Plasmoid.activated()")
-            dashboard.toggle()
-        }
-    }
-
-    // The panel button: icon + a fill MouseArea to catch clicks.
-    Component {
-        id: buttonComponent
-
-        Item {
-            id: button
-
-            Layout.minimumWidth: Kirigami.Units.iconSizes.small
-            Layout.minimumHeight: Kirigami.Units.iconSizes.small
-            Layout.maximumWidth: Kirigami.Units.iconSizes.enormous
-            Layout.maximumHeight: Kirigami.Units.iconSizes.enormous
-
-            Kirigami.Icon {
-                id: buttonIcon
-                anchors.fill: parent
-                // Bundled monochrome XMB icon by default; a custom panelIcon overrides it.
-                source: Plasmoid.configuration.panelIcon === "" || Plasmoid.configuration.panelIcon === "applications-all"
-                    ? Qt.resolvedUrl("../icons/xmb-bigscreen.svg") : Plasmoid.icon
-                active: mouseArea.containsMouse
-            }
-
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                activeFocusOnTab: true
-
-                Accessible.name: Plasmoid.title
-                Accessible.role: Accessible.Button
-
-                Keys.onReturnPressed: Plasmoid.activated()
-                Keys.onEnterPressed: Plasmoid.activated()
-                Keys.onSpacePressed: Plasmoid.activated()
-
-                onClicked: {
-                    console.log("XMB: panel icon clicked")
-                    dashboard.toggle()
-                }
-            }
-        }
     }
 }

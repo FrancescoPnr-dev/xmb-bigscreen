@@ -1,15 +1,14 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// Fullscreen frameless XMB overlay: a top-level Window, not a plasmoid popup.
+// The XMB homescreen: fills the Bigscreen containment, always shown.
 import QtQuick
-import QtQuick.Window
 import QtQuick.Effects
 import QtMultimedia
 import org.kde.plasma.private.kicker as Kicker
 import org.kde.kitemmodels as KItemModels
 import "i18n-catalogs.js" as Catalogs
 
-Window {
+Item {
     id: dashboard
 
     // Config injected by main.qml from Plasmoid.configuration.
@@ -26,7 +25,6 @@ Window {
     property int  snapDuration: 220
     property real magneticStrength: 0.7
     property int  hotZoneBandHeight: 200   // px band around the category row
-    property bool manageScreenEdges: false
 
     // XMB wave background (port of linkev/PlayStation-3-XMB); defaults mirror the demo.
     property real waveFlowSpeed: 0.25
@@ -106,71 +104,26 @@ Window {
 
     property var categories: []
 
-    // Unique title matched by the KWin "keep above" rule (install-kwin-rule.sh), so the
-    // overlay stays above a revealing auto-hide panel.
-    title: "XMB BigScreen"
-    width: Screen.width
-    height: Screen.height
-    color: "transparent"
-    // Frameless alone is enough; on Wayland adding StaysOnTop to a frameless parentless
-    // window can stop the surface from mapping at all.
-    flags: Qt.FramelessWindowHint
-    transientParent: null
-    visible: false
-
-    // Auto-close on focus loss, but only once the window has been active: on Wayland
-    // focus isn't synchronous after show(), so a naive !active check dismisses it mid-open.
-    property bool autoCloseArmed: false
-    property bool everActive: false
-
-    // Frees Plasma's screen edges to the dashboard while open (corners stay active).
-    EdgeGuard { id: edgeGuard }
-
-    function open() {
-        console.log("XMB: Dashboard.open() called")
-        autoCloseArmed = false
-        everActive = false
-        if (dashboard.manageScreenEdges)
-            edgeGuard.disableSystemEdges()
-        dashboard.showFullScreen()
-        dashboard.raise()
-        dashboard.requestActivate()
+    // The homescreen is always shown; a short settle delay after startup gates nav ticks
+    // so they don't fire while the app models first populate.
+    property bool ready: false
+    Component.onCompleted: {
         content.forceActiveFocus()
-        armTimer.restart()
-        console.log("XMB: after show -> visible=" + dashboard.visible
-                    + " visibility=" + dashboard.visibility)
-    }
-    function close() {
-        console.log("XMB: Dashboard.close() called")
-        autoCloseArmed = false
-        everActive = false
-        edgeGuard.restoreSystemEdges()
-        dashboard.visible = false
-    }
-    function toggle() {
-        console.log("XMB: Dashboard.toggle(), currently visible=" + dashboard.visible)
-        dashboard.visible ? close() : open()
-    }
-
-    onVisibleChanged: {
-        console.log("XMB: Dashboard visibleChanged -> " + visible)
-        if (visible) {
-            if (ambientSoundSource.toString() !== "") {
-                ambientStopTimer.stop()
-                ambientLoop.play()
-                ambientLevel = 1.0
-            }
-        } else {
-            ambientLevel = 0.0            // fade out, then stop to free the device
-            ambientStopTimer.restart()
+        if (ambientSoundSource.toString() !== "") {
+            ambientLoop.play()
+            ambientLevel = 1.0
         }
+        readyTimer.restart()
+    }
+    Timer {
+        id: readyTimer
+        interval: 350
+        onTriggered: dashboard.ready = true
     }
 
-    // onVisibleChanged only fires on open/close; this covers mode/file changes while
-    // open (mode 2 and mode 1 with no file both resolve to an empty source).
+    // Covers ambience mode/file changes at runtime (mode 2 and mode 1 with no file both
+    // resolve to an empty source).
     onAmbientSoundSourceChanged: {
-        if (!visible)
-            return
         if (ambientSoundSource.toString() !== "") {
             ambientStopTimer.stop()
             ambientLoop.play()
@@ -179,19 +132,6 @@ Window {
             ambientLevel = 0.0
             ambientStopTimer.restart()
         }
-    }
-
-    onActiveChanged: {
-        if (active) {
-            everActive = true
-        } else if (autoCloseArmed && everActive) {
-            close()
-        }
-    }
-    Timer {
-        id: armTimer
-        interval: 350
-        onTriggered: dashboard.autoCloseArmed = true
     }
 
     // Same source as Kickoff; showAllAppsCategorized makes rootModel.modelForRow(i) a category's apps.
@@ -379,11 +319,6 @@ Window {
         readonly property real barCenterY: height * 0.42
         readonly property real appPinY: height * 0.54
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: dashboard.close()
-        }
-
         // Middle-click anywhere launches the highlighted app. TapHandler (not MouseArea) so it
         // doesn't override the hover cursor or steal clicks from items below.
         TapHandler {
@@ -446,7 +381,6 @@ Window {
                           dashboard.allAppsFlat.trigger(src.row, "", null)
                   }
                 : null
-            onAppLaunched: dashboard.close()
         }
 
         // Navigation
@@ -456,7 +390,6 @@ Window {
         Keys.onDownPressed:  appColumn.down()
         Keys.onReturnPressed: appColumn.launchCurrent()
         Keys.onEnterPressed:  appColumn.launchCurrent()
-        Keys.onEscapePressed: dashboard.close()
 
         // Type-to-search: a printable char opens the KRunner overlay seeded with it;
         // nav keys (empty text) fall through to the handlers above.
@@ -505,14 +438,12 @@ Window {
         z: 90
         atBottom: dashboard.topBarPosition === 1
         translate: dashboard.tr
-        onActionTriggered: dashboard.close()
     }
 
     XmbSearch {
         id: searchOverlay
         anchors.fill: parent
         z: 110
-        onLaunched: dashboard.close()
         onClosed: content.forceActiveFocus()
     }
 
@@ -535,8 +466,8 @@ Window {
         onTriggered: ambientLoop.stop()
     }
     function playNavTick() {
-        // Only past the open transition, so we don't tick on initial model population.
-        if (!dashboard.visible || !dashboard.autoCloseArmed || dashboard.navSoundMode === 2)
+        // Only once settled, so we don't tick while the app models first populate.
+        if (!dashboard.ready || dashboard.navSoundMode === 2)
             return
         navSound.play()
     }

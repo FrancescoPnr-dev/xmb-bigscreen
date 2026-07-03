@@ -1,12 +1,9 @@
 {
     "KPackageStructure": "Plasma/Applet",
     "KPlugin": {
-        "Category": "Application Launchers",
-        "Description": "A console-like XrossMediaBar (PS3/PSP XMB) launcher for Plasma Bigscreen and the living room.",
-        "Description[it]": "Un launcher console-like in stile XrossMediaBar (XMB di PS3/PSP) per Plasma Bigscreen e il salotto.",
-        "FormFactors": [
-            "desktop"
-        ],
+        "Category": "Containments",
+        "Description": "A console-like XrossMediaBar (PS3/PSP XMB) homescreen for Plasma Bigscreen and the living room.",
+        "Description[it]": "Una schermata iniziale console-like in stile XrossMediaBar (XMB di PS3/PSP) per Plasma Bigscreen e il salotto.",
         "Authors": [
             {
                 "Name": "Francesco Panarese",
@@ -22,7 +19,9 @@
         "Website": "https://github.com/FrancescoPnr-dev/xmb-bigscreen"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
+    "X-Plasma-ContainmentType": "Desktop",
     "X-Plasma-Provides": [
+        "org.kde.bigscreen.homescreen",
         "org.kde.plasma.launchermenu"
     ]
 }

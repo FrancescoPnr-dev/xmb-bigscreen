@@ -16,7 +16,6 @@ KCM.SimpleKCM {
     property alias cfg_categoryIconSize: categorySizeSpin.value
     property alias cfg_appIconSize: appSizeSpin.value
     property alias cfg_intersectionXFraction: intersectionSlider.value
-    property alias cfg_panelIcon: iconField.text
     property alias cfg_hotZoneFractionLeft: hotZoneLeftSlider.value
     property alias cfg_hotZoneFractionRight: hotZoneRightSlider.value
     property alias cfg_minScrollSpeed: minSpeedSpin.value
@@ -24,7 +23,6 @@ KCM.SimpleKCM {
     property alias cfg_snapDuration: snapDurationSpin.value
     property alias cfg_magneticStrength: magneticSlider.value
     property alias cfg_hotZoneBandHeight: bandHeightSpin.value
-    property alias cfg_manageScreenEdges: manageScreenEdgesCheck.checked
     property alias cfg_topBarPosition: barRevealCombo.currentIndex
     property string cfg_language
     property alias cfg_clockTimeFormat: clockFormatCombo.currentIndex
@@ -85,7 +83,6 @@ KCM.SimpleKCM {
     property int  cfg_categoryIconSizeDefault: 112
     property int  cfg_appIconSizeDefault: 56
     property real cfg_intersectionXFractionDefault: 0.30
-    property string cfg_panelIconDefault: ""
     property int  cfg_clockTimeFormatDefault: 0
     property int  cfg_clockDateFormatDefault: 0
     property bool cfg_clockShowDateDefault: true
@@ -135,7 +132,6 @@ KCM.SimpleKCM {
         cfg_categoryIconSize = cfg_categoryIconSizeDefault
         cfg_appIconSize = cfg_appIconSizeDefault
         cfg_intersectionXFraction = cfg_intersectionXFractionDefault
-        cfg_panelIcon = cfg_panelIconDefault
     }
     function resetClock() {
         cfg_clockTimeFormat = cfg_clockTimeFormatDefault
@@ -234,13 +230,6 @@ KCM.SimpleKCM {
             }
         }
 
-        QQC2.TextField {
-            id: iconField
-            Kirigami.FormData.label: i18n("Panel icon name:")
-            placeholderText: i18n("XMB logo (default)")
-            Layout.preferredWidth: page.controlWidth
-        }
-
         QQC2.Button {
             text: i18n("Reset section to defaults")
             icon.name: "edit-undo"
@@ -298,12 +287,6 @@ KCM.SimpleKCM {
         Kirigami.Separator {
             Kirigami.FormData.label: i18n("Behaviour")
             Kirigami.FormData.isSection: true
-        }
-
-        QQC2.CheckBox {
-            id: manageScreenEdgesCheck
-            Kirigami.FormData.label: i18n("Screen edges:")
-            text: i18n("Disable system edges while the dashboard is open")
         }
 
         QQC2.ComboBox {

@@ -32,11 +32,6 @@ SPDX-License-Identifier: GPL-3.0-only
             <default>0.30</default>
         </entry>
 
-        <!-- Themed icon name for the panel button; empty = bundled XMB logo. -->
-        <entry name="panelIcon" type="String">
-            <default></default>
-        </entry>
-
         <!-- Clock: time 0 = system, 1 = 12h, 2 = 24h; date 0 = system, 1 = dd/mm, 2 = mm/dd. -->
         <entry name="clockTimeFormat" type="Int">
             <default>0</default>
@@ -103,11 +98,6 @@ SPDX-License-Identifier: GPL-3.0-only
         <!-- Height (px) of the band around the category row where the edge hot zones are active. -->
         <entry name="hotZoneBandHeight" type="Int">
             <default>200</default>
-        </entry>
-
-        <!-- Disable Plasma's screen-edge actions while the dashboard is open (restored on close). -->
-        <entry name="manageScreenEdges" type="Bool">
-            <default>false</default>
         </entry>
 
         <!-- XMB wave background (ShaderEffect port of linkev/PlayStation-3-XMB); defaults
