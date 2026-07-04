@@ -91,17 +91,17 @@ var catalogs = {
   "The file loops while the dashboard is open. WAV loops gaplessly; mp3/ogg may have a small seam at the loop point.": "Il file si ripete in loop mentre la dashboard è aperta. Il WAV si ripete senza interruzioni; mp3/ogg possono avere un piccolo stacco al punto di ripetizione.",
   "Visible categories": "Categorie visibili",
   "Show all categories": "Mostra tutte le categorie",
-  "Open apps": "App aperte",
-  "No open apps": "Nessuna app aperta",
   "Back to XMB": "Torna alla XMB",
-  "Brightness": "Luminosità",
   "Volume": "Volume",
+  "Brightness": "Luminosità",
   "Network": "Rete",
-  "Settings": "Impostazioni",
-  "Lock": "Blocca",
-  "Log out": "Esci",
   "Sleep": "Sospendi",
   "Restart": "Riavvia",
-  "Shut down": "Spegni"
+  "Shut down": "Spegni",
+  "Lock": "Blocca",
+  "Log out": "Esci",
+  "Open apps": "App aperte",
+  "No open apps": "Nessuna app aperta",
+  "Settings": "Impostazioni"
  }
 }
