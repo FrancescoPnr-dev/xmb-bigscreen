@@ -69,11 +69,12 @@ ContainmentItem {
 
     HomeOverlay { id: homeOverlay }
 
-    // Home button (controller/remote) and the Meta key raise the app switcher; Back closes it.
+    // Home button (controller PS/Guide or remote) and the Meta key raise the app switcher; Back closes it.
     Plasmoid.onActivated: homeOverlay.toggle()
     Bigscreen.BackHandler.onActivated: homeOverlay.hideOverlay()
     Connections {
         target: ControllerHandler.ControllerHandlerStatus
         function onHomeActionRequested() { homeOverlay.toggle() }
     }
+    Component.onCompleted: ControllerHandler.ControllerHandlerStatus.connectToService()
 }
