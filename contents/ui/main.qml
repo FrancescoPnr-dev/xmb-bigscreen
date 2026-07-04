@@ -76,5 +76,14 @@ ContainmentItem {
         target: ControllerHandler.ControllerHandlerStatus
         function onHomeActionRequested() { homeOverlay.toggle() }
     }
-    Component.onCompleted: ControllerHandler.ControllerHandlerStatus.connectToService()
+
+    // The inputhandler suppresses controller-as-keyboard input by default; the homescreen
+    // must un-suppress it while it is the foreground surface, or the D-pad never reaches us.
+    readonly property bool winActive: root.Window.active
+    onWinActiveChanged: if (winActive) claimController()
+    function claimController() {
+        ControllerHandler.ControllerHandlerStatus.connectToService()
+        ControllerHandler.ControllerHandlerStatus.inputSuppressed = false
+    }
+    Component.onCompleted: claimController()
 }

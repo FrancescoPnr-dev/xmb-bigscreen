@@ -121,6 +121,11 @@ Item {
         onTriggered: dashboard.ready = true
     }
 
+    // Re-grab keyboard focus whenever the homescreen window becomes active, so injected
+    // controller/keyboard keys reach the navigation handlers.
+    readonly property bool winActive: dashboard.Window.active
+    onWinActiveChanged: if (winActive) content.forceActiveFocus()
+
     // Covers ambience mode/file changes at runtime (mode 2 and mode 1 with no file both
     // resolve to an empty source).
     onAmbientSoundSourceChanged: {
