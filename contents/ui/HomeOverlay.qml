@@ -197,6 +197,7 @@ Window {
 
             Keys.onReturnPressed: overlay.activateCurrent()
             Keys.onEnterPressed: overlay.activateCurrent()
+            Keys.onEscapePressed: overlay.hideOverlay()
         }
 
         QQC2.Label {
@@ -264,6 +265,7 @@ Window {
 
             Keys.onReturnPressed: triggerCurrent()
             Keys.onEnterPressed: triggerCurrent()
+            Keys.onEscapePressed: overlay.hideOverlay()
             function triggerCurrent() {
                 var a = overlay.systemActions.filter(x => x.on !== false)[currentIndex]
                 if (a) overlay.triggerSystem(a.act)
@@ -287,5 +289,4 @@ Window {
         }
     }
 
-    Keys.onEscapePressed: hideOverlay()
 }

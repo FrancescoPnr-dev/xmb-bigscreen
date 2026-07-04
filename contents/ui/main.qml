@@ -82,7 +82,6 @@ ContainmentItem {
     readonly property bool winActive: root.Window.active
     onWinActiveChanged: if (winActive) claimController()
     function claimController() {
-        ControllerHandler.ControllerHandlerStatus.connectToService()
         ControllerHandler.ControllerHandlerStatus.inputSuppressed = false
     }
     Component.onCompleted: claimController()
