@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 01:18+0200\n"
+"POT-Creation-Date: 2026-07-04 02:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -376,6 +376,18 @@ msgstr ""
 
 #: contents/ui/config/ConfigGeneral.qml:640
 msgid "Show all categories"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:62
+msgid "Open apps"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:62
+msgid "No open apps"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:124
+msgid "Back to XMB"
 msgstr ""
 
 #: contents/ui/XmbQuickSettings.qml:91

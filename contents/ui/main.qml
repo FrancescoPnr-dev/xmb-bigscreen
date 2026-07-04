@@ -3,6 +3,8 @@
 // Containment entry point: the XMB homescreen that fills the Bigscreen shell.
 import QtQuick
 import org.kde.plasma.plasmoid
+import org.kde.bigscreen as Bigscreen
+import org.kde.bigscreen.controllerhandler as ControllerHandler
 
 ContainmentItem {
     id: root
@@ -63,5 +65,15 @@ ContainmentItem {
 
         topBarPosition: Plasmoid.configuration.topBarPosition
         uiLanguage: Plasmoid.configuration.language
+    }
+
+    HomeOverlay { id: homeOverlay }
+
+    // Home button (controller/remote) and the Meta key raise the app switcher; Back closes it.
+    Plasmoid.onActivated: homeOverlay.toggle()
+    Bigscreen.BackHandler.onActivated: homeOverlay.hideOverlay()
+    Connections {
+        target: ControllerHandler.ControllerHandlerStatus
+        function onHomeActionRequested() { homeOverlay.toggle() }
     }
 }
