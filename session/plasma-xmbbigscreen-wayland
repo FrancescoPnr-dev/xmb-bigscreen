@@ -2,8 +2,38 @@
 # SPDX-FileCopyrightText: 2026 Francesco Panarese
 # SPDX-License-Identifier: GPL-3.0-only
 
+# WirePlumber keeps one per-user audio state (volumes, mutes, default device), so the
+# TV and desktop sessions would trample each other's. Give each its own persistent
+# slot and swap them around the session; the parked desktop slot doubles as the
+# crash marker, so an unclean exit heals on the next swap.
+wp_state="${XDG_STATE_HOME:-$HOME/.local/state}/wireplumber"
+wp_desktop="$wp_state.desktop-session"
+wp_xmb="$wp_state.xmb-session"
+
+audio_state_enter() {
+    # Desktop slot already parked = crashed XMB run; its live state is already ours.
+    if [ ! -d "$wp_desktop" ]; then
+        systemctl --user stop wireplumber 2>/dev/null
+        [ -d "$wp_state" ] && mv "$wp_state" "$wp_desktop"
+        [ -d "$wp_xmb" ] && mv "$wp_xmb" "$wp_state"
+        systemctl --user start wireplumber 2>/dev/null
+    fi
+}
+
+audio_state_exit() {
+    systemctl --user stop wireplumber 2>/dev/null
+    rm -rf "$wp_xmb"
+    [ -d "$wp_state" ] && mv "$wp_state" "$wp_xmb"
+    [ -d "$wp_desktop" ] && mv "$wp_desktop" "$wp_state"
+    systemctl --user start wireplumber 2>/dev/null
+}
+
+audio_state_enter
+
 # Reuse Bigscreen's environment, then load our shell instead of the native one.
 . plasma-bigscreen-common-env
 export PLASMA_DEFAULT_SHELL=org.kde.plasma.xmbbigscreen
 
 startplasma-wayland --xwayland --libinput --exit-with-session=/usr/lib/startplasma-waylandsession
+
+audio_state_exit
