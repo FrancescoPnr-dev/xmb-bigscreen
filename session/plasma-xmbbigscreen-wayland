@@ -2,8 +2,21 @@
 # SPDX-FileCopyrightText: 2026 Francesco Panarese
 # SPDX-License-Identifier: GPL-3.0-only
 
+# Fully isolated profile: the XMB session keeps its OWN config and state, so it can
+# never alter the desktop session's settings or audio state. This is what keeps the
+# icon theme (and everything else) separate from the desktop.
+export XDG_CONFIG_HOME="$HOME/.config-xmbbigscreen"
+export XDG_STATE_HOME="$HOME/.local/state-xmbbigscreen"
+mkdir -p "$XDG_CONFIG_HOME" "$XDG_STATE_HOME"
+
 # Reuse Bigscreen's environment, then load our shell instead of the native one.
 . plasma-bigscreen-common-env
 export PLASMA_DEFAULT_SHELL=org.kde.plasma.xmbbigscreen
+
+# Default icon theme for this profile; only seeded if the user hasn't picked one, so it
+# stays changeable from the XMB session's own settings and persists.
+if [ -z "$(kreadconfig6 --file "$XDG_CONFIG_HOME/kdeglobals" --group Icons --key Theme 2>/dev/null)" ]; then
+    kwriteconfig6 --file "$XDG_CONFIG_HOME/kdeglobals" --group Icons --key Theme YAMIS
+fi
 
 startplasma-wayland --xwayland --libinput --exit-with-session=/usr/lib/startplasma-waylandsession
