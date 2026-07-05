@@ -40,6 +40,11 @@ Item {
     // Set for Favourites, whose ListModel has no trigger(); called with the current row.
     property var launchHandler: null
 
+    // Optional name→file resolver for the user-selected icon theme; the tick re-runs bindings.
+    property var iconResolver: null
+    property int iconResolverTick: 0
+    property bool iconMonochrome: false
+
     function up()   { var i = list.currentIndex; list.decrementCurrentIndex(); if (list.currentIndex !== i) navigated() }
     function down() { var i = list.currentIndex; list.incrementCurrentIndex(); if (list.currentIndex !== i) navigated() }
     function launchCurrent() {
@@ -90,7 +95,8 @@ Item {
             height: column.cellHeight
             labelBelow: false
             iconSize: column.iconSize
-            iconSource: decoration
+            iconSource: column.iconResolver ? column.iconResolver(decoration, column.iconResolverTick) : decoration
+            iconMonochrome: column.iconMonochrome
             label: display
             selected: ListView.isCurrentItem
             // Only the centred app is clickable; the rest are reached via the wheel.

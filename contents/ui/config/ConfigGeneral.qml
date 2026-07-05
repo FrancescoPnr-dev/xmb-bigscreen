@@ -7,11 +7,13 @@ import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import org.kde.kcmutils as KCM
 import org.kde.plasma.private.kicker as Kicker
+import org.kde.plasma.plasma5support as P5Support
 import "../i18n-catalogs.js" as Catalogs
 
 KCM.SimpleKCM {
     id: page
 
+    property string cfg_iconTheme
     property alias cfg_backgroundOpacity: opacitySlider.value
     property alias cfg_categoryIconSize: categorySizeSpin.value
     property alias cfg_appIconSize: appSizeSpin.value
@@ -79,6 +81,7 @@ KCM.SimpleKCM {
 
     // Each cfg_<key>Default must be declared explicitly (the loader won't auto-create
     // them), otherwise reset reads undefined and does nothing. Keep in sync with main.xml.
+    property string cfg_iconThemeDefault: ""
     property real cfg_backgroundOpacityDefault: 1.0
     property int  cfg_categoryIconSizeDefault: 112
     property int  cfg_appIconSizeDefault: 56
@@ -128,6 +131,7 @@ KCM.SimpleKCM {
     property real   cfg_ambientSoundVolumeDefault: 0.5
 
     function resetAppearance() {
+        cfg_iconTheme = cfg_iconThemeDefault
         cfg_backgroundOpacity = cfg_backgroundOpacityDefault
         cfg_categoryIconSize = cfg_categoryIconSizeDefault
         cfg_appIconSize = cfg_appIconSizeDefault
@@ -201,6 +205,32 @@ KCM.SimpleKCM {
                 text: Math.round(opacitySlider.value * 100) + "%"
                 Layout.minimumWidth: valueColumnWidth
                 horizontalAlignment: Text.AlignRight
+            }
+        }
+
+        QQC2.ComboBox {
+            id: iconThemeCombo
+            Kirigami.FormData.label: i18n("Icon theme:")
+            Layout.preferredWidth: page.controlWidth
+            property var themes: [""]
+            model: themes.map(t => t === "" ? i18n("System") : t)
+            currentIndex: Math.max(0, themes.indexOf(page.cfg_iconTheme))
+            onActivated: page.cfg_iconTheme = themes[currentIndex]
+
+            // Icon themes = dirs with an index.theme plus at least one icon context dir
+            // (this skips cursor-only themes).
+            P5Support.DataSource {
+                engine: "executable"
+                connectedSources: ["for d in \"$HOME\"/.local/share/icons/*/ /usr/share/icons/*/; do "
+                                   + "[ -f \"$d/index.theme\" ] || continue; "
+                                   + "{ [ -d \"$d/apps\" ] || [ -d \"$d/places\" ] || [ -d \"$d/actions\" ] || [ -d \"$d/categories\" ]; } "
+                                   + "&& basename \"$d\"; done | sort -u"]
+                onNewData: (src, data) => {
+                    disconnectSource(src)
+                    var names = ((data["stdout"] || "") + "").split("\n").filter(s => s.trim() !== "")
+                    iconThemeCombo.themes = [""].concat(names)
+                    iconThemeCombo.currentIndex = Math.max(0, iconThemeCombo.themes.indexOf(page.cfg_iconTheme))
+                }
             }
         }
 

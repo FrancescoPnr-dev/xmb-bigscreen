@@ -13,6 +13,10 @@ Item {
     property var iconSource: ""
     property string label: ""
     property int iconSize: 64
+    // Recolor to white only the files resolved from a monochrome user icon theme
+    // (their currentColor would paint black); themed fallbacks keep their own colors.
+    property bool iconMonochrome: false
+    readonly property bool maskIcon: iconMonochrome && String(iconSource).indexOf("file://") === 0
     property bool selected: false
     property int neighbourDistance: 0    // 0 = selected, 1 = adjacent, ...
     property bool labelBelow: true       // true: category style (label under icon), false: app style
@@ -67,6 +71,8 @@ Item {
             width: delegate.iconSize
             height: delegate.iconSize
             source: delegate.iconSource
+            isMask: delegate.maskIcon
+            color: "white"
             smooth: true
         }
         Kirigami.Heading {
@@ -93,6 +99,8 @@ Item {
             width: delegate.iconSize
             height: delegate.iconSize
             source: delegate.iconSource
+            isMask: delegate.maskIcon
+            color: "white"
             smooth: true
         }
         Kirigami.Heading {
