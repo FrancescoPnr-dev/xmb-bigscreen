@@ -2,12 +2,11 @@
 # SPDX-FileCopyrightText: 2026 Francesco Panarese
 # SPDX-License-Identifier: GPL-3.0-only
 
-# Fully isolated profile: the XMB session keeps its OWN config and state, so it can
-# never alter the desktop session's settings or audio state. This is what keeps the
-# icon theme (and everything else) separate from the desktop.
+# Own config profile so the icon theme (and other settings) stay separate from the
+# desktop. State (incl. audio routing) is shared, so sound works out of the box; this is
+# safe as long as the XMB and desktop sessions never run at the same time.
 export XDG_CONFIG_HOME="$HOME/.config-xmbbigscreen"
-export XDG_STATE_HOME="$HOME/.local/state-xmbbigscreen"
-mkdir -p "$XDG_CONFIG_HOME" "$XDG_STATE_HOME"
+mkdir -p "$XDG_CONFIG_HOME"
 
 # Reuse Bigscreen's environment, then load our shell instead of the native one.
 . plasma-bigscreen-common-env
