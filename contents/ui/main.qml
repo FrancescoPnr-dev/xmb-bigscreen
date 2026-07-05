@@ -3,6 +3,7 @@
 // Containment entry point: the XMB homescreen that fills the Bigscreen shell.
 import QtQuick
 import org.kde.plasma.plasmoid
+import org.kde.plasma.plasma5support as P5Support
 import org.kde.bigscreen as Bigscreen
 import org.kde.bigscreen.controllerhandler as ControllerHandler
 
@@ -75,6 +76,28 @@ ContainmentItem {
     Connections {
         target: ControllerHandler.ControllerHandlerStatus
         function onHomeActionRequested() { homeOverlay.toggle() }
+        function onSdlControllerAdded(name) { root.showOsd("input-gamepad-symbolic", i18n("Controller connected: %1", name)) }
+        function onSdlControllerRemoved(name) { root.showOsd("input-gamepad-symbolic", i18n("Controller disconnected: %1", name)) }
+        function onCecControllerAdded(name) { root.showOsd("input-tvremote-symbolic", i18n("Remote connected: %1", name)) }
+        function onCecControllerRemoved(name) { root.showOsd("input-tvremote-symbolic", i18n("Remote disconnected: %1", name)) }
+        function onInputSuppressedChanged(suppressed, automatic) {
+            if (!automatic) return
+            root.showOsd("input-gamepad-symbolic",
+                         suppressed ? i18n("An application is using the controller") : i18n("Controller back to the system"))
+        }
+    }
+
+    // System OSD (shows over everything) for controller/remote feedback, via the real
+    // Plasma osdService — Plasmoid.showOSD isn't available outside the native shell.
+    P5Support.DataSource {
+        id: osdExec
+        engine: "executable"
+        onNewData: (s) => osdExec.disconnectSource(s)
+    }
+    function showOsd(icon, text) {
+        var safe = String(text).replace(/"/g, "'")
+        osdExec.connectSource("qdbus6 org.kde.plasmashell /org/kde/osdService org.kde.osdService.showText \""
+                              + icon + "\" \"" + safe + "\"")
     }
 
     // The inputhandler suppresses controller-as-keyboard input by default; the homescreen

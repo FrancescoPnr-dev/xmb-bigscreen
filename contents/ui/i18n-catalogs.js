@@ -102,6 +102,12 @@ var catalogs = {
   "Log out": "Esci",
   "Open apps": "App aperte",
   "No open apps": "Nessuna app aperta",
+  "Controller connected: %1": "Controller connesso: %1",
+  "Controller disconnected: %1": "Controller disconnesso: %1",
+  "Remote connected: %1": "Telecomando connesso: %1",
+  "Remote disconnected: %1": "Telecomando disconnesso: %1",
+  "An application is using the controller": "Un'applicazione sta usando il controller",
+  "Controller back to the system": "Controller di nuovo al sistema",
   "Settings": "Impostazioni"
  }
 }

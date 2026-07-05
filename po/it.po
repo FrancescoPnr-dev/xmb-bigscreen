@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-04 02:14+0200\n"
+"POT-Creation-Date: 2026-07-05 04:32+0200\n"
 "PO-Revision-Date: 2026-07-02 12:00+0200\n"
 "Last-Translator: Francesco Panarese <FrancescoPnr-dev@proton.me>\n"
 "Language-Team: Italian\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "General"
 msgstr "Generale"
 
-#: contents/config/config.qml:17 contents/ui/Dashboard.qml:241
+#: contents/config/config.qml:17 contents/ui/Dashboard.qml:246
 msgid "Favorites"
 msgstr "Preferiti"
 
@@ -386,12 +386,12 @@ msgid "Back to XMB"
 msgstr "Torna alla XMB"
 
 #: contents/ui/HomeOverlay.qml:109 contents/ui/HomeOverlay.qml:110
-#: contents/ui/HomeOverlay.qml:210 contents/ui/XmbQuickSettings.qml:110
+#: contents/ui/HomeOverlay.qml:211 contents/ui/XmbQuickSettings.qml:110
 msgid "Volume"
 msgstr "Volume"
 
 #: contents/ui/HomeOverlay.qml:111 contents/ui/HomeOverlay.qml:112
-#: contents/ui/HomeOverlay.qml:211 contents/ui/XmbQuickSettings.qml:91
+#: contents/ui/HomeOverlay.qml:212 contents/ui/XmbQuickSettings.qml:91
 msgid "Brightness"
 msgstr "Luminosità"
 
@@ -426,6 +426,30 @@ msgstr "App aperte"
 #: contents/ui/HomeOverlay.qml:143
 msgid "No open apps"
 msgstr "Nessuna app aperta"
+
+#: contents/ui/main.qml:79
+msgid "Controller connected: %1"
+msgstr "Controller connesso: %1"
+
+#: contents/ui/main.qml:80
+msgid "Controller disconnected: %1"
+msgstr "Controller disconnesso: %1"
+
+#: contents/ui/main.qml:81
+msgid "Remote connected: %1"
+msgstr "Telecomando connesso: %1"
+
+#: contents/ui/main.qml:82
+msgid "Remote disconnected: %1"
+msgstr "Telecomando disconnesso: %1"
+
+#: contents/ui/main.qml:86
+msgid "An application is using the controller"
+msgstr "Un'applicazione sta usando il controller"
+
+#: contents/ui/main.qml:86
+msgid "Controller back to the system"
+msgstr "Controller di nuovo al sistema"
 
 #: contents/ui/XmbQuickSettings.qml:135
 msgid "Settings"
