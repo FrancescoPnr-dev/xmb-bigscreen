@@ -13,48 +13,59 @@ Item {
     property real volume: 0.6
     property bool looping: false
     readonly property bool isWav: root.source.toString().toLowerCase().endsWith(".wav")
-
-    // Track the system default output as devices come and go (session start races,
-    // HDMI handshake, hotplug); a device fixed at creation time can be a dead sink.
-    MediaDevices { id: mediaDevices }
+    readonly property bool playing: effectLoader.item ? effectLoader.item.playing
+                                                      : playerLoader.item ? playerLoader.item.playing : false
     property bool active: false
 
-    SoundEffect {
-        id: effect
-        source: root.isWav ? root.source : ""
-        volume: root.volume
-        loops: root.looping ? SoundEffect.Infinite : 1
-        audioDevice: mediaDevices.defaultAudioOutput
-        // A device switch stops playback; looping sounds must survive it.
-        onAudioDeviceChanged: if (root.looping && root.active) { effect.stop(); effect.play() }
+    // QtMultimedia players stay wired to the output they were created with — a dead one,
+    // if we started before any sink existed (session start, HDMI handshake) — and setting
+    // audioDevice on a live player is inert; rebuild them whenever the default changes.
+    MediaDevices { id: mediaDevices }
+    readonly property string outputId: mediaDevices.defaultAudioOutput.description
+    onOutputIdChanged: {
+        const resume = root.active && root.looping
+        effectLoader.reload()
+        playerLoader.reload()
+        if (resume)
+            root.play()
     }
 
-    MediaPlayer {
-        id: player
-        source: root.isWav ? "" : root.source
-        audioOutput: AudioOutput {
-            device: mediaDevices.defaultAudioOutput
+    Loader {
+        id: effectLoader
+        function reload() { active = false; active = true }
+        sourceComponent: SoundEffect {
+            source: root.isWav ? root.source : ""
             volume: root.volume
+            loops: root.looping ? SoundEffect.Infinite : 1
         }
-        loops: root.looping ? MediaPlayer.Infinite : 1
+    }
+
+    Loader {
+        id: playerLoader
+        function reload() { active = false; active = true }
+        sourceComponent: MediaPlayer {
+            source: root.isWav ? "" : root.source
+            audioOutput: AudioOutput { volume: root.volume }
+            loops: root.looping ? MediaPlayer.Infinite : 1
+        }
     }
 
     function play() {
         if (root.source.toString() === "")
             return
         root.active = true
-        if (root.isWav) {
-            effect.stop()
-            effect.play()
-        } else {
-            player.stop()
-            player.play()
+        const target = root.isWav ? effectLoader.item : playerLoader.item
+        if (target) {
+            target.stop()
+            target.play()
         }
     }
 
     function stop() {
         root.active = false
-        effect.stop()
-        player.stop()
+        if (effectLoader.item)
+            effectLoader.item.stop()
+        if (playerLoader.item)
+            playerLoader.item.stop()
     }
 }
