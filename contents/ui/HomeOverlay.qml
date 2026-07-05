@@ -1,15 +1,13 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// Home overlay: a layer-shell window over the running app. Controller/keyboard hub with
-// open apps to switch between, "back to XMB", and system actions (volume, power, network).
+// Home overlay: a layer-shell window over the running app, laid out as a mini XMB
+// (PS3 in-game style): horizontal categories, vertical items under the selected one.
+// Home / open apps / power-session actions / quick settings, all controller-navigable.
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Controls as QQC2
-import org.kde.kirigami as Kirigami
-import org.kde.taskmanager as TaskManager
-import org.kde.layershell as LayerShell
 import org.kde.plasma.private.sessions as Sessions
 import org.kde.plasma.plasma5support as P5Support
+import org.kde.taskmanager as TaskManager
+import org.kde.layershell as LayerShell
 
 Window {
     id: overlay
@@ -25,14 +23,23 @@ Window {
     LayerShell.Window.keyboardInteractivity: LayerShell.Window.KeyboardInteractivityOnDemand
     LayerShell.Window.exclusionZone: -1
 
+    // Injected by main.qml so the overlay matches the dashboard's sound and icon theme.
+    property url navTickSource: ""
+    property real navTickVolume: 0.5
+    property var iconResolver: null
+    property int iconResolverTick: 0
+    property bool iconThemeMonochrome: false
+
+    readonly property real interX: width * 0.30
+
     function showOverlay() {
         visible = true
         overlay.requestActivate()
         readSettings()
-        if (tasksModel.count > 0)
-            appsList.forceActiveFocus()
-        else
-            systemList.forceActiveFocus()
+        categoryBar.position = 0
+        currentCategoryIndex = 0
+        itemList.currentIndex = 0
+        content.forceActiveFocus()
     }
     function hideOverlay() { visible = false }
     function toggle() { visible ? hideOverlay() : showOverlay() }
@@ -58,6 +65,29 @@ Window {
                     tasksModel.requestToggleMinimized(idx)
             }
         }
+    }
+
+    // Non-visual mirror of the open tasks, so categories stay plain JS arrays.
+    property var taskItems: []
+    Instantiator {
+        id: taskSource
+        model: tasksModel
+        delegate: QtObject {
+            required property string display
+            required property var decoration
+            required property int index
+        }
+        onObjectAdded: Qt.callLater(overlay.rebuildTaskItems)
+        onObjectRemoved: Qt.callLater(overlay.rebuildTaskItems)
+    }
+    function rebuildTaskItems() {
+        var arr = []
+        for (var i = 0; i < taskSource.count; i++) {
+            var o = taskSource.objectAt(i)
+            if (o)
+                arr.push({ act: "task", row: o.index, label: o.display, icon: o.decoration })
+        }
+        taskItems = arr
     }
 
     // Volume/brightness read and step, same backends as the mouse reveal bar.
@@ -104,189 +134,146 @@ Window {
         run("qdbus6 " + briBase + " setBrightnessSilent " + v)
     }
 
-    readonly property var systemActions: [
-        { act: "home",     label: i18n("Back to XMB"), icon: "go-home",             on: true },
-        { act: "voldown",  label: i18n("Volume") + " −",     icon: "audio-volume-low",    on: true },
-        { act: "volup",    label: i18n("Volume") + " +",     icon: "audio-volume-high",   on: true },
-        { act: "bridown",  label: i18n("Brightness") + " −", icon: "video-display",       on: _briMax > 0 },
-        { act: "briup",    label: i18n("Brightness") + " +", icon: "video-display",       on: _briMax > 0 },
-        { act: "network",  label: i18n("Network"),     icon: "network-wireless",    on: true },
-        { act: "suspend",  label: i18n("Sleep"),       icon: "system-suspend",      on: session.canSuspend },
-        { act: "reboot",   label: i18n("Restart"),     icon: "system-reboot",       on: session.canReboot },
-        { act: "shutdown", label: i18n("Shut down"),   icon: "system-shutdown",     on: session.canShutdown },
-        { act: "lock",     label: i18n("Lock"),        icon: "system-lock-screen",  on: session.canLock },
-        { act: "logout",   label: i18n("Log out"),     icon: "system-log-out",      on: session.canLogout }
+    property int currentCategoryIndex: 0
+    readonly property var categories: [
+        { name: i18n("Home"), icon: "go-home", items: [
+            { act: "home", label: i18n("Back to XMB"), icon: "go-home" }
+        ]},
+        { name: i18n("Applications"), icon: "applications-all", items:
+            taskItems.length > 0 ? taskItems
+                                 : [{ act: "none", label: i18n("No open apps"), icon: "window" }]
+        },
+        { name: i18n("Power"), icon: "system-shutdown", items: [
+            { act: "suspend",    label: i18n("Sleep"),        icon: "system-suspend",      on: session.canSuspend },
+            { act: "hibernate",  label: i18n("Hibernate"),    icon: "system-suspend-hibernate", on: session.canHibernate },
+            { act: "reboot",     label: i18n("Restart"),      icon: "system-reboot",       on: session.canReboot },
+            { act: "shutdown",   label: i18n("Shut down"),    icon: "system-shutdown",     on: session.canShutdown },
+            { act: "logout",     label: i18n("Log out"),      icon: "system-log-out",      on: session.canLogout },
+            { act: "switchuser", label: i18n("Switch user"),  icon: "system-switch-user",  on: session.canSwitchUser },
+            { act: "lock",       label: i18n("Lock"),         icon: "system-lock-screen",  on: session.canLock }
+        ].filter(a => a.on !== false)},
+        { name: i18n("Settings"), icon: "configure", items: [
+            { act: "volup",   label: i18n("Volume") + " +",     icon: "audio-volume-high" },
+            { act: "voldown", label: i18n("Volume") + " −",     icon: "audio-volume-low" },
+            { act: "briup",   label: i18n("Brightness") + " +", icon: "video-display",   on: _briMax > 0 },
+            { act: "bridown", label: i18n("Brightness") + " −", icon: "video-display",   on: _briMax > 0 },
+            { act: "network", label: i18n("Network"),           icon: "network-wireless" }
+        ].filter(a => a.on !== false)}
     ]
-    function triggerSystem(act) {
-        switch (act) {
-        case "home":     goHome(); return
-        case "voldown":  volStep(false); return
-        case "volup":    volStep(true); return
-        case "bridown":  briStep(false); return
-        case "briup":    briStep(true); return
-        case "network":  run("kcmshell6 kcm_networkmanagement"); hideOverlay(); return
-        case "suspend":  session.suspend(); hideOverlay(); return
-        case "reboot":   session.requestReboot(); hideOverlay(); return
-        case "shutdown": session.requestShutdown(); hideOverlay(); return
-        case "lock":     session.lock(); hideOverlay(); return
-        case "logout":   session.requestLogout(); hideOverlay(); return
+    readonly property var currentItems: categories[currentCategoryIndex].items
+
+    // Live labels for the stepper items, without rebuilding the arrays (keeps the index).
+    function itemLabel(item) {
+        if ((item.act === "volup" || item.act === "voldown") && volPct >= 0)
+            return item.label + "   " + volPct + "%"
+        if ((item.act === "briup" || item.act === "bridown") && briPct >= 0)
+            return item.label + "   " + briPct + "%"
+        return item.label
+    }
+
+    function trigger(item) {
+        switch (item.act) {
+        case "home":       goHome(); return
+        case "task":       tasksModel.requestActivate(tasksModel.makeModelIndex(item.row)); hideOverlay(); return
+        case "none":       return
+        case "suspend":    session.suspend(); hideOverlay(); return
+        case "hibernate":  session.hibernate(); hideOverlay(); return
+        case "reboot":     session.requestReboot(); hideOverlay(); return
+        case "shutdown":   session.requestShutdown(); hideOverlay(); return
+        case "logout":     session.requestLogout(); hideOverlay(); return
+        case "switchuser": session.switchUser(); hideOverlay(); return
+        case "lock":       session.lock(); hideOverlay(); return
+        case "volup":      volStep(true); tick.play(); return
+        case "voldown":    volStep(false); tick.play(); return
+        case "briup":      briStep(true); tick.play(); return
+        case "bridown":    briStep(false); tick.play(); return
+        case "network":    run("kcmshell6 kcm_networkmanagement"); hideOverlay(); return
         }
     }
 
-    ColumnLayout {
-        anchors.centerIn: parent
-        width: Math.min(parent.width * 0.86, 1500)
-        spacing: Kirigami.Units.largeSpacing
+    XmbSound {
+        id: tick
+        source: overlay.navTickSource
+        volume: overlay.navTickVolume
+    }
 
-        QQC2.Label {
-            Layout.leftMargin: Kirigami.Units.gridUnit
-            text: tasksModel.count > 0 ? i18n("Open apps") : i18n("No open apps")
-            color: "white"
-            font.pixelSize: 34
-            font.weight: Font.Light
-        }
+    Item {
+        id: content
+        anchors.fill: parent
+        focus: true
 
-        ListView {
-            id: appsList
-            visible: tasksModel.count > 0
-            Layout.fillWidth: true
-            Layout.preferredHeight: Kirigami.Units.gridUnit * 9
-            orientation: ListView.Horizontal
-            spacing: Kirigami.Units.largeSpacing
-            clip: true
-            model: tasksModel
-            keyNavigationWraps: true
-            KeyNavigation.down: systemList
-
-            delegate: Item {
-                id: tile
-                required property int index
-                required property var model
-                width: Kirigami.Units.gridUnit * 11
-                height: ListView.view.height
-                readonly property bool current: ListView.isCurrentItem
-
-                Rectangle {
-                    anchors.fill: parent
-                    radius: Kirigami.Units.smallSpacing
-                    color: tile.current && appsList.activeFocus ? Qt.rgba(1, 1, 1, 0.18) : Qt.rgba(1, 1, 1, 0.06)
-                    border.width: tile.current && appsList.activeFocus ? 2 : 0
-                    border.color: "white"
-                }
-                ColumnLayout {
-                    anchors.fill: parent
-                    anchors.margins: Kirigami.Units.largeSpacing
-                    Kirigami.Icon {
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.fillHeight: true
-                        Layout.preferredWidth: height
-                        source: tile.model.decoration
-                    }
-                    QQC2.Label {
-                        Layout.fillWidth: true
-                        text: tile.model.display
-                        color: "white"
-                        elide: Text.ElideRight
-                        horizontalAlignment: Text.AlignHCenter
-                    }
-                }
-                TapHandler {
-                    onTapped: { appsList.currentIndex = tile.index; overlay.activateCurrent() }
+        CategoryBar {
+            id: categoryBar
+            width: parent.width
+            y: parent.height * 0.26 - height / 2
+            intersectionX: overlay.interX
+            iconSize: 96
+            model: overlay.categories
+            iconResolver: overlay.iconResolver
+            iconResolverTick: overlay.iconResolverTick
+            iconMonochrome: overlay.iconThemeMonochrome
+            onCommitted: (index) => {
+                if (overlay.currentCategoryIndex !== index) {
+                    overlay.currentCategoryIndex = index
+                    itemList.currentIndex = 0
                 }
             }
-
-            Keys.onReturnPressed: overlay.activateCurrent()
-            Keys.onEnterPressed: overlay.activateCurrent()
-            Keys.onEscapePressed: overlay.hideOverlay()
         }
 
-        QQC2.Label {
-            Layout.leftMargin: Kirigami.Units.gridUnit
-            color: "white"
-            opacity: 0.7
-            font.pixelSize: 18
-            visible: overlay.volPct >= 0 || overlay.briPct >= 0
-            text: {
-                var parts = []
-                if (overlay.volPct >= 0) parts.push(i18n("Volume") + " " + overlay.volPct + "%")
-                if (overlay.briPct >= 0) parts.push(i18n("Brightness") + " " + overlay.briPct + "%")
-                return parts.join("   ·   ")
-            }
-        }
-
+        // Vertical arm: items of the selected category, pinned below the category row.
         ListView {
-            id: systemList
-            Layout.fillWidth: true
-            Layout.preferredHeight: Kirigami.Units.gridUnit * 5
-            orientation: ListView.Horizontal
-            spacing: Kirigami.Units.largeSpacing
-            clip: true
-            keyNavigationWraps: true
-            KeyNavigation.up: appsList
-            model: overlay.systemActions.filter(a => a.on !== false)
+            id: itemList
+            x: overlay.interX - 24
+            y: categoryBar.y + categoryBar.height
+            width: 620
+            height: parent.height - y
+            spacing: 18
+            interactive: false
+            keyNavigationEnabled: false
+            model: overlay.currentItems
+            preferredHighlightBegin: parent.height * 0.16
+            preferredHighlightEnd: parent.height * 0.16
+            highlightRangeMode: ListView.StrictlyEnforceRange
+            highlightMoveDuration: 200
+            highlightMoveVelocity: -1
+            boundsBehavior: Flickable.StopAtBounds
 
-            delegate: Item {
-                id: sTile
-                required property int index
+            delegate: XmbItemDelegate {
                 required property var modelData
-                width: Kirigami.Units.gridUnit * 8
-                height: ListView.view.height
-                readonly property bool current: ListView.isCurrentItem
+                required property int index
 
-                Rectangle {
-                    anchors.fill: parent
-                    radius: Kirigami.Units.smallSpacing
-                    color: sTile.current && systemList.activeFocus ? Qt.rgba(1, 1, 1, 0.18) : Qt.rgba(1, 1, 1, 0.06)
-                    border.width: sTile.current && systemList.activeFocus ? 2 : 0
-                    border.color: "white"
-                }
-                ColumnLayout {
-                    anchors.fill: parent
-                    anchors.margins: Kirigami.Units.smallSpacing
-                    Kirigami.Icon {
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.fillHeight: true
-                        Layout.preferredWidth: height
-                        source: sTile.modelData.icon
-                    }
-                    QQC2.Label {
-                        Layout.fillWidth: true
-                        text: sTile.modelData.label
-                        color: "white"
-                        elide: Text.ElideRight
-                        horizontalAlignment: Text.AlignHCenter
-                        font.pixelSize: 16
-                    }
-                }
-                TapHandler {
-                    onTapped: { systemList.currentIndex = sTile.index; overlay.triggerSystem(sTile.modelData.act) }
-                }
-            }
+                width: itemList.width
+                height: 72
+                labelBelow: false
+                iconSize: 48
+                iconSource: overlay.iconResolver ? overlay.iconResolver(modelData.icon, overlay.iconResolverTick)
+                                                 : modelData.icon
+                iconMonochrome: overlay.iconThemeMonochrome
+                label: overlay.itemLabel(modelData)
+                selected: ListView.isCurrentItem
+                interactive: ListView.isCurrentItem
+                neighbourDistance: Math.abs(index - itemList.currentIndex)
+                selectedScale: 1.15
+                glowWhenSelected: true
 
-            Keys.onReturnPressed: triggerCurrent()
-            Keys.onEnterPressed: triggerCurrent()
-            Keys.onEscapePressed: overlay.hideOverlay()
-            function triggerCurrent() {
-                var a = overlay.systemActions.filter(x => x.on !== false)[currentIndex]
-                if (a) overlay.triggerSystem(a.act)
+                onClicked: overlay.trigger(modelData)
             }
         }
-    }
 
-    function activateCurrent() {
-        if (appsList.currentIndex < 0)
-            return
-        tasksModel.requestActivate(tasksModel.makeModelIndex(appsList.currentIndex))
-        hideOverlay()
-    }
-
-    // If the last app closes while open, drop the now-empty app row focus to the system row.
-    Connections {
-        target: tasksModel
-        function onCountChanged() {
-            if (overlay.visible && tasksModel.count === 0)
-                systemList.forceActiveFocus()
+        Keys.onLeftPressed: { categoryBar.goPrev(); tick.play() }
+        Keys.onRightPressed: { categoryBar.goNext(); tick.play() }
+        Keys.onUpPressed: {
+            var i = itemList.currentIndex
+            itemList.decrementCurrentIndex()
+            if (itemList.currentIndex !== i) tick.play()
         }
+        Keys.onDownPressed: {
+            var i = itemList.currentIndex
+            itemList.incrementCurrentIndex()
+            if (itemList.currentIndex !== i) tick.play()
+        }
+        Keys.onReturnPressed: overlay.trigger(overlay.currentItems[itemList.currentIndex])
+        Keys.onEnterPressed: overlay.trigger(overlay.currentItems[itemList.currentIndex])
+        Keys.onEscapePressed: overlay.hideOverlay()
     }
-
 }

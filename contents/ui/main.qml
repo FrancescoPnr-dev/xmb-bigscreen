@@ -70,7 +70,14 @@ ContainmentItem {
         uiLanguage: Plasmoid.configuration.language
     }
 
-    HomeOverlay { id: homeOverlay }
+    HomeOverlay {
+        id: homeOverlay
+        navTickSource: dashboard.navSoundSource
+        navTickVolume: dashboard.navSoundVolume
+        iconResolver: dashboard.resolveIcon
+        iconResolverTick: dashboard.iconMapTick
+        iconThemeMonochrome: dashboard.iconThemeMonochrome
+    }
 
     // Home button (controller PS/Guide or remote) and the Meta key raise the app switcher; Back closes it.
     Plasmoid.onActivated: homeOverlay.toggle()
