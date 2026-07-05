@@ -14,6 +14,7 @@ audio_state_enter() {
     # Desktop slot already parked = crashed XMB run; its live state is already ours.
     if [ ! -d "$wp_desktop" ]; then
         systemctl --user stop wireplumber 2>/dev/null
+        sleep 2
         [ -d "$wp_state" ] && mv "$wp_state" "$wp_desktop"
         [ -d "$wp_xmb" ] && mv "$wp_xmb" "$wp_state"
         systemctl --user start wireplumber 2>/dev/null
@@ -22,12 +23,22 @@ audio_state_enter() {
 
 audio_state_exit() {
     systemctl --user stop wireplumber 2>/dev/null
+    # USB DACs need a beat to release their ALSA handles, or the re-probe
+    # degrades them to the pro-audio/off profiles and their sinks vanish.
+    sleep 2
     rm -rf "$wp_xmb"
     [ -d "$wp_state" ] && mv "$wp_state" "$wp_xmb"
     [ -d "$wp_desktop" ] && mv "$wp_desktop" "$wp_state"
     systemctl --user start wireplumber 2>/dev/null
 }
 
+stop_stale_inputhandlers() {
+    # An input handler leaked from an earlier session keeps the gamepad bound to a
+    # dead compositor and starves the new session's instance.
+    systemctl --user stop 'app-org.kde.plasma.bigscreen.inputhandler@*.service' 2>/dev/null
+}
+
+stop_stale_inputhandlers
 audio_state_enter
 
 # Reuse Bigscreen's environment, then load our shell instead of the native one.
@@ -37,3 +48,4 @@ export PLASMA_DEFAULT_SHELL=org.kde.plasma.xmbbigscreen
 startplasma-wayland --xwayland --libinput --exit-with-session=/usr/lib/startplasma-waylandsession
 
 audio_state_exit
+stop_stale_inputhandlers
