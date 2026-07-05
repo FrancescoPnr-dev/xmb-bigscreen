@@ -16,7 +16,12 @@ audio_state_enter() {
         systemctl --user stop wireplumber 2>/dev/null
         sleep 2
         [ -d "$wp_state" ] && mv "$wp_state" "$wp_desktop"
-        [ -d "$wp_xmb" ] && mv "$wp_xmb" "$wp_state"
+        if [ -d "$wp_xmb" ]; then
+            mv "$wp_xmb" "$wp_state"
+        elif [ -d "$wp_desktop" ]; then
+            # First TV login: seed from the desktop so devices and volumes start sane.
+            cp -a "$wp_desktop" "$wp_state"
+        fi
         systemctl --user start wireplumber 2>/dev/null
     fi
 }
