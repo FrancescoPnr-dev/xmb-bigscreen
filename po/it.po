@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-05 18:49+0200\n"
+"POT-Creation-Date: 2026-07-06 02:59+0200\n"
 "PO-Revision-Date: 2026-07-02 12:00+0200\n"
 "Last-Translator: Francesco Panarese <FrancescoPnr-dev@proton.me>\n"
 "Language-Team: Italian\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "General"
 msgstr "Generale"
 
-#: contents/config/config.qml:17 contents/ui/Dashboard.qml:297
+#: contents/config/config.qml:17 contents/ui/Dashboard.qml:308
 msgid "Favorites"
 msgstr "Preferiti"
 
@@ -386,93 +386,97 @@ msgstr "Categorie visibili"
 msgid "Show all categories"
 msgstr "Mostra tutte le categorie"
 
-#: contents/ui/HomeOverlay.qml:138
+#: contents/ui/HomeOverlay.qml:135
 msgid "Home"
 msgstr "Home"
 
-#: contents/ui/HomeOverlay.qml:139
+#: contents/ui/HomeOverlay.qml:136
 msgid "Back to XMB"
 msgstr "Torna alla XMB"
 
-#: contents/ui/HomeOverlay.qml:141
+#: contents/ui/HomeOverlay.qml:138
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: contents/ui/HomeOverlay.qml:143
+#: contents/ui/HomeOverlay.qml:140
 msgid "No open apps"
 msgstr "Nessuna app aperta"
 
-#: contents/ui/HomeOverlay.qml:145
+#: contents/ui/HomeOverlay.qml:142
 msgid "Power"
 msgstr "Alimentazione"
 
-#: contents/ui/HomeOverlay.qml:146 contents/ui/XmbTopBar.qml:109
+#: contents/ui/HomeOverlay.qml:143 contents/ui/XmbTopBar.qml:109
 msgid "Sleep"
 msgstr "Sospendi"
 
-#: contents/ui/HomeOverlay.qml:147
+#: contents/ui/HomeOverlay.qml:144
 msgid "Hibernate"
 msgstr "Ibernazione"
 
-#: contents/ui/HomeOverlay.qml:148 contents/ui/XmbTopBar.qml:110
+#: contents/ui/HomeOverlay.qml:145 contents/ui/XmbTopBar.qml:110
 msgid "Restart"
 msgstr "Riavvia"
 
-#: contents/ui/HomeOverlay.qml:149 contents/ui/XmbTopBar.qml:111
+#: contents/ui/HomeOverlay.qml:146 contents/ui/XmbTopBar.qml:111
 msgid "Shut down"
 msgstr "Spegni"
 
-#: contents/ui/HomeOverlay.qml:150 contents/ui/XmbTopBar.qml:108
+#: contents/ui/HomeOverlay.qml:147 contents/ui/XmbTopBar.qml:108
 msgid "Log out"
 msgstr "Esci"
 
-#: contents/ui/HomeOverlay.qml:151
+#: contents/ui/HomeOverlay.qml:148
 msgid "Switch user"
 msgstr "Cambia utente"
 
-#: contents/ui/HomeOverlay.qml:152 contents/ui/XmbTopBar.qml:107
+#: contents/ui/HomeOverlay.qml:149 contents/ui/XmbTopBar.qml:107
 msgid "Lock"
 msgstr "Blocca"
 
-#: contents/ui/HomeOverlay.qml:154 contents/ui/XmbQuickSettings.qml:135
+#: contents/ui/HomeOverlay.qml:151 contents/ui/XmbQuickSettings.qml:135
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: contents/ui/HomeOverlay.qml:155 contents/ui/HomeOverlay.qml:156
+#: contents/ui/HomeOverlay.qml:152 contents/ui/HomeOverlay.qml:153
 #: contents/ui/XmbQuickSettings.qml:110
 msgid "Volume"
 msgstr "Volume"
 
-#: contents/ui/HomeOverlay.qml:157 contents/ui/HomeOverlay.qml:158
+#: contents/ui/HomeOverlay.qml:154 contents/ui/HomeOverlay.qml:155
 #: contents/ui/XmbQuickSettings.qml:91
 msgid "Brightness"
 msgstr "Luminosità"
 
-#: contents/ui/HomeOverlay.qml:159 contents/ui/XmbQuickSettings.qml:129
+#: contents/ui/HomeOverlay.qml:156 contents/ui/XmbQuickSettings.qml:129
 msgid "Network"
 msgstr "Rete"
 
-#: contents/ui/main.qml:87
+#: contents/ui/HomeOverlay.qml:157
+msgid "XMB settings"
+msgstr "Impostazioni XMB"
+
+#: contents/ui/main.qml:86
 msgid "Controller connected: %1"
 msgstr "Controller connesso: %1"
 
-#: contents/ui/main.qml:88
+#: contents/ui/main.qml:87
 msgid "Controller disconnected: %1"
 msgstr "Controller disconnesso: %1"
 
-#: contents/ui/main.qml:89
+#: contents/ui/main.qml:88
 msgid "Remote connected: %1"
 msgstr "Telecomando connesso: %1"
 
-#: contents/ui/main.qml:90
+#: contents/ui/main.qml:89
 msgid "Remote disconnected: %1"
 msgstr "Telecomando disconnesso: %1"
 
-#: contents/ui/main.qml:94
+#: contents/ui/main.qml:93
 msgid "An application is using the controller"
 msgstr "Un'applicazione sta usando il controller"
 
-#: contents/ui/main.qml:94
+#: contents/ui/main.qml:93
 msgid "Controller back to the system"
 msgstr "Controller di nuovo al sistema"
 

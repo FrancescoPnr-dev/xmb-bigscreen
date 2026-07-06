@@ -108,6 +108,7 @@ var catalogs = {
   "Volume": "Volume",
   "Brightness": "Luminosità",
   "Network": "Rete",
+  "XMB settings": "Impostazioni XMB",
   "Controller connected: %1": "Controller connesso: %1",
   "Controller disconnected: %1": "Controller disconnesso: %1",
   "Remote connected: %1": "Telecomando connesso: %1",
