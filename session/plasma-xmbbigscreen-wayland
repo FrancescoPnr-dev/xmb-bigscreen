@@ -28,13 +28,14 @@ audio_state_enter() {
 
 audio_state_exit() {
     systemctl --user stop wireplumber 2>/dev/null
-    # USB DACs need a beat to release their ALSA handles, or the re-probe
-    # degrades them to the pro-audio/off profiles and their sinks vanish.
-    sleep 2
     rm -rf "$wp_xmb"
     [ -d "$wp_state" ] && mv "$wp_state" "$wp_xmb"
     [ -d "$wp_desktop" ] && mv "$wp_desktop" "$wp_state"
-    systemctl --user start wireplumber 2>/dev/null
+    # Restart only after the logout churn settles: a USB DAC re-probed too early loses
+    # its analog profile. The transient timer outlives this session; if the whole user
+    # manager goes down with it, the next login starts wireplumber fresh anyway.
+    systemd-run --user --on-active=5 systemctl --user start wireplumber 2>/dev/null \
+        || systemctl --user start wireplumber 2>/dev/null
 }
 
 stop_stale_inputhandlers() {
