@@ -9,7 +9,6 @@ import org.kde.plasma.private.sessions as Sessions
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.taskmanager as TaskManager
 import org.kde.layershell as LayerShell
-import org.kde.bigscreen.controllerhandler as ControllerHandler
 
 Window {
     id: overlay
@@ -41,18 +40,6 @@ Window {
     }
     function hideOverlay() { visible = false }
     function toggle() { visible ? hideOverlay() : showOverlay() }
-
-    // Match Bigscreen's overlay: force key injection on while open (the overlay can be
-    // summoned over a game that grabbed the pad), and restore the prior state on close.
-    property bool savedSuppress: false
-    onVisibleChanged: {
-        if (visible) {
-            savedSuppress = ControllerHandler.ControllerHandlerStatus.inputSuppressed
-            ControllerHandler.ControllerHandlerStatus.inputSuppressed = false
-        } else {
-            ControllerHandler.ControllerHandlerStatus.inputSuppressed = savedSuppress
-        }
-    }
     function goHome() {
         tasksModel.minimizeAllTasks()
         hideOverlay()
