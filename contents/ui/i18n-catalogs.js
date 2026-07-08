@@ -108,6 +108,8 @@ var catalogs = {
   "Volume": "Volume",
   "Brightness": "Luminosità",
   "Network": "Rete",
+  "Audio device": "Dispositivo audio",
+  "System settings": "Impostazioni di sistema",
   "XMB settings": "Impostazioni XMB",
   "Controller connected: %1": "Controller connesso: %1",
   "Controller disconnected: %1": "Controller disconnesso: %1",

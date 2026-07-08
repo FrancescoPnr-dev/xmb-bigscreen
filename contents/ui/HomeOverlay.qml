@@ -153,8 +153,10 @@ Window {
             { act: "voldown", label: i18n("Volume") + " −" },
             { act: "briup",   label: i18n("Brightness") + " +", on: _briMax > 0 },
             { act: "bridown", label: i18n("Brightness") + " −", on: _briMax > 0 },
-            { act: "network", label: i18n("Network") },
-            { act: "config",  label: i18n("XMB settings") }
+            { act: "network",  label: i18n("Network") },
+            { act: "audio",    label: i18n("Audio device") },
+            { act: "settings", label: i18n("System settings") },
+            { act: "config",   label: i18n("XMB settings") }
         ].filter(a => a.on !== false)}
     ]
     readonly property var currentItems: categories[currentCategoryIndex].items
@@ -184,7 +186,9 @@ Window {
         case "voldown":    volStep(false); tick.play(); return
         case "briup":      briStep(true); tick.play(); return
         case "bridown":    briStep(false); tick.play(); return
-        case "network":    run("kcmshell6 kcm_networkmanagement"); hideOverlay(); return
+        case "network":    run("systemsettings kcm_mediacenter_wifi"); hideOverlay(); return
+        case "audio":      run("systemsettings kcm_mediacenter_audiodevice"); hideOverlay(); return
+        case "settings":   run("systemsettings kcm_mediacenter_bigscreen_settings"); hideOverlay(); return
         case "config":     configRequested(); hideOverlay(); return
         }
     }
