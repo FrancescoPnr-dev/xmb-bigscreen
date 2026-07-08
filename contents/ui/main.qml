@@ -106,13 +106,4 @@ ContainmentItem {
         osdExec.connectSource("qdbus6 org.kde.plasmashell /org/kde/osdService org.kde.osdService.showText \""
                               + icon + "\" \"" + safe + "\"")
     }
-
-    // The inputhandler suppresses controller-as-keyboard input by default; the homescreen
-    // must un-suppress it while it is the foreground surface, or the D-pad never reaches us.
-    readonly property bool winActive: root.Window.active
-    onWinActiveChanged: if (winActive) claimController()
-    function claimController() {
-        ControllerHandler.ControllerHandlerStatus.inputSuppressed = false
-    }
-    Component.onCompleted: claimController()
 }

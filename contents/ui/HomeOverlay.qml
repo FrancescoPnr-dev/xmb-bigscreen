@@ -9,6 +9,7 @@ import org.kde.plasma.private.sessions as Sessions
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.taskmanager as TaskManager
 import org.kde.layershell as LayerShell
+import org.kde.bigscreen.controllerhandler as ControllerHandler
 
 Window {
     id: overlay
@@ -40,6 +41,18 @@ Window {
     }
     function hideOverlay() { visible = false }
     function toggle() { visible ? hideOverlay() : showOverlay() }
+
+    // Match Bigscreen's overlay: force key injection on while open (the overlay can be
+    // summoned over a game that grabbed the pad), and restore the prior state on close.
+    property bool savedSuppress: false
+    onVisibleChanged: {
+        if (visible) {
+            savedSuppress = ControllerHandler.ControllerHandlerStatus.inputSuppressed
+            ControllerHandler.ControllerHandlerStatus.inputSuppressed = false
+        } else {
+            ControllerHandler.ControllerHandlerStatus.inputSuppressed = savedSuppress
+        }
+    }
     function goHome() {
         tasksModel.minimizeAllTasks()
         hideOverlay()
@@ -155,7 +168,6 @@ Window {
             { act: "bridown", label: i18n("Brightness") + " −", on: _briMax > 0 },
             { act: "network",  label: i18n("Network") },
             { act: "audio",    label: i18n("Audio device") },
-            { act: "settings", label: i18n("System settings") },
             { act: "config",   label: i18n("XMB settings") }
         ].filter(a => a.on !== false)}
     ]
@@ -188,7 +200,6 @@ Window {
         case "bridown":    briStep(false); tick.play(); return
         case "network":    run("systemsettings kcm_mediacenter_wifi"); hideOverlay(); return
         case "audio":      run("systemsettings kcm_mediacenter_audiodevice"); hideOverlay(); return
-        case "settings":   run("systemsettings kcm_mediacenter_bigscreen_settings"); hideOverlay(); return
         case "config":     configRequested(); hideOverlay(); return
         }
     }
