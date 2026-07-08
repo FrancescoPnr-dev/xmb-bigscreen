@@ -102,11 +102,19 @@ Item {
             iconMapTick++
             return
         }
-        var userDir = "\"$HOME/.local/share/icons/" + t + "\""
-        var sysDir = "\"/usr/share/icons/" + t + "\""
-        iconScan.connectSource("grep -him1 '^FollowsColorScheme=true' " + userDir + "/index.theme " + sysDir + "/index.theme 2>/dev/null"
-                               + "; find -L " + userDir + " " + sysDir
-                               + " -type f \\( -name '*.svg' -o -name '*.svgz' -o -name '*.png' \\) 2>/dev/null")
+        var d1 = "\"$HOME/.local/share/icons/" + t + "\""
+        var d2 = "\"/usr/share/icons/" + t + "\""
+        // A theme is a white-mask theme when its app icons are drawn with
+        // fill="currentColor" (YAMIS) rather than baked-in colours (WhiteSur, Oxygen).
+        // Sample real SVGs instead of trusting the unreliable FollowsColorScheme flag.
+        iconScan.connectSource(
+            "smp=$(find -L " + d1 + " " + d2 + " -type d -name apps 2>/dev/null | head -4 | "
+          + "xargs -I{} find -L {} -type f -name '*.svg' 2>/dev/null | head -16); "
+          + "[ -z \"$smp\" ] && smp=$(find -L " + d1 + " " + d2 + " -type f -name '*.svg' 2>/dev/null | head -16); "
+          + "n=$(printf '%s\\n' \"$smp\" | grep -c .); "
+          + "cc=$(printf '%s\\n' \"$smp\" | grep . | xargs grep -li currentColor 2>/dev/null | wc -l); "
+          + "m=0; [ \"$n\" -gt 0 ] && [ \"$cc\" -gt $((n/2)) ] && m=1; echo \"MONO=$m\"; "
+          + "find -L " + d1 + " " + d2 + " -type f \\( -name '*.svg' -o -name '*.svgz' -o -name '*.png' \\) 2>/dev/null")
     }
 
     P5Support.DataSource {
@@ -122,8 +130,8 @@ Item {
                 var path = lines[i].trim()
                 if (path === "")
                     continue
-                if (path.toLowerCase() === "followscolorscheme=true") {
-                    mono = true
+                if (path.indexOf("MONO=") === 0) {
+                    mono = path === "MONO=1"
                     continue
                 }
                 var base = path.slice(path.lastIndexOf("/") + 1).replace(/\.(svg|svgz|png)$/, "")
