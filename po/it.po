@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-08 14:25+0200\n"
+"POT-Creation-Date: 2026-07-08 15:01+0200\n"
 "PO-Revision-Date: 2026-07-02 12:00+0200\n"
 "Last-Translator: Francesco Panarese <FrancescoPnr-dev@proton.me>\n"
 "Language-Team: Italian\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "General"
 msgstr "Generale"
 
-#: contents/config/config.qml:17 contents/ui/Dashboard.qml:308
+#: contents/config/config.qml:17 contents/ui/Dashboard.qml:316
 msgid "Favorites"
 msgstr "Preferiti"
 
@@ -35,316 +35,131 @@ msgstr "Cerca applicazioni…"
 msgid "No applications found."
 msgstr "Nessuna applicazione trovata."
 
-#: contents/ui/config/ConfigGeneral.qml:193
+#: contents/ui/config/ConfigGeneral.qml:99
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: contents/ui/config/ConfigGeneral.qml:198
-msgid "Background opacity:"
-msgstr "Opacità dello sfondo:"
-
-#: contents/ui/config/ConfigGeneral.qml:213
+#: contents/ui/config/ConfigGeneral.qml:105
 msgid "Icon theme:"
 msgstr "Tema delle icone:"
 
-#: contents/ui/config/ConfigGeneral.qml:216
-#: contents/ui/config/ConfigGeneral.qml:279
-#: contents/ui/config/ConfigGeneral.qml:296
-#: contents/ui/config/ConfigGeneral.qml:303
+#: contents/ui/config/ConfigGeneral.qml:108
+#: contents/ui/config/ConfigGeneral.qml:185
+#: contents/ui/config/ConfigGeneral.qml:202
+#: contents/ui/config/ConfigGeneral.qml:209
 msgid "System"
 msgstr "Sistema"
 
-#: contents/ui/config/ConfigGeneral.qml:239
+#: contents/ui/config/ConfigGeneral.qml:130
+msgid "Background opacity:"
+msgstr "Opacità dello sfondo:"
+
+#: contents/ui/config/ConfigGeneral.qml:145
 msgid "Category icon size (px):"
 msgstr "Dimensione icone categoria (px):"
 
-#: contents/ui/config/ConfigGeneral.qml:245
+#: contents/ui/config/ConfigGeneral.qml:151
 msgid "App icon size (px):"
 msgstr "Dimensione icone applicazioni (px):"
 
-#: contents/ui/config/ConfigGeneral.qml:250
+#: contents/ui/config/ConfigGeneral.qml:156
 msgid "Cross position (from left):"
 msgstr "Posizione della croce (da sinistra):"
 
-#: contents/ui/config/ConfigGeneral.qml:264
-#: contents/ui/config/ConfigGeneral.qml:312
-#: contents/ui/config/ConfigGeneral.qml:408
-#: contents/ui/config/ConfigGeneral.qml:470
-#: contents/ui/config/ConfigGeneral.qml:524
-#: contents/ui/config/ConfigGeneral.qml:560
-#: contents/ui/config/ConfigGeneral.qml:631
+#: contents/ui/config/ConfigGeneral.qml:170
+#: contents/ui/config/ConfigGeneral.qml:218
+#: contents/ui/config/ConfigGeneral.qml:301
 msgid "Reset section to defaults"
 msgstr "Ripristina i valori predefiniti della sezione"
 
-#: contents/ui/config/ConfigGeneral.qml:270
+#: contents/ui/config/ConfigGeneral.qml:176
 msgid "Language"
 msgstr "Lingua"
 
-#: contents/ui/config/ConfigGeneral.qml:276
+#: contents/ui/config/ConfigGeneral.qml:182
 msgid "Language:"
 msgstr "Lingua:"
 
-#: contents/ui/config/ConfigGeneral.qml:288
+#: contents/ui/config/ConfigGeneral.qml:194
 msgid "Clock"
 msgstr "Orologio"
 
-#: contents/ui/config/ConfigGeneral.qml:294
+#: contents/ui/config/ConfigGeneral.qml:200
 msgid "Time format:"
 msgstr "Formato dell'ora:"
 
-#: contents/ui/config/ConfigGeneral.qml:296
+#: contents/ui/config/ConfigGeneral.qml:202
 msgid "12-hour"
 msgstr "12 ore"
 
-#: contents/ui/config/ConfigGeneral.qml:296
+#: contents/ui/config/ConfigGeneral.qml:202
 msgid "24-hour"
 msgstr "24 ore"
 
-#: contents/ui/config/ConfigGeneral.qml:301
+#: contents/ui/config/ConfigGeneral.qml:207
 msgid "Date format:"
 msgstr "Formato della data:"
 
-#: contents/ui/config/ConfigGeneral.qml:303
+#: contents/ui/config/ConfigGeneral.qml:209
 msgid "Day/month"
 msgstr "Giorno/mese"
 
-#: contents/ui/config/ConfigGeneral.qml:303
+#: contents/ui/config/ConfigGeneral.qml:209
 msgid "Month/day"
 msgstr "Mese/giorno"
 
-#: contents/ui/config/ConfigGeneral.qml:308
+#: contents/ui/config/ConfigGeneral.qml:214
 msgid "Show date:"
 msgstr "Mostra la data:"
 
-#: contents/ui/config/ConfigGeneral.qml:318
+#: contents/ui/config/ConfigGeneral.qml:224
 msgid "Behaviour"
 msgstr "Comportamento"
 
-#: contents/ui/config/ConfigGeneral.qml:324
+#: contents/ui/config/ConfigGeneral.qml:230
 msgid "Bar reveal:"
 msgstr "Barra a comparsa:"
 
-#: contents/ui/config/ConfigGeneral.qml:326
+#: contents/ui/config/ConfigGeneral.qml:232
 msgid "Top edge"
 msgstr "Bordo superiore"
 
-#: contents/ui/config/ConfigGeneral.qml:326
+#: contents/ui/config/ConfigGeneral.qml:232
 msgid "Bottom edge"
 msgstr "Bordo inferiore"
 
-#: contents/ui/config/ConfigGeneral.qml:330
-msgid "Category bar (mouse)"
-msgstr "Barra delle categorie (mouse)"
-
-#: contents/ui/config/ConfigGeneral.qml:335
-msgid "Left hot-zone width:"
-msgstr "Larghezza zona attiva sinistra:"
-
-#: contents/ui/config/ConfigGeneral.qml:349
-msgid "Right hot-zone width:"
-msgstr "Larghezza zona attiva destra:"
-
-#: contents/ui/config/ConfigGeneral.qml:364
-msgid "Hot-zone band height (px):"
-msgstr "Altezza banda zone attive (px):"
-
-#: contents/ui/config/ConfigGeneral.qml:370
-msgid "Min scroll speed (px/s):"
-msgstr "Velocità minima di scorrimento (px/s):"
-
-#: contents/ui/config/ConfigGeneral.qml:380
-msgid "Max scroll speed (px/s):"
-msgstr "Velocità massima di scorrimento (px/s):"
-
-#: contents/ui/config/ConfigGeneral.qml:389
-msgid "Snap animation (ms):"
-msgstr "Animazione di aggancio (ms):"
-
-#: contents/ui/config/ConfigGeneral.qml:394
-msgid "Magnetic glue strength:"
-msgstr "Forza dell'aggancio magnetico:"
-
-#: contents/ui/config/ConfigGeneral.qml:414
-msgid "Wave background"
-msgstr "Sfondo a onde"
-
-#: contents/ui/config/ConfigGeneral.qml:419
-#: contents/ui/config/ConfigGeneral.qml:553
-msgid "Flow speed:"
-msgstr "Velocità del flusso:"
-
-#: contents/ui/config/ConfigGeneral.qml:424
-msgid "Band amplitude:"
-msgstr "Ampiezza della banda:"
-
-#: contents/ui/config/ConfigGeneral.qml:429
-msgid "Wave height:"
-msgstr "Altezza delle onde:"
-
-#: contents/ui/config/ConfigGeneral.qml:434
-msgid "Soft clip:"
-msgstr "Soft clip:"
-
-#: contents/ui/config/ConfigGeneral.qml:439
-msgid "Tension:"
-msgstr "Tensione:"
-
-#: contents/ui/config/ConfigGeneral.qml:444
-msgid "Fresnel power:"
-msgstr "Potenza Fresnel:"
-
-#: contents/ui/config/ConfigGeneral.qml:449
-msgid "Fresnel scale:"
-msgstr "Scala Fresnel:"
-
-#: contents/ui/config/ConfigGeneral.qml:454
-msgid "Wave opacity:"
-msgstr "Opacità delle onde:"
-
-#: contents/ui/config/ConfigGeneral.qml:459
-msgid "Brightness:"
-msgstr "Luminosità:"
-
-#: contents/ui/config/ConfigGeneral.qml:465
-msgid "Wave detail (rows):"
-msgstr "Dettaglio delle onde (righe):"
-
-#: contents/ui/config/ConfigGeneral.qml:476
-msgid "Wave colour"
-msgstr "Colore delle onde"
-
-#: contents/ui/config/ConfigGeneral.qml:482
-msgid "Colour preset:"
-msgstr "Colore predefinito:"
-
-#: contents/ui/config/ConfigGeneral.qml:484
-msgid "Automatic (current month)"
-msgstr "Automatico (mese corrente)"
-
-#: contents/ui/config/ConfigGeneral.qml:485
-msgid "January"
-msgstr "Gennaio"
-
-#: contents/ui/config/ConfigGeneral.qml:485
-msgid "February"
-msgstr "Febbraio"
-
-#: contents/ui/config/ConfigGeneral.qml:485
-msgid "March"
-msgstr "Marzo"
-
-#: contents/ui/config/ConfigGeneral.qml:485
-msgid "April"
-msgstr "Aprile"
-
-#: contents/ui/config/ConfigGeneral.qml:486
-msgid "May"
-msgstr "Maggio"
-
-#: contents/ui/config/ConfigGeneral.qml:486
-msgid "June"
-msgstr "Giugno"
-
-#: contents/ui/config/ConfigGeneral.qml:486
-msgid "July"
-msgstr "Luglio"
-
-#: contents/ui/config/ConfigGeneral.qml:486
-msgid "August"
-msgstr "Agosto"
-
-#: contents/ui/config/ConfigGeneral.qml:487
-msgid "September"
-msgstr "Settembre"
-
-#: contents/ui/config/ConfigGeneral.qml:487
-msgid "October"
-msgstr "Ottobre"
-
-#: contents/ui/config/ConfigGeneral.qml:487
-msgid "November"
-msgstr "Novembre"
-
-#: contents/ui/config/ConfigGeneral.qml:487
-msgid "December"
-msgstr "Dicembre"
-
-#: contents/ui/config/ConfigGeneral.qml:488
-msgid "Custom colour (RGB)"
-msgstr "Colore personalizzato (RGB)"
-
-#: contents/ui/config/ConfigGeneral.qml:493
-msgid "Colour R:"
-msgstr "Colore R:"
-
-#: contents/ui/config/ConfigGeneral.qml:499
-msgid "Colour G:"
-msgstr "Colore G:"
-
-#: contents/ui/config/ConfigGeneral.qml:505
-msgid "Colour B:"
-msgstr "Colore B:"
-
-#: contents/ui/config/ConfigGeneral.qml:511
-msgid "Gradient top mul:"
-msgstr "Moltiplicatore gradiente alto:"
-
-#: contents/ui/config/ConfigGeneral.qml:517
-msgid "Gradient bottom mul:"
-msgstr "Moltiplicatore gradiente basso:"
-
-#: contents/ui/config/ConfigGeneral.qml:530
-msgid "Particles"
-msgstr "Particelle"
-
-#: contents/ui/config/ConfigGeneral.qml:536
-msgid "Particles:"
-msgstr "Particelle:"
-
-#: contents/ui/config/ConfigGeneral.qml:537
-msgid "Enabled"
-msgstr "Attive"
-
-#: contents/ui/config/ConfigGeneral.qml:541
-msgid "Count:"
-msgstr "Quantità:"
-
-#: contents/ui/config/ConfigGeneral.qml:547
-msgid "Opacity:"
-msgstr "Opacità:"
-
-#: contents/ui/config/ConfigGeneral.qml:566
+#: contents/ui/config/ConfigGeneral.qml:236
 msgid "Sounds"
 msgstr "Suoni"
 
-#: contents/ui/config/ConfigGeneral.qml:572
+#: contents/ui/config/ConfigGeneral.qml:242
 msgid "Navigation tick:"
 msgstr "Suono di navigazione:"
 
-#: contents/ui/config/ConfigGeneral.qml:574
-#: contents/ui/config/ConfigGeneral.qml:605
+#: contents/ui/config/ConfigGeneral.qml:244
+#: contents/ui/config/ConfigGeneral.qml:275
 msgid "XMB (default)"
 msgstr "XMB (predefinito)"
 
-#: contents/ui/config/ConfigGeneral.qml:574
-#: contents/ui/config/ConfigGeneral.qml:605
+#: contents/ui/config/ConfigGeneral.qml:244
+#: contents/ui/config/ConfigGeneral.qml:275
 msgid "Custom file…"
 msgstr "File personalizzato…"
 
-#: contents/ui/config/ConfigGeneral.qml:574
-#: contents/ui/config/ConfigGeneral.qml:605
+#: contents/ui/config/ConfigGeneral.qml:244
+#: contents/ui/config/ConfigGeneral.qml:275
 msgid "Off"
 msgstr "Disattivato"
 
-#: contents/ui/config/ConfigGeneral.qml:579
+#: contents/ui/config/ConfigGeneral.qml:249
 msgid "Custom sound file:"
 msgstr "File audio personalizzato:"
 
-#: contents/ui/config/ConfigGeneral.qml:582
+#: contents/ui/config/ConfigGeneral.qml:252
 msgid "/path/to/sound.wav or .mp3"
 msgstr "/percorso/del/suono.wav o .mp3"
 
-#: contents/ui/config/ConfigGeneral.qml:589
+#: contents/ui/config/ConfigGeneral.qml:259
 msgid ""
 "The original PS3 sound is not bundled (Sony copyright). Point this at your "
 "own local copy. WAV gives the lowest latency."
@@ -352,24 +167,24 @@ msgstr ""
 "Il suono originale della PS3 non è incluso (copyright Sony). Indica qui una "
 "tua copia locale. Il formato WAV ha la latenza più bassa."
 
-#: contents/ui/config/ConfigGeneral.qml:593
-#: contents/ui/config/ConfigGeneral.qml:624
+#: contents/ui/config/ConfigGeneral.qml:263
+#: contents/ui/config/ConfigGeneral.qml:294
 msgid "Volume:"
 msgstr "Volume:"
 
-#: contents/ui/config/ConfigGeneral.qml:603
+#: contents/ui/config/ConfigGeneral.qml:273
 msgid "Background ambience:"
 msgstr "Ambiente di sottofondo:"
 
-#: contents/ui/config/ConfigGeneral.qml:610
+#: contents/ui/config/ConfigGeneral.qml:280
 msgid "Custom ambience file:"
 msgstr "File dell'ambiente personalizzato:"
 
-#: contents/ui/config/ConfigGeneral.qml:613
+#: contents/ui/config/ConfigGeneral.qml:283
 msgid "/path/to/loop.wav or .mp3"
 msgstr "/percorso/del/loop.wav o .mp3"
 
-#: contents/ui/config/ConfigGeneral.qml:620
+#: contents/ui/config/ConfigGeneral.qml:290
 msgid ""
 "The file loops while the dashboard is open. WAV loops gaplessly; mp3/ogg may "
 "have a small seam at the loop point."
@@ -378,89 +193,85 @@ msgstr ""
 "senza interruzioni; mp3/ogg possono avere un piccolo stacco al punto di "
 "ripetizione."
 
-#: contents/ui/config/ConfigGeneral.qml:637
+#: contents/ui/config/ConfigGeneral.qml:307
 msgid "Visible categories"
 msgstr "Categorie visibili"
 
-#: contents/ui/config/ConfigGeneral.qml:670
+#: contents/ui/config/ConfigGeneral.qml:340
 msgid "Show all categories"
 msgstr "Mostra tutte le categorie"
 
-#: contents/ui/HomeOverlay.qml:135
+#: contents/ui/HomeOverlay.qml:148
 msgid "Home"
 msgstr "Home"
 
-#: contents/ui/HomeOverlay.qml:136
+#: contents/ui/HomeOverlay.qml:149
 msgid "Back to XMB"
 msgstr "Torna alla XMB"
 
-#: contents/ui/HomeOverlay.qml:138
+#: contents/ui/HomeOverlay.qml:151
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: contents/ui/HomeOverlay.qml:140
+#: contents/ui/HomeOverlay.qml:153
 msgid "No open apps"
 msgstr "Nessuna app aperta"
 
-#: contents/ui/HomeOverlay.qml:142
+#: contents/ui/HomeOverlay.qml:155
 msgid "Power"
 msgstr "Alimentazione"
 
-#: contents/ui/HomeOverlay.qml:143 contents/ui/XmbTopBar.qml:109
+#: contents/ui/HomeOverlay.qml:156 contents/ui/XmbTopBar.qml:109
 msgid "Sleep"
 msgstr "Sospendi"
 
-#: contents/ui/HomeOverlay.qml:144
+#: contents/ui/HomeOverlay.qml:157
 msgid "Hibernate"
 msgstr "Ibernazione"
 
-#: contents/ui/HomeOverlay.qml:145 contents/ui/XmbTopBar.qml:110
+#: contents/ui/HomeOverlay.qml:158 contents/ui/XmbTopBar.qml:110
 msgid "Restart"
 msgstr "Riavvia"
 
-#: contents/ui/HomeOverlay.qml:146 contents/ui/XmbTopBar.qml:111
+#: contents/ui/HomeOverlay.qml:159 contents/ui/XmbTopBar.qml:111
 msgid "Shut down"
 msgstr "Spegni"
 
-#: contents/ui/HomeOverlay.qml:147 contents/ui/XmbTopBar.qml:108
+#: contents/ui/HomeOverlay.qml:160 contents/ui/XmbTopBar.qml:108
 msgid "Log out"
 msgstr "Esci"
 
-#: contents/ui/HomeOverlay.qml:148
+#: contents/ui/HomeOverlay.qml:161
 msgid "Switch user"
 msgstr "Cambia utente"
 
-#: contents/ui/HomeOverlay.qml:149 contents/ui/XmbTopBar.qml:107
+#: contents/ui/HomeOverlay.qml:162 contents/ui/XmbTopBar.qml:107
 msgid "Lock"
 msgstr "Blocca"
 
-#: contents/ui/HomeOverlay.qml:151 contents/ui/XmbQuickSettings.qml:135
+#: contents/ui/HomeOverlay.qml:164 contents/ui/XmbQuickSettings.qml:135
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: contents/ui/HomeOverlay.qml:152 contents/ui/HomeOverlay.qml:153
+#: contents/ui/HomeOverlay.qml:165 contents/ui/HomeOverlay.qml:166
 #: contents/ui/XmbQuickSettings.qml:110
 msgid "Volume"
 msgstr "Volume"
 
-#: contents/ui/HomeOverlay.qml:154 contents/ui/HomeOverlay.qml:155
+#: contents/ui/HomeOverlay.qml:167 contents/ui/HomeOverlay.qml:168
 #: contents/ui/XmbQuickSettings.qml:91
 msgid "Brightness"
 msgstr "Luminosità"
 
-#: contents/ui/HomeOverlay.qml:156 contents/ui/XmbQuickSettings.qml:129
+#: contents/ui/HomeOverlay.qml:169 contents/ui/XmbQuickSettings.qml:129
 msgid "Network"
 msgstr "Rete"
 
-#: contents/ui/HomeOverlay.qml:157
+#: contents/ui/HomeOverlay.qml:170
 msgid "Audio device"
 msgstr "Dispositivo audio"
 
-#: contents/ui/HomeOverlay.qml:158
-msgid "System settings"
-msgstr "Impostazioni di sistema"
-
-#: contents/ui/HomeOverlay.qml:159
+#: contents/ui/HomeOverlay.qml:171
 msgid "XMB settings"
 msgstr "Impostazioni XMB"
 
@@ -487,6 +298,144 @@ msgstr "Un'applicazione sta usando il controller"
 #: contents/ui/main.qml:93
 msgid "Controller back to the system"
 msgstr "Controller di nuovo al sistema"
+
+#~ msgid "Category bar (mouse)"
+#~ msgstr "Barra delle categorie (mouse)"
+
+#~ msgid "Left hot-zone width:"
+#~ msgstr "Larghezza zona attiva sinistra:"
+
+#~ msgid "Right hot-zone width:"
+#~ msgstr "Larghezza zona attiva destra:"
+
+#~ msgid "Hot-zone band height (px):"
+#~ msgstr "Altezza banda zone attive (px):"
+
+#~ msgid "Min scroll speed (px/s):"
+#~ msgstr "Velocità minima di scorrimento (px/s):"
+
+#~ msgid "Max scroll speed (px/s):"
+#~ msgstr "Velocità massima di scorrimento (px/s):"
+
+#~ msgid "Snap animation (ms):"
+#~ msgstr "Animazione di aggancio (ms):"
+
+#~ msgid "Magnetic glue strength:"
+#~ msgstr "Forza dell'aggancio magnetico:"
+
+#~ msgid "Wave background"
+#~ msgstr "Sfondo a onde"
+
+#~ msgid "Flow speed:"
+#~ msgstr "Velocità del flusso:"
+
+#~ msgid "Band amplitude:"
+#~ msgstr "Ampiezza della banda:"
+
+#~ msgid "Wave height:"
+#~ msgstr "Altezza delle onde:"
+
+#~ msgid "Soft clip:"
+#~ msgstr "Soft clip:"
+
+#~ msgid "Tension:"
+#~ msgstr "Tensione:"
+
+#~ msgid "Fresnel power:"
+#~ msgstr "Potenza Fresnel:"
+
+#~ msgid "Fresnel scale:"
+#~ msgstr "Scala Fresnel:"
+
+#~ msgid "Wave opacity:"
+#~ msgstr "Opacità delle onde:"
+
+#~ msgid "Brightness:"
+#~ msgstr "Luminosità:"
+
+#~ msgid "Wave detail (rows):"
+#~ msgstr "Dettaglio delle onde (righe):"
+
+#~ msgid "Wave colour"
+#~ msgstr "Colore delle onde"
+
+#~ msgid "Colour preset:"
+#~ msgstr "Colore predefinito:"
+
+#~ msgid "Automatic (current month)"
+#~ msgstr "Automatico (mese corrente)"
+
+#~ msgid "January"
+#~ msgstr "Gennaio"
+
+#~ msgid "February"
+#~ msgstr "Febbraio"
+
+#~ msgid "March"
+#~ msgstr "Marzo"
+
+#~ msgid "April"
+#~ msgstr "Aprile"
+
+#~ msgid "May"
+#~ msgstr "Maggio"
+
+#~ msgid "June"
+#~ msgstr "Giugno"
+
+#~ msgid "July"
+#~ msgstr "Luglio"
+
+#~ msgid "August"
+#~ msgstr "Agosto"
+
+#~ msgid "September"
+#~ msgstr "Settembre"
+
+#~ msgid "October"
+#~ msgstr "Ottobre"
+
+#~ msgid "November"
+#~ msgstr "Novembre"
+
+#~ msgid "December"
+#~ msgstr "Dicembre"
+
+#~ msgid "Custom colour (RGB)"
+#~ msgstr "Colore personalizzato (RGB)"
+
+#~ msgid "Colour R:"
+#~ msgstr "Colore R:"
+
+#~ msgid "Colour G:"
+#~ msgstr "Colore G:"
+
+#~ msgid "Colour B:"
+#~ msgstr "Colore B:"
+
+#~ msgid "Gradient top mul:"
+#~ msgstr "Moltiplicatore gradiente alto:"
+
+#~ msgid "Gradient bottom mul:"
+#~ msgstr "Moltiplicatore gradiente basso:"
+
+#~ msgid "Particles"
+#~ msgstr "Particelle"
+
+#~ msgid "Particles:"
+#~ msgstr "Particelle:"
+
+#~ msgid "Enabled"
+#~ msgstr "Attive"
+
+#~ msgid "Count:"
+#~ msgstr "Quantità:"
+
+#~ msgid "Opacity:"
+#~ msgstr "Opacità:"
+
+#~ msgid "System settings"
+#~ msgstr "Impostazioni di sistema"
 
 #~ msgid "Open apps"
 #~ msgstr "App aperte"
