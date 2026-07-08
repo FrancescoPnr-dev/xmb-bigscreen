@@ -5,7 +5,6 @@ import QtQuick
 import QtQuick.Effects
 import QtMultimedia
 import org.kde.plasma.private.kicker as Kicker
-import org.kde.plasma.plasma5support as P5Support
 import org.kde.kitemmodels as KItemModels
 import "i18n-catalogs.js" as Catalogs
 
@@ -78,75 +77,6 @@ Item {
     property int clockTimeFormat: 0
     property int clockDateFormat: 0
     property bool clockShowDate: true
-
-    // "" = system icon theme; otherwise icons are resolved by name against this theme's
-    // files only inside the XMB, leaving the session and desktop themes untouched.
-    property string iconTheme: ""
-    property var iconMap: null
-    property int iconMapTick: 0
-    property bool iconThemeMonochrome: false
-    onIconThemeChanged: rescanIconTheme()
-
-    function resolveIcon(src, tick) {
-        if (!iconMap || typeof src !== "string" || src === "")
-            return src
-        var p = iconMap[src]
-        return p ? "file://" + p : src
-    }
-
-    function rescanIconTheme() {
-        var t = iconTheme.replace(/[^A-Za-z0-9_.@ -]/g, "")
-        if (t === "") {
-            iconMap = null
-            iconThemeMonochrome = false
-            iconMapTick++
-            return
-        }
-        var d1 = "\"$HOME/.local/share/icons/" + t + "\""
-        var d2 = "\"/usr/share/icons/" + t + "\""
-        // A theme is a white-mask theme when its app icons are drawn with
-        // fill="currentColor" (YAMIS) rather than baked-in colours (WhiteSur, Oxygen).
-        // Sample real SVGs instead of trusting the unreliable FollowsColorScheme flag.
-        iconScan.connectSource(
-            "smp=$(find -L " + d1 + " " + d2 + " -type d -name apps 2>/dev/null | head -4 | "
-          + "xargs -I{} find -L {} -type f -name '*.svg' 2>/dev/null | head -16); "
-          + "[ -z \"$smp\" ] && smp=$(find -L " + d1 + " " + d2 + " -type f -name '*.svg' 2>/dev/null | head -16); "
-          + "n=$(printf '%s\\n' \"$smp\" | grep -c .); "
-          + "cc=$(printf '%s\\n' \"$smp\" | grep . | xargs grep -li currentColor 2>/dev/null | wc -l); "
-          + "m=0; [ \"$n\" -gt 0 ] && [ \"$cc\" -gt $((n/2)) ] && m=1; echo \"MONO=$m\"; "
-          + "find -L " + d1 + " " + d2 + " -type f \\( -name '*.svg' -o -name '*.svgz' -o -name '*.png' \\) 2>/dev/null")
-    }
-
-    P5Support.DataSource {
-        id: iconScan
-        engine: "executable"
-        onNewData: (src, data) => {
-            iconScan.disconnectSource(src)
-            var map = {}
-            var rank = {}
-            var mono = false
-            var lines = ((data["stdout"] || "") + "").split("\n")
-            for (var i = 0; i < lines.length; i++) {
-                var path = lines[i].trim()
-                if (path === "")
-                    continue
-                if (path.indexOf("MONO=") === 0) {
-                    mono = path === "MONO=1"
-                    continue
-                }
-                var base = path.slice(path.lastIndexOf("/") + 1).replace(/\.(svg|svgz|png)$/, "")
-                // Prefer scalable variants over fixed-size ones.
-                var r = path.indexOf("/scalable") !== -1 ? 0 : 1
-                if (!(base in map) || r < rank[base]) {
-                    map[base] = path
-                    rank[base] = r
-                }
-            }
-            dashboard.iconMap = map
-            dashboard.iconThemeMonochrome = mono
-            dashboard.iconMapTick++
-        }
-    }
 
     property int topBarPosition: 0
 
@@ -415,9 +345,6 @@ Item {
             intersectionX: content.interX
             iconSize: dashboard.categoryIconSize
             model: dashboard.categories
-            iconResolver: dashboard.resolveIcon
-            iconResolverTick: dashboard.iconMapTick
-            iconMonochrome: dashboard.iconThemeMonochrome
             z: 1
 
             pointerX: pointerTracker.point.position.x
@@ -448,9 +375,6 @@ Item {
             categoryCenterY: content.barCenterY
             categoryIconSize: dashboard.categoryIconSize
             model: dashboard.appsModel
-            iconResolver: dashboard.resolveIcon
-            iconResolverTick: dashboard.iconMapTick
-            iconMonochrome: dashboard.iconThemeMonochrome
             z: 2
             // Wheel adjusts the top bar's quick settings when hovering it, not the apps.
             wheelLocked: topBar.contentHovered

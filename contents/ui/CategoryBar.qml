@@ -41,10 +41,6 @@ Item {
     property real hotZoneFractionLeft: 0.15
     property real hotZoneFractionRight: 0.15
 
-    // Optional name→file resolver for the user-selected icon theme; the tick re-runs bindings.
-    property var iconResolver: null
-    property int iconResolverTick: 0
-    property bool iconMonochrome: false
     property real minScrollSpeed: 150       // px/s just inside the threshold
     property real maxScrollSpeed: 2600      // px/s at the extreme edge
     property int  snapDuration: 220         // ms, glide/snap animation
@@ -159,8 +155,7 @@ Item {
                 labelBelow: true
                 interactive: false        // categories are navigated via hot zones / keyboard
                 iconSize: bar.iconSize
-                iconSource: bar.iconResolver ? bar.iconResolver(modelData.icon, bar.iconResolverTick) : modelData.icon
-                iconMonochrome: bar.iconMonochrome
+                iconSource: modelData.icon
                 label: modelData.name
                 selected: index === bar.currentIndex
                 neighbourDistance: Math.abs(index - bar.position)   // fractional => smooth fade

@@ -15,7 +15,6 @@ ContainmentItem {
         anchors.fill: parent
         appletInterface: root
         favorites: Plasmoid.configuration.favorites
-        iconTheme: Plasmoid.configuration.iconTheme
         backgroundOpacity: Plasmoid.configuration.backgroundOpacity
         categoryIconSize: Plasmoid.configuration.categoryIconSize
         appIconSize: Plasmoid.configuration.appIconSize

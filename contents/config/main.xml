@@ -16,12 +16,6 @@ SPDX-License-Identifier: GPL-3.0-only
             <default>1.0</default>
         </entry>
 
-        <!-- Icon theme (directory name under ~/.local/share/icons or /usr/share/icons)
-             used for XMB category/app icons only; "" = system theme. -->
-        <entry name="iconTheme" type="String">
-            <default></default>
-        </entry>
-
         <!-- Icon size (px) of the selected category on the horizontal bar. -->
         <entry name="categoryIconSize" type="Int">
             <default>112</default>
