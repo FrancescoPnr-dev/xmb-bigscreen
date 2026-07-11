@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 00:48+0200\n"
+"POT-Creation-Date: 2026-07-12 00:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: contents/config/config.qml:17 contents/ui/Dashboard.qml:247
+#: contents/config/config.qml:17 contents/ui/Dashboard.qml:249
 msgid "Favorites"
 msgstr ""
 
@@ -37,265 +37,239 @@ msgstr ""
 msgid "No applications found."
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:95
+#: contents/ui/config/ConfigGeneral.qml:93
 msgid "Appearance"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:100
+#: contents/ui/config/ConfigGeneral.qml:98
 msgid "Background opacity:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:115
+#: contents/ui/config/ConfigGeneral.qml:113
 msgid "Category icon size (px):"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:121
+#: contents/ui/config/ConfigGeneral.qml:119
 msgid "App icon size (px):"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:126
+#: contents/ui/config/ConfigGeneral.qml:124
 msgid "Cross position (from left):"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:140
-#: contents/ui/config/ConfigGeneral.qml:188
-#: contents/ui/config/ConfigGeneral.qml:271
+#: contents/ui/config/ConfigGeneral.qml:138
+#: contents/ui/config/ConfigGeneral.qml:186
+#: contents/ui/config/ConfigGeneral.qml:257
 msgid "Reset section to defaults"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:146
+#: contents/ui/config/ConfigGeneral.qml:144
 msgid "Language"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:152
+#: contents/ui/config/ConfigGeneral.qml:150
 msgid "Language:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:155
-#: contents/ui/config/ConfigGeneral.qml:172
-#: contents/ui/config/ConfigGeneral.qml:179
+#: contents/ui/config/ConfigGeneral.qml:153
+#: contents/ui/config/ConfigGeneral.qml:170
+#: contents/ui/config/ConfigGeneral.qml:177
 msgid "System"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:164
+#: contents/ui/config/ConfigGeneral.qml:162
 msgid "Clock"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:170
+#: contents/ui/config/ConfigGeneral.qml:168
 msgid "Time format:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:172
+#: contents/ui/config/ConfigGeneral.qml:170
 msgid "12-hour"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:172
+#: contents/ui/config/ConfigGeneral.qml:170
 msgid "24-hour"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:177
+#: contents/ui/config/ConfigGeneral.qml:175
 msgid "Date format:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:179
+#: contents/ui/config/ConfigGeneral.qml:177
 msgid "Day/month"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:179
+#: contents/ui/config/ConfigGeneral.qml:177
 msgid "Month/day"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:184
+#: contents/ui/config/ConfigGeneral.qml:182
 msgid "Show date:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:194
-msgid "Behaviour"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:200
-msgid "Bar reveal:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:202
-msgid "Top edge"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:202
-msgid "Bottom edge"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:206
+#: contents/ui/config/ConfigGeneral.qml:192
 msgid "Sounds"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:212
+#: contents/ui/config/ConfigGeneral.qml:198
 msgid "Navigation tick:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:214
-#: contents/ui/config/ConfigGeneral.qml:245
+#: contents/ui/config/ConfigGeneral.qml:200
+#: contents/ui/config/ConfigGeneral.qml:231
 msgid "XMB (default)"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:214
-#: contents/ui/config/ConfigGeneral.qml:245
+#: contents/ui/config/ConfigGeneral.qml:200
+#: contents/ui/config/ConfigGeneral.qml:231
 msgid "Custom file…"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:214
-#: contents/ui/config/ConfigGeneral.qml:245
+#: contents/ui/config/ConfigGeneral.qml:200
+#: contents/ui/config/ConfigGeneral.qml:231
 msgid "Off"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:219
+#: contents/ui/config/ConfigGeneral.qml:205
 msgid "Custom sound file:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:222
+#: contents/ui/config/ConfigGeneral.qml:208
 msgid "/path/to/sound.wav or .mp3"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:229
+#: contents/ui/config/ConfigGeneral.qml:215
 msgid ""
 "The original PS3 sound is not bundled (Sony copyright). Point this at your "
 "own local copy. WAV gives the lowest latency."
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:233
-#: contents/ui/config/ConfigGeneral.qml:264
+#: contents/ui/config/ConfigGeneral.qml:219
+#: contents/ui/config/ConfigGeneral.qml:250
 msgid "Volume:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:243
+#: contents/ui/config/ConfigGeneral.qml:229
 msgid "Background ambience:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:250
+#: contents/ui/config/ConfigGeneral.qml:236
 msgid "Custom ambience file:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:253
+#: contents/ui/config/ConfigGeneral.qml:239
 msgid "/path/to/loop.wav or .mp3"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:260
+#: contents/ui/config/ConfigGeneral.qml:246
 msgid ""
 "The file loops while the dashboard is open. WAV loops gaplessly; mp3/ogg may "
 "have a small seam at the loop point."
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:277
+#: contents/ui/config/ConfigGeneral.qml:263
 msgid "Visible categories"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:310
+#: contents/ui/config/ConfigGeneral.qml:296
 msgid "Show all categories"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:97
-msgid "Home"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:98
-msgid "Back to XMB"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:100
-msgid "Applications"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:102
-msgid "No open apps"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:104
+#: contents/ui/HomeOverlay.qml:110
 msgid "Power"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:105 contents/ui/XmbTopBar.qml:109
-msgid "Sleep"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:106
-msgid "Hibernate"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:107 contents/ui/XmbTopBar.qml:110
-msgid "Restart"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:108 contents/ui/XmbTopBar.qml:111
-msgid "Shut down"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:109 contents/ui/XmbTopBar.qml:108
-msgid "Log out"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:110
-msgid "Switch user"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:111 contents/ui/XmbTopBar.qml:107
-msgid "Lock"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:112
-msgid "Exit to desktop"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:114 contents/ui/XmbQuickSettings.qml:93
-msgid "Settings"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:115 contents/ui/HomeOverlay.qml:116
-#: contents/ui/XmbQuickSettings.qml:68
-msgid "Volume"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:117 contents/ui/HomeOverlay.qml:118
-#: contents/ui/XmbQuickSettings.qml:49
+#: contents/ui/HomeOverlay.qml:111
 msgid "Brightness"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:119 contents/ui/XmbQuickSettings.qml:87
+#: contents/ui/HomeOverlay.qml:112
+msgid "Volume"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:113
 msgid "Network"
 msgstr ""
 
+#: contents/ui/HomeOverlay.qml:114
+msgid "Settings"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:117
+msgid "Back to XMB"
+msgstr ""
+
 #: contents/ui/HomeOverlay.qml:120
-msgid "Audio device"
+msgid "Sleep"
 msgstr ""
 
 #: contents/ui/HomeOverlay.qml:121
-msgid "All settings"
+msgid "Hibernate"
 msgstr ""
 
 #: contents/ui/HomeOverlay.qml:122
+msgid "Restart"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:123
+msgid "Shut down"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:124
+msgid "Log out"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:125
+msgid "Switch user"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:126
+msgid "Lock"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:127
+msgid "Exit to desktop"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:130
+msgid "Audio device"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:131
+msgid "All settings"
+msgstr ""
+
+#: contents/ui/HomeOverlay.qml:132
 msgid "XMB settings"
 msgstr ""
 
-#: contents/ui/main.qml:90
-msgid "Controller connected: %1"
-msgstr ""
-
-#: contents/ui/main.qml:91
-msgid "Controller disconnected: %1"
-msgstr ""
-
-#: contents/ui/main.qml:92
-msgid "Remote connected: %1"
+#: contents/ui/HomeOverlay.qml:150
+msgid "Open"
 msgstr ""
 
 #: contents/ui/main.qml:93
+msgid "Controller connected: %1"
+msgstr ""
+
+#: contents/ui/main.qml:94
+msgid "Controller disconnected: %1"
+msgstr ""
+
+#: contents/ui/main.qml:95
+msgid "Remote connected: %1"
+msgstr ""
+
+#: contents/ui/main.qml:96
 msgid "Remote disconnected: %1"
 msgstr ""
 
-#: contents/ui/main.qml:97
+#: contents/ui/main.qml:100
 msgid "An application is using the controller"
 msgstr ""
 
-#: contents/ui/main.qml:97
+#: contents/ui/main.qml:100
 msgid "Controller back to the system"
 msgstr ""
 
