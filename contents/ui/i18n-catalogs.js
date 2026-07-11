@@ -60,6 +60,7 @@ var catalogs = {
   "All settings": "Tutte le impostazioni",
   "XMB settings": "Impostazioni XMB",
   "Open": "Apri",
+  "No open apps": "Nessuna app aperta",
   "Close": "Chiudi",
   "Controller connected: %1": "Controller connesso: %1",
   "Controller disconnected: %1": "Controller disconnesso: %1",
