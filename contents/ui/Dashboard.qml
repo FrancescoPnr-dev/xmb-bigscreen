@@ -78,7 +78,9 @@ Item {
     property int clockDateFormat: 0
     property bool clockShowDate: true
 
-    property int topBarPosition: 0
+    // Set by main.qml: the system overlay's visibility, and the request to open it.
+    property bool overlayActive: false
+    signal overlayRequested()
 
     // "" = system language; otherwise a code from the bundled catalogs.
     property string uiLanguage: ""
@@ -308,8 +310,8 @@ Item {
         anchors.fill: parent
         focus: true
 
-        // Light blur over the cross while search/top bar is active; layer off when idle for no cost.
-        readonly property bool blurWanted: searchOverlay.active || topBar.powerExpanded || topBar.contentHovered
+        // Light blur over the cross while search or the system overlay is up; layer off when idle.
+        readonly property bool blurWanted: searchOverlay.active || dashboard.overlayActive
         property real blurAmt: blurWanted ? 0.45 : 0.0
         Behavior on blurAmt { NumberAnimation { duration: 260; easing.type: Easing.InOutQuad } }
         layer.enabled: blurAmt > 0.001
@@ -377,8 +379,6 @@ Item {
             categoryIconSize: dashboard.categoryIconSize
             model: dashboard.appsModel
             z: 2
-            // Wheel adjusts the top bar's quick settings when hovering it, not the apps.
-            wheelLocked: topBar.contentHovered
             // The favourites proxy has no trigger() — launch via the source model.
             launchHandler: (dashboard.currentCategory && dashboard.currentCategory.favorites)
                 ? function(idx) {
@@ -409,7 +409,7 @@ Item {
         }
 
         WheelHandler {
-            enabled: !searchOverlay.active && !topBar.contentHovered
+            enabled: !searchOverlay.active
             acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
             // Step one app per full notch (120) so hi-res/touchpad deltas don't miscount.
             property real accumY: 0
@@ -437,14 +437,17 @@ Item {
         showDate: dashboard.clockShowDate
     }
 
-    // Top-edge reveal system bar, independent of Plasma's screen edges.
-    XmbTopBar {
-        id: topBar
-        anchors.fill: parent
+    // Top-edge hover opens the system overlay, the mouse counterpart of the PS button.
+    Item {
+        y: 0
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 8
         z: 90
-        system: dashboard.system
-        atBottom: dashboard.topBarPosition === 1
-        translate: dashboard.tr
+        HoverHandler {
+            enabled: !searchOverlay.active && !dashboard.overlayActive
+            onHoveredChanged: if (hovered) dashboard.overlayRequested()
+        }
     }
 
     XmbSearch {

@@ -69,8 +69,10 @@ ContainmentItem {
         clockDateFormat: Plasmoid.configuration.clockDateFormat
         clockShowDate: Plasmoid.configuration.clockShowDate
 
-        topBarPosition: Plasmoid.configuration.topBarPosition
         uiLanguage: Plasmoid.configuration.language
+
+        overlayActive: homeOverlay.visible
+        onOverlayRequested: homeOverlay.showOverlay()
     }
 
     HomeOverlay {
@@ -81,9 +83,10 @@ ContainmentItem {
         onConfigRequested: Plasmoid.internalAction("configure").trigger()
     }
 
-    // Home button (controller PS/Guide or remote) and the Meta key raise the app switcher; Back closes it.
+    // Home button (controller PS/Guide or remote) and the Meta key raise the system
+    // band; Back closes its drop-down first, then the band.
     Plasmoid.onActivated: homeOverlay.toggle()
-    Bigscreen.BackHandler.onActivated: homeOverlay.hideOverlay()
+    Bigscreen.BackHandler.onActivated: homeOverlay.back()
     Connections {
         target: ControllerHandler.ControllerHandlerStatus
         function onHomeActionRequested() { homeOverlay.toggle() }

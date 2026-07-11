@@ -43,11 +43,6 @@ SPDX-License-Identifier: GPL-3.0-only
             <default>true</default>
         </entry>
 
-        <!-- Reveal bar edge: 0 = top, 1 = bottom. -->
-        <entry name="topBarPosition" type="Int">
-            <default>0</default>
-        </entry>
-
         <!-- Dashboard language override; empty = system language. -->
         <entry name="language" type="String">
             <default></default>

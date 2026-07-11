@@ -18,7 +18,6 @@ KCM.SimpleKCM {
     property alias cfg_categoryIconSize: categorySizeSpin.value
     property alias cfg_appIconSize: appSizeSpin.value
     property alias cfg_intersectionXFraction: intersectionSlider.value
-    property alias cfg_topBarPosition: barRevealCombo.currentIndex
     property string cfg_language
     property alias cfg_clockTimeFormat: clockFormatCombo.currentIndex
     property alias cfg_clockDateFormat: clockDateFormatCombo.currentIndex
@@ -55,7 +54,6 @@ KCM.SimpleKCM {
     property int  cfg_categoryIconSizeDefault: 112
     property int  cfg_appIconSizeDefault: 56
     property real cfg_intersectionXFractionDefault: 0.30
-    property int  cfg_topBarPositionDefault: 0
     property string cfg_languageDefault: ""
     property int  cfg_clockTimeFormatDefault: 0
     property int  cfg_clockDateFormatDefault: 0
@@ -188,18 +186,6 @@ KCM.SimpleKCM {
             text: i18n("Reset section to defaults")
             icon.name: "edit-undo"
             onClicked: page.resetClock()
-        }
-
-        Kirigami.Separator {
-            Kirigami.FormData.label: i18n("Behaviour")
-            Kirigami.FormData.isSection: true
-        }
-
-        QQC2.ComboBox {
-            id: barRevealCombo
-            Kirigami.FormData.label: i18n("Bar reveal:")
-            Layout.preferredWidth: page.controlWidth
-            model: [i18n("Top edge"), i18n("Bottom edge")]
         }
 
         Kirigami.Separator {
