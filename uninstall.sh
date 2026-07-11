@@ -15,6 +15,8 @@ rm -rf "$PREFIX/share/plasma/plasmoids/org.kde.plasma.xmbbigscreen"
 rm -rf "$PREFIX/share/plasma/shells/org.kde.plasma.xmbbigscreen"
 rm -f  "$PREFIX/bin/plasma-xmbbigscreen-wayland"
 rm -f  "$PREFIX/share/wayland-sessions/plasma-xmbbigscreen-wayland.desktop"
+rm -f  "$PREFIX/bin/xmb-bigscreen-stick-swap"
+rm -rf "$PREFIX/lib/systemd/user/app-org.kde.plasma.bigscreen.inputhandler@.service.d"
 
 [ -n "${SUDO_USER:-}" ] && sudo -u "$SUDO_USER" kbuildsycoca6 >/dev/null 2>&1 || true
 

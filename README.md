@@ -34,7 +34,8 @@ background, type-to-search and subtle sounds.
 
 ## Requirements
 
-- KDE Plasma 6 (6.7+ for native controller support), any distribution.
+- KDE Plasma 6.7+ with **plasma-bigscreen** installed (XMB BigScreen reuses its
+  session backend: controller/remote input, TV settings modules, environment).
 - Qt6 Multimedia QML module, used for the sounds. Most distros ship it with
   Plasma; if not: `qt6-multimedia` (Arch/Solus), `qml6-module-qtmultimedia`
   (Debian/Ubuntu), `qt6-qtmultimedia` (Fedora/openSUSE).
@@ -46,41 +47,50 @@ background, type-to-search and subtle sounds.
 > Colors & Themes → Icons*. XMB BigScreen is designed around its clean adaptive
 > look, and the whole cross stays visually coherent. (Thanks DIRN, awesome set) 
 
-From the folder containing `metadata.json`:
-
 ```bash
-# install
-kpackagetool6 --type Plasma/Applet --install .
-# update after changes
-kpackagetool6 --type Plasma/Applet --upgrade .
-# remove
-kpackagetool6 --type Plasma/Applet --remove org.kde.plasma.xmbbigscreen
+sudo ./install.sh     # remove with: sudo ./uninstall.sh
 ```
 
-Then add it from *Add Widgets…* and click its panel icon to open the dashboard.
-For quick iteration during development, `plasmoidviewer --applet .` (from
-`plasma-sdk`) loads straight from source.
+Log out and pick **XMB BigScreen** at the login manager, next to your normal
+Plasma and Plasma Bigscreen sessions. The installer deploys the homescreen
+containment, a thin shell profile on top of Bigscreen's, the Wayland session,
+and the optional stick-swap tool.
 
 > **Note:** the `tools/` and `po/` folders are development sources only (sound
-> generators, translation files, packaging). They are not part of the installed
-> widget and nothing from them ever runs on your machine.
+> generators, translation files, packaging). Nothing from them ever runs on
+> your machine.
 
 ## Usage
 
-The widget is just a panel button: the XMB itself opens as a fullscreen
-overlay on top of your desktop, and closes with Esc — nothing sits on the
-desktop permanently.
+The XMB is the session's homescreen — always there, with apps launching on top.
 
-- **Arrows / wheel / screen edges** — move between apps and categories.
-- **Enter or left-click** the highlighted app, or **middle-click anywhere** — launch it.
+- **Arrows / D-pad / left stick / wheel / screen edges** — move between apps and categories.
+- **Enter / South button or left-click** the highlighted app, or **middle-click anywhere** — launch it.
 - **Start typing** — search; Enter or middle-click runs the top result.
-- **Esc or click empty space** — close.
+- **PS/Guide button or Meta** — home overlay over the running app: open apps,
+  power actions, volume/brightness, quick settings.
+- **Back / Esc** — close the overlay.
+
+### Swapping the analog sticks
+
+By default the Bigscreen input handler moves the mouse pointer with the **right**
+stick and navigates lists with the left. If you prefer the pointer on the left
+stick (and list scrolling plus L3-as-click accordingly):
+
+```bash
+xmb-bigscreen-stick-swap        # with the controller connected
+xmb-bigscreen-stick-swap --off  # back to the physical layout
+```
+
+Takes effect at the next XMB session login. Only the system input handler sees
+the swap — games keep the physical stick layout. Run it once per controller and
+connection type (USB and Bluetooth count as different controllers).
 
 ## Configuration
 
-Right-click the widget → *Configure*. Sections for appearance, behaviour, the
-mouse category bar, the wave background and colour, particles, sounds, and visible
-categories. Each section has its own "reset to defaults".
+From the home overlay pick *Settings → XMB settings*, or hover the top edge with
+a mouse. Sections for appearance, behaviour, the wave background and colour,
+sounds, and visible categories. Each section has its own "reset to defaults".
 
 <img width="3554" height="2069" alt="4" src="https://github.com/user-attachments/assets/c402e973-104d-451d-b1d1-cb7f422db742" />
 
