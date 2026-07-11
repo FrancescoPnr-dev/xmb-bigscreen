@@ -5,10 +5,9 @@
 // selected one. Home / open apps / power-session actions / quick settings.
 import QtQuick
 import QtQuick.Effects
-import org.kde.plasma.private.sessions as Sessions
-import org.kde.plasma.plasma5support as P5Support
 import org.kde.taskmanager as TaskManager
 import org.kde.layershell as LayerShell
+import org.kde.bigscreen as Bigscreen
 
 Window {
     id: overlay
@@ -24,7 +23,8 @@ Window {
     LayerShell.Window.keyboardInteractivity: LayerShell.Window.KeyboardInteractivityOnDemand
     LayerShell.Window.exclusionZone: -1
 
-    // Injected by main.qml so the overlay matches the dashboard's tick sound.
+    // Injected by main.qml: the shared backend gateway and the dashboard's tick sound.
+    property var system: null
     property url navTickSource: ""
     property real navTickVolume: 0.5
 
@@ -33,7 +33,6 @@ Window {
     function showOverlay() {
         visible = true
         overlay.requestActivate()
-        readSettings()
         currentCategoryIndex = 0
         itemList.currentIndex = 0
         content.forceActiveFocus()
@@ -45,7 +44,7 @@ Window {
         hideOverlay()
     }
 
-    Sessions.SessionManagement { id: session }
+    readonly property var session: system ? system.session : null
 
     TaskManager.TasksModel {
         id: tasksModel
@@ -86,75 +85,45 @@ Window {
         taskItems = arr
     }
 
-    // Volume/brightness read and step, same backends as the mouse reveal bar.
-    property int volPct: -1
-    property int briPct: -1
-    property int _briRaw: 0
-    property int _briMax: 0
-    readonly property string briBase: "org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement/Actions/BrightnessControl"
+    // Volume/brightness come reactive from the shared backend gateway.
+    readonly property int volPct: system ? system.volumePercent : -1
+    readonly property int briPct: system ? system.brightnessPercent : -1
 
-    P5Support.DataSource {
-        id: exec
-        engine: "executable"
-        onNewData: (src, data) => {
-            var out = ((data["stdout"] || "") + "").trim()
-            if (src.indexOf("get-volume") !== -1) {
-                var m = out.match(/([0-9]*\.?[0-9]+)/)
-                if (m) overlay.volPct = Math.round(parseFloat(m[1]) * 100)
-            } else if (src.indexOf("BRI_READ") !== -1) {
-                var p = out.replace("BRI_READ", "").trim().split(/\s+/)
-                if (p.length >= 2) {
-                    overlay._briRaw = parseInt(p[0]); overlay._briMax = parseInt(p[1])
-                    overlay.briPct = overlay._briMax > 0 ? Math.round(overlay._briRaw * 100 / overlay._briMax) : -1
-                }
-            }
-            exec.disconnectSource(src)
-        }
-    }
-    function run(c) { exec.connectSource(c) }
-    function readSettings() {
-        run("wpctl get-volume @DEFAULT_AUDIO_SINK@")
-        run("echo BRI_READ $(qdbus6 " + briBase + " brightness) $(qdbus6 " + briBase + " brightnessMax)")
-    }
-    Timer { id: volReread; interval: 120; onTriggered: overlay.run("wpctl get-volume @DEFAULT_AUDIO_SINK@") }
-    function volStep(up) {
-        run("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%" + (up ? "+" : "-"))
-        volReread.restart()
-    }
-    function briStep(up) {
-        if (_briMax <= 0) return
-        var step = Math.max(1, Math.round(_briMax * 0.05))
-        var v = Math.max(0, Math.min(_briMax, _briRaw + (up ? step : -step)))
-        _briRaw = v
-        briPct = Math.round(v * 100 / _briMax)
-        run("qdbus6 " + briBase + " setBrightnessSilent " + v)
+    // Native flow: hide the overlay, then shoot once it has faded out.
+    Timer {
+        id: screenshotTimer
+        interval: 500
+        onTriggered: Bigscreen.Global.takeScreenshot()
     }
 
     property int currentCategoryIndex: 0
     readonly property var categories: [
         { name: i18n("Home"), items: [
-            { act: "home", label: i18n("Back to XMB") }
+            { act: "home", label: i18n("Back to XMB") },
+            { act: "screenshot", label: i18n("Screenshot") }
         ]},
         { name: i18n("Applications"), items:
             taskItems.length > 0 ? taskItems
                                  : [{ act: "none", label: i18n("No open apps") }]
         },
         { name: i18n("Power"), items: [
-            { act: "suspend",    label: i18n("Sleep"),       on: session.canSuspend },
-            { act: "hibernate",  label: i18n("Hibernate"),   on: session.canHibernate },
-            { act: "reboot",     label: i18n("Restart"),     on: session.canReboot },
-            { act: "shutdown",   label: i18n("Shut down"),   on: session.canShutdown },
-            { act: "logout",     label: i18n("Log out"),     on: session.canLogout },
-            { act: "switchuser", label: i18n("Switch user"), on: session.canSwitchUser },
-            { act: "lock",       label: i18n("Lock"),        on: session.canLock }
+            { act: "suspend",    label: i18n("Sleep"),       on: session ? session.canSuspend : false },
+            { act: "hibernate",  label: i18n("Hibernate"),   on: session ? session.canHibernate : false },
+            { act: "reboot",     label: i18n("Restart"),     on: session ? session.canReboot : false },
+            { act: "shutdown",   label: i18n("Shut down"),   on: session ? session.canShutdown : false },
+            { act: "logout",     label: i18n("Log out"),     on: session ? session.canLogout : false },
+            { act: "switchuser", label: i18n("Switch user"), on: session ? session.canSwitchUser : false },
+            { act: "lock",       label: i18n("Lock"),        on: session ? session.canLock : false },
+            { act: "swapsession", label: i18n("Exit to desktop"), on: Bigscreen.Global.launchReason === "swap" }
         ].filter(a => a.on !== false)},
         { name: i18n("Settings"), items: [
-            { act: "volup",   label: i18n("Volume") + " +" },
-            { act: "voldown", label: i18n("Volume") + " −" },
-            { act: "briup",   label: i18n("Brightness") + " +", on: _briMax > 0 },
-            { act: "bridown", label: i18n("Brightness") + " −", on: _briMax > 0 },
+            { act: "volup",   label: i18n("Volume") + " +",     on: volPct >= 0 },
+            { act: "voldown", label: i18n("Volume") + " −",     on: volPct >= 0 },
+            { act: "briup",   label: i18n("Brightness") + " +", on: briPct >= 0 },
+            { act: "bridown", label: i18n("Brightness") + " −", on: briPct >= 0 },
             { act: "network",  label: i18n("Network") },
             { act: "audio",    label: i18n("Audio device") },
+            { act: "allsettings", label: i18n("All settings") },
             { act: "config",   label: i18n("XMB settings") }
         ].filter(a => a.on !== false)}
     ]
@@ -172,6 +141,7 @@ Window {
     function trigger(item) {
         switch (item.act) {
         case "home":       goHome(); return
+        case "screenshot": hideOverlay(); screenshotTimer.restart(); return
         case "task":       tasksModel.requestActivate(tasksModel.makeModelIndex(item.row)); hideOverlay(); return
         case "none":       return
         case "suspend":    session.suspend(); hideOverlay(); return
@@ -181,12 +151,14 @@ Window {
         case "logout":     session.requestLogout(); hideOverlay(); return
         case "switchuser": session.switchUser(); hideOverlay(); return
         case "lock":       session.lock(); hideOverlay(); return
-        case "volup":      volStep(true); tick.play(); return
-        case "voldown":    volStep(false); tick.play(); return
-        case "briup":      briStep(true); tick.play(); return
-        case "bridown":    briStep(false); tick.play(); return
-        case "network":    run("systemsettings kcm_mediacenter_wifi"); hideOverlay(); return
-        case "audio":      run("systemsettings kcm_mediacenter_audiodevice"); hideOverlay(); return
+        case "swapsession": Bigscreen.Global.swapSession(); hideOverlay(); return
+        case "volup":      system.volumeStep(true); tick.play(); return
+        case "voldown":    system.volumeStep(false); tick.play(); return
+        case "briup":      system.brightnessStep(true); tick.play(); return
+        case "bridown":    system.brightnessStep(false); tick.play(); return
+        case "network":    system.openSettings("kcm_mediacenter_wifi"); hideOverlay(); return
+        case "audio":      system.openSettings("kcm_mediacenter_audiodevice"); hideOverlay(); return
+        case "allsettings": system.openSettings(""); hideOverlay(); return
         case "config":     configRequested(); hideOverlay(); return
         }
     }

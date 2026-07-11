@@ -3,13 +3,13 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
-import org.kde.plasma.private.sessions as Sessions
 
 Item {
     id: root
 
     signal actionTriggered()
 
+    property var system: null
     property bool revealed: false
     property bool powerExpanded: false
     property bool atBottom: false
@@ -22,7 +22,7 @@ Item {
 
     onRevealedChanged: if (!revealed) powerExpanded = false
 
-    Sessions.SessionManagement { id: session }
+    readonly property var session: system ? system.session : null
 
     // Handler sits on the fullscreen root so the wheel adjusts the setting and never reaches the app list below
     WheelHandler {
@@ -104,16 +104,16 @@ Item {
 
         Repeater {
             model: [
-                { label: root.translate("Lock"),      act: "lock",     on: session.canLock },
-                { label: root.translate("Log out"),   act: "logout",   on: session.canLogout },
-                { label: root.translate("Sleep"),     act: "suspend",  on: session.canSuspend },
-                { label: root.translate("Restart"),   act: "reboot",   on: session.canReboot },
-                { label: root.translate("Shut down"), act: "shutdown", on: session.canShutdown }
+                { label: root.translate("Lock"),      act: "lock",     on: root.session ? root.session.canLock : false },
+                { label: root.translate("Log out"),   act: "logout",   on: root.session ? root.session.canLogout : false },
+                { label: root.translate("Sleep"),     act: "suspend",  on: root.session ? root.session.canSuspend : false },
+                { label: root.translate("Restart"),   act: "reboot",   on: root.session ? root.session.canReboot : false },
+                { label: root.translate("Shut down"), act: "shutdown", on: root.session ? root.session.canShutdown : false }
             ]
             delegate: Text {
                 id: btn
                 required property var modelData
-                visible: modelData.on
+                visible: modelData.on === true
                 text: modelData.label
                 color: "white"
                 opacity: itemHover.hovered ? 1.0 : 0.74
@@ -142,6 +142,7 @@ Item {
     // quick settings
     XmbQuickSettings {
         id: quick
+        system: root.system
         translate: root.translate
         anchors.horizontalCenter: parent.horizontalCenter
         y: root.atBottom ? root.height - height - root.edgeMargin : root.edgeMargin

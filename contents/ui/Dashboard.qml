@@ -20,14 +20,14 @@ Item {
 
     property real hotZoneFractionLeft: 0.15
     property real hotZoneFractionRight: 0.15
-    property int  minScrollSpeed: 150
+    property int  minScrollSpeed: 1500
     property int  maxScrollSpeed: 2600
     property int  snapDuration: 220
     property real magneticStrength: 0.7
     property int  hotZoneBandHeight: 200   // px band around the category row
 
-    // XMB wave background (port of linkev/PlayStation-3-XMB); defaults mirror the demo.
-    property real waveFlowSpeed: 0.25
+    // XMB wave background (port of linkev/PlayStation-3-XMB); defaults mirror main.xml.
+    property real waveFlowSpeed: 0.45
     property real waveBandAmplitude: 0.20
     property real waveHeightScale: 0.5
     property real waveSoftClip: 0.22
@@ -37,7 +37,7 @@ Item {
     property real waveOpacity: 0.7
     property real waveBrightness: 0.98
     property int  waveRowCount: 200
-    property int  waveColorMonth: 0
+    property int  waveColorMonth: 13
     property int  waveColorR: 37
     property int  waveColorG: 89
     property int  waveColorB: 179
@@ -45,7 +45,7 @@ Item {
     property real waveGradientBotMul: 0.62
     property bool waveParticlesEnabled: true
     property int  waveParticleCount: 2000
-    property real waveParticleOpacity: 0.9
+    property real waveParticleOpacity: 1.0
     property real waveParticleFlowSpeed: 0.8
 
     // navSoundMode: 0 = bundled XMB-style tick, 1 = custom file, 2 = off.
@@ -99,6 +99,7 @@ Item {
 
     // Favourites are NOT the system favourites — our own list of app IDs from config.
     property var appletInterface: null
+    property var system: null
     property var favorites: []
     onFavoritesChanged: rebuildFavorites()
 
@@ -441,6 +442,7 @@ Item {
         id: topBar
         anchors.fill: parent
         z: 90
+        system: dashboard.system
         atBottom: dashboard.topBarPosition === 1
         translate: dashboard.tr
     }

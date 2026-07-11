@@ -3,17 +3,21 @@
 // Containment entry point: the XMB homescreen that fills the Bigscreen shell.
 import QtQuick
 import org.kde.plasma.plasmoid
-import org.kde.plasma.plasma5support as P5Support
 import org.kde.bigscreen as Bigscreen
 import org.kde.bigscreen.controllerhandler as ControllerHandler
 
 ContainmentItem {
     id: root
 
+    SystemControl {
+        id: systemControl
+    }
+
     Dashboard {
         id: dashboard
         anchors.fill: parent
         appletInterface: root
+        system: systemControl
         favorites: Plasmoid.configuration.favorites
         backgroundOpacity: Plasmoid.configuration.backgroundOpacity
         categoryIconSize: Plasmoid.configuration.categoryIconSize
@@ -71,6 +75,7 @@ ContainmentItem {
 
     HomeOverlay {
         id: homeOverlay
+        system: systemControl
         navTickSource: dashboard.navSoundSource
         navTickVolume: dashboard.navSoundVolume
         onConfigRequested: Plasmoid.internalAction("configure").trigger()
@@ -93,16 +98,9 @@ ContainmentItem {
         }
     }
 
-    // System OSD (shows over everything) for controller/remote feedback, via the real
-    // Plasma osdService — Plasmoid.showOSD isn't available outside the native shell.
-    P5Support.DataSource {
-        id: osdExec
-        engine: "executable"
-        onNewData: (s) => osdExec.disconnectSource(s)
-    }
+    // Plasmoid.showOSD isn't available outside the native shell; SystemControl talks
+    // to the plasmashell osdService directly.
     function showOsd(icon, text) {
-        var safe = String(text).replace(/"/g, "'")
-        osdExec.connectSource("qdbus6 org.kde.plasmashell /org/kde/osdService org.kde.osdService.showText \""
-                              + icon + "\" \"" + safe + "\"")
+        systemControl.showOsd(icon, text)
     }
 }
