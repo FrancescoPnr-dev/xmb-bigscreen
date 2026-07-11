@@ -13,7 +13,10 @@ Window {
     id: overlay
 
     visible: false
-    color: Qt.rgba(0, 0, 0, 0.72)
+    // Single fade driver for the backdrop dim and the content on show.
+    property real dim: visible ? 0.72 : 0.0
+    Behavior on dim { NumberAnimation { duration: 180; easing.type: Easing.OutQuad } }
+    color: Qt.rgba(0, 0, 0, dim)
     flags: Qt.FramelessWindowHint
 
     LayerShell.Window.scope: "overlay"
@@ -89,18 +92,10 @@ Window {
     readonly property int volPct: system ? system.volumePercent : -1
     readonly property int briPct: system ? system.brightnessPercent : -1
 
-    // Native flow: hide the overlay, then shoot once it has faded out.
-    Timer {
-        id: screenshotTimer
-        interval: 500
-        onTriggered: Bigscreen.Global.takeScreenshot()
-    }
-
     property int currentCategoryIndex: 0
     readonly property var categories: [
         { name: i18n("Home"), items: [
-            { act: "home", label: i18n("Back to XMB") },
-            { act: "screenshot", label: i18n("Screenshot") }
+            { act: "home", label: i18n("Back to XMB") }
         ]},
         { name: i18n("Applications"), items:
             taskItems.length > 0 ? taskItems
@@ -141,7 +136,6 @@ Window {
     function trigger(item) {
         switch (item.act) {
         case "home":       goHome(); return
-        case "screenshot": hideOverlay(); screenshotTimer.restart(); return
         case "task":       tasksModel.requestActivate(tasksModel.makeModelIndex(item.row)); hideOverlay(); return
         case "none":       return
         case "suspend":    session.suspend(); hideOverlay(); return
@@ -182,6 +176,7 @@ Window {
         id: content
         anchors.fill: parent
         focus: true
+        opacity: overlay.dim / 0.72
 
         Row {
             id: categoryRow
@@ -201,11 +196,14 @@ Window {
                     text: modelData.name
                     color: "white"
                     opacity: current ? 1.0 : 0.40
-                    font.pixelSize: current ? 38 : 26
+                    // Fixed font + scale keeps the emphasis animation on the GPU:
+                    // animating pixelSize relayouts and re-rasterizes every frame.
+                    font.pixelSize: 38
+                    scale: current ? 1.0 : 26 / 38
                     font.weight: Font.Light
                     font.letterSpacing: 2
                     Behavior on opacity { NumberAnimation { duration: 180 } }
-                    Behavior on font.pixelSize { NumberAnimation { duration: 180 } }
+                    Behavior on scale { NumberAnimation { duration: 180; easing.type: Easing.OutCubic } }
 
                     TapHandler { onTapped: overlay.selectCategory(index) }
                     HoverHandler { cursorShape: Qt.PointingHandCursor }
@@ -255,14 +253,17 @@ Window {
                     text: overlay.itemLabel(row.modelData)
                     color: "white"
                     opacity: row.current ? 1.0 : Math.max(0.25, 0.6 - Math.abs(row.index - itemList.currentIndex) * 0.1)
-                    font.pixelSize: row.current ? 30 : 22
+                    // Fixed font + scale: keeps the glow layer's texture size constant and
+                    // the emphasis animation GPU-only.
+                    font.pixelSize: 30
+                    scale: row.current ? 1.0 : 22 / 30
                     font.weight: Font.Light
                     font.letterSpacing: 1
                     elide: Text.ElideMiddle
                     width: Math.min(implicitWidth, row.width)
                     horizontalAlignment: Text.AlignHCenter
                     Behavior on opacity { NumberAnimation { duration: 160 } }
-                    Behavior on font.pixelSize { NumberAnimation { duration: 160 } }
+                    Behavior on scale { NumberAnimation { duration: 160; easing.type: Easing.OutCubic } }
 
                     layer.enabled: row.current
                     layer.effect: MultiEffect {
