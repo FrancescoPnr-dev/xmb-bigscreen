@@ -48,6 +48,7 @@ var catalogs = {
   "Show all categories": "Mostra tutte le categorie",
   "Home": "Home",
   "Back to XMB": "Torna alla XMB",
+  "Screenshot": "Schermata",
   "Applications": "Applicazioni",
   "No open apps": "Nessuna app aperta",
   "Power": "Alimentazione",
@@ -58,17 +59,20 @@ var catalogs = {
   "Log out": "Esci",
   "Switch user": "Cambia utente",
   "Lock": "Blocca",
+  "Exit to desktop": "Esci sul desktop",
   "Settings": "Impostazioni",
   "Volume": "Volume",
   "Brightness": "Luminosità",
   "Network": "Rete",
   "Audio device": "Dispositivo audio",
+  "All settings": "Tutte le impostazioni",
   "XMB settings": "Impostazioni XMB",
   "Controller connected: %1": "Controller connesso: %1",
   "Controller disconnected: %1": "Controller disconnesso: %1",
   "Remote connected: %1": "Telecomando connesso: %1",
   "Remote disconnected: %1": "Telecomando disconnesso: %1",
   "An application is using the controller": "Un'applicazione sta usando il controller",
-  "Controller back to the system": "Controller di nuovo al sistema"
+  "Controller back to the system": "Controller di nuovo al sistema",
+  "XMB BigScreen is preventing the system from sleeping": "XMB BigScreen sta impedendo la sospensione del sistema"
  }
 }
