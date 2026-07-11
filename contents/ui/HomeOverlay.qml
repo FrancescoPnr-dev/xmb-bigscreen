@@ -132,10 +132,16 @@ Window {
         { act: "config",      label: i18n("XMB settings") }
     ]
 
-    // "" or the act of the open drop-down ("power"/"settings").
+    // "" or the act of the open drop-down ("power"/"settings"/"task").
     property string expanded: ""
+    property int expandedTaskRow: -1
     readonly property var expandedItems:
-        expanded === "power" ? powerItems : expanded === "settings" ? settingsItems : []
+        expanded === "power" ? powerItems
+      : expanded === "settings" ? settingsItems
+      : expanded === "task" ? [
+            { act: "activate-task", label: i18n("Open"),  row: expandedTaskRow },
+            { act: "close-task",    label: i18n("Close"), row: expandedTaskRow }
+        ] : []
 
     function firstTaskIndex() {
         for (var i = 0; i < bandItems.length; i++)
@@ -147,8 +153,14 @@ Window {
     function valueLabel(item) {
         if (item.act === "bri") return briPct + "%"
         if (item.act === "vol") return volPct + "%"
-        if (item.expand || item.act === "network") return i18n("Open")
+        if (item.expand || item.act === "network" || item.act === "task") return i18n("Open")
         return ""
+    }
+
+    function closeTask(row) {
+        tasksModel.requestClose(tasksModel.makeModelIndex(row))
+        if (expanded === "task")
+            expanded = ""
     }
 
     function trigger(item) {
@@ -162,7 +174,10 @@ Window {
         case "bri":        system.brightnessStep(true); return
         case "vol":        system.volumeStep(true); return
         case "network":    system.openSettings("kcm_mediacenter_wifi"); hideOverlay(); return
-        case "task":       tasksModel.requestActivate(tasksModel.makeModelIndex(item.row)); hideOverlay(); return
+        case "task":
+        case "activate-task":
+                           tasksModel.requestActivate(tasksModel.makeModelIndex(item.row)); hideOverlay(); return
+        case "close-task": closeTask(item.row); return
         case "home":       goHome(); return
         case "suspend":    session.suspend(); hideOverlay(); return
         case "hibernate":  session.hibernate(); hideOverlay(); return
@@ -178,13 +193,23 @@ Window {
         }
     }
 
-    // Up/down on the steppers adjusts; on a drop-down anchor it opens/navigates.
+    // Up/down on the steppers adjusts; down on an expandable entry or an open app
+    // drops its menu.
     function stepCurrent(up) {
         var item = bandItems[band.currentIndex]
         if (!item) return
         if (item.act === "bri") { system.brightnessStep(up); tick.play() }
         else if (item.act === "vol") { system.volumeStep(up); tick.play() }
-        else if (!up && item.expand && expanded === "") trigger(item)
+        else if (!up && expanded === "") {
+            if (item.expand) {
+                trigger(item)
+            } else if (item.act === "task") {
+                expanded = "task"
+                expandedTaskRow = item.row
+                subList.currentIndex = 0
+                tick.play()
+            }
+        }
     }
 
     function selectBand(index) {
@@ -240,6 +265,10 @@ Window {
             anchors.topMargin: Math.round(overlay.height * 0.025)
             anchors.leftMargin: Math.round(overlay.width * 0.03)
             anchors.rightMargin: Math.round(overlay.width * 0.03)
+            // Centred while the items fit; a translate keeps the full-width viewport,
+            // so delegates instantiate and contentWidth stays accurate.
+            readonly property real centerOffset: Math.max(0, (width - contentWidth) / 2)
+            transform: Translate { x: band.centerOffset }
             height: Math.round(overlay.labelSize * 4)
             spacing: Math.round(overlay.labelSize * 2.2)
             interactive: false
@@ -310,6 +339,11 @@ Window {
                 TapHandler {
                     onTapped: overlay.trigger(cell.modelData)
                 }
+                TapHandler {
+                    acceptedButtons: Qt.RightButton
+                    enabled: cell.modelData.act === "task"
+                    onTapped: overlay.closeTask(cell.modelData.row)
+                }
                 WheelHandler {
                     enabled: cell.modelData.act === "bri" || cell.modelData.act === "vol"
                     acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
@@ -324,9 +358,9 @@ Window {
             visible: overlay.expanded !== ""
             x: {
                 var base = band.currentItem
-                    ? band.anchors.leftMargin + band.currentItem.x - band.contentX : band.anchors.leftMargin
-                return Math.max(band.anchors.leftMargin,
-                                Math.min(base, overlay.width - width - band.anchors.leftMargin))
+                    ? band.x + band.centerOffset + band.currentItem.x - band.contentX
+                    : band.x + band.centerOffset
+                return Math.max(band.x, Math.min(base, overlay.width - width - band.x))
             }
             anchors.top: band.bottom
             anchors.topMargin: Math.round(overlay.labelSize * 0.6)
