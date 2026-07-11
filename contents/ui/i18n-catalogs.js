@@ -48,7 +48,6 @@ var catalogs = {
   "Show all categories": "Mostra tutte le categorie",
   "Home": "Home",
   "Back to XMB": "Torna alla XMB",
-  "Screenshot": "Schermata",
   "Applications": "Applicazioni",
   "No open apps": "Nessuna app aperta",
   "Power": "Alimentazione",

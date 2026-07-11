@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 00:15+0200\n"
+"POT-Creation-Date: 2026-07-12 00:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -193,89 +193,85 @@ msgstr ""
 msgid "Show all categories"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:101
+#: contents/ui/HomeOverlay.qml:97
 msgid "Home"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:102
+#: contents/ui/HomeOverlay.qml:98
 msgid "Back to XMB"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:103
-msgid "Screenshot"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:105
+#: contents/ui/HomeOverlay.qml:100
 msgid "Applications"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:107
+#: contents/ui/HomeOverlay.qml:102
 msgid "No open apps"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:109
+#: contents/ui/HomeOverlay.qml:104
 msgid "Power"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:110 contents/ui/XmbTopBar.qml:109
+#: contents/ui/HomeOverlay.qml:105 contents/ui/XmbTopBar.qml:109
 msgid "Sleep"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:111
+#: contents/ui/HomeOverlay.qml:106
 msgid "Hibernate"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:112 contents/ui/XmbTopBar.qml:110
+#: contents/ui/HomeOverlay.qml:107 contents/ui/XmbTopBar.qml:110
 msgid "Restart"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:113 contents/ui/XmbTopBar.qml:111
+#: contents/ui/HomeOverlay.qml:108 contents/ui/XmbTopBar.qml:111
 msgid "Shut down"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:114 contents/ui/XmbTopBar.qml:108
+#: contents/ui/HomeOverlay.qml:109 contents/ui/XmbTopBar.qml:108
 msgid "Log out"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:115
+#: contents/ui/HomeOverlay.qml:110
 msgid "Switch user"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:116 contents/ui/XmbTopBar.qml:107
+#: contents/ui/HomeOverlay.qml:111 contents/ui/XmbTopBar.qml:107
 msgid "Lock"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:117
+#: contents/ui/HomeOverlay.qml:112
 msgid "Exit to desktop"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:119 contents/ui/XmbQuickSettings.qml:93
+#: contents/ui/HomeOverlay.qml:114 contents/ui/XmbQuickSettings.qml:93
 msgid "Settings"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:120 contents/ui/HomeOverlay.qml:121
+#: contents/ui/HomeOverlay.qml:115 contents/ui/HomeOverlay.qml:116
 #: contents/ui/XmbQuickSettings.qml:68
 msgid "Volume"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:122 contents/ui/HomeOverlay.qml:123
+#: contents/ui/HomeOverlay.qml:117 contents/ui/HomeOverlay.qml:118
 #: contents/ui/XmbQuickSettings.qml:49
 msgid "Brightness"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:124 contents/ui/XmbQuickSettings.qml:87
+#: contents/ui/HomeOverlay.qml:119 contents/ui/XmbQuickSettings.qml:87
 msgid "Network"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:125
+#: contents/ui/HomeOverlay.qml:120
 msgid "Audio device"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:126
+#: contents/ui/HomeOverlay.qml:121
 msgid "All settings"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:127
+#: contents/ui/HomeOverlay.qml:122
 msgid "XMB settings"
 msgstr ""
 
@@ -303,6 +299,6 @@ msgstr ""
 msgid "Controller back to the system"
 msgstr ""
 
-#: contents/ui/SystemControl.qml:95
+#: contents/ui/SystemControl.qml:96
 msgid "XMB BigScreen is preventing the system from sleeping"
 msgstr ""
