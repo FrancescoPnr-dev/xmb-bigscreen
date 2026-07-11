@@ -51,6 +51,48 @@ audio_state_enter
 . plasma-bigscreen-common-env
 export PLASMA_DEFAULT_SHELL=org.kde.plasma.xmbbigscreen
 
+# TV defaults regardless of the desktop session's kwinrc: one virtual desktop, no
+# hot edges or corners. The [$i] locks apply only through this session's
+# XDG_CONFIG_DIRS cascade; the shared ~/.config/kwinrc is never touched.
+xmb_conf="${XDG_CONFIG_HOME:-$HOME/.config}/xmb-bigscreen"
+mkdir -p "$xmb_conf"
+cat > "$xmb_conf/kwinrc" <<'EOF'
+[Desktops]
+Number[$i]=1
+Rows[$i]=1
+
+[Windows]
+ElectricBorders[$i]=0
+
+[ElectricBorders]
+Bottom[$i]=None
+BottomLeft[$i]=None
+BottomRight[$i]=None
+Left[$i]=None
+Right[$i]=None
+Top[$i]=None
+TopLeft[$i]=None
+TopRight[$i]=None
+
+[TouchEdges]
+Bottom[$i]=none
+Left[$i]=none
+Right[$i]=none
+Top[$i]=none
+
+[Effect-overview]
+BorderActivate[$i]=9
+
+[Effect-windowview]
+BorderActivate[$i]=9
+BorderActivateAll[$i]=9
+
+[TabBox]
+BorderActivate[$i]=9
+BorderAlternativeActivate[$i]=9
+EOF
+export XDG_CONFIG_DIRS="$xmb_conf:$XDG_CONFIG_DIRS"
+
 startplasma-wayland --xwayland --libinput --exit-with-session=/usr/lib/startplasma-waylandsession
 
 audio_state_exit
