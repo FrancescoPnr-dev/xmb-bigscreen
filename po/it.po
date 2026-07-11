@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 00:58+0200\n"
+"POT-Creation-Date: 2026-07-12 01:18+0200\n"
 "PO-Revision-Date: 2026-07-02 12:00+0200\n"
 "Last-Translator: Francesco Panarese <FrancescoPnr-dev@proton.me>\n"
 "Language-Team: Italian\n"
@@ -248,9 +248,13 @@ msgstr "Tutte le impostazioni"
 msgid "XMB settings"
 msgstr "Impostazioni XMB"
 
-#: contents/ui/HomeOverlay.qml:150
+#: contents/ui/HomeOverlay.qml:142 contents/ui/HomeOverlay.qml:156
 msgid "Open"
 msgstr "Apri"
+
+#: contents/ui/HomeOverlay.qml:143
+msgid "Close"
+msgstr "Chiudi"
 
 #: contents/ui/main.qml:93
 msgid "Controller connected: %1"
