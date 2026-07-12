@@ -77,7 +77,8 @@ The XMB is the session's homescreen — always there, with apps launching on top
 ### Pad mapping
 
 Controllers work out of the box: the session refreshes the pad mapping at every
-login, so Triangle (search) and Square (delete) are always wired. Only the
+login and whenever a controller connects, so Triangle (search) and Square
+(delete) are always wired — plug in or pair a pad and it just works. Only the
 system input handler sees the mapping — games keep the physical layout.
 
 By default the Bigscreen input handler moves the mouse pointer with the
@@ -85,8 +86,7 @@ By default the Bigscreen input handler moves the mouse pointer with the
 left stick (with list scrolling and L3-as-click accordingly), flip *Settings →
 XMB settings → Controller → Pointer on the left stick*, or run
 `xmb-bigscreen-stick-swap --on` (`--off` to go back). It applies from the next
-login. A controller must have been connected at least once at login for its
-special keys to work (USB and Bluetooth count as different controllers).
+login.
 
 ## Configuration
 

@@ -96,7 +96,10 @@ ContainmentItem {
     Connections {
         target: ControllerHandler.ControllerHandlerStatus
         function onHomeActionRequested() { homeOverlay.toggle() }
-        function onSdlControllerAdded(name) { root.showOsd("input-gamepad-symbolic", i18n("Controller connected: %1", name)) }
+        function onSdlControllerAdded(name) {
+            systemControl.refreshPadMapping()
+            root.showOsd("input-gamepad-symbolic", i18n("Controller connected: %1", name))
+        }
         function onSdlControllerRemoved(name) { root.showOsd("input-gamepad-symbolic", i18n("Controller disconnected: %1", name)) }
         function onCecControllerAdded(name) { root.showOsd("input-tvremote-symbolic", i18n("Remote connected: %1", name)) }
         function onCecControllerRemoved(name) { root.showOsd("input-tvremote-symbolic", i18n("Remote disconnected: %1", name)) }

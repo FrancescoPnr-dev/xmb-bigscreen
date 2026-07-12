@@ -71,6 +71,18 @@ Item {
         })
     }
 
+    // A controller plugged in mid-session may be new to the mapping file: regenerate
+    // it and, only when it actually changed, restart the input handler so SDL reloads
+    // it (mappings are read once at daemon start). The change guard prevents loops,
+    // since the restarted daemon announces the pad again.
+    function refreshPadMapping() {
+        launcher.connectSource("sh -c '"
+            + "f=\"${XDG_CONFIG_HOME:-$HOME/.config}/xmb-bigscreen/gamecontroller-swap.txt\"; "
+            + "old=$(md5sum \"$f\" 2>/dev/null); xmb-bigscreen-stick-swap >/dev/null 2>&1; "
+            + "[ \"$old\" != \"$(md5sum \"$f\" 2>/dev/null)\" ] && "
+            + "systemctl --user restart \"app-org.kde.plasma.bigscreen.inputhandler@*.service\"'")
+    }
+
     // Bigscreen's own TV settings app; a kcmId deep-links a mediacenter module.
     function openSettings(kcmId) {
         launcher.connectSource(kcmId && kcmId.length > 0
