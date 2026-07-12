@@ -102,6 +102,25 @@ native delegates, fully navigable by controller or remote. Changes apply live.
 The **icon theme** chosen there applies to the XMB session only, from the next
 login, and never touches your desktop session's theme.
 
+### Autologin (couch mode)
+
+The login screen cannot be driven by a controller, so a living-room machine
+should boot straight into the XMB. With Plasma Login Manager (or SDDM), either
+enable it from *System Settings → Login Screen* picking the *XMB BigScreen*
+session, or drop a file as root:
+
+```ini
+# /etc/plasmalogin.conf.d/xmb-autologin.conf  (SDDM: /etc/sddm.conf.d/)
+[Autologin]
+User=YOUR_USER
+Session=plasma-xmbbigscreen-wayland
+```
+
+The XMB session never locks the screen by itself (no idle lock, no lock on
+resume from sleep), and the power menu carries no Lock entry — a password
+prompt is a dead end on a TV. Logging out still reaches the login screen:
+the overlay warns first, and rebooting the machine autologs back in.
+
 <img width="3554" height="2069" alt="4" src="https://github.com/user-attachments/assets/c402e973-104d-451d-b1d1-cb7f422db742" />
 
 

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 18:51+0200\n"
+"POT-Creation-Date: 2026-07-12 19:56+0200\n"
 "PO-Revision-Date: 2026-07-02 12:00+0200\n"
 "Last-Translator: Francesco Panarese <FrancescoPnr-dev@proton.me>\n"
 "Language-Team: Italian\n"
@@ -18,79 +18,75 @@ msgstr ""
 msgid "Favorites"
 msgstr "Preferiti"
 
-#: contents/ui/HomeOverlay.qml:145
+#: contents/ui/HomeOverlay.qml:148
 msgid "Power"
 msgstr "Alimentazione"
 
-#: contents/ui/HomeOverlay.qml:146
+#: contents/ui/HomeOverlay.qml:149
 msgid "Brightness"
 msgstr "Luminosità"
 
-#: contents/ui/HomeOverlay.qml:147
+#: contents/ui/HomeOverlay.qml:150
 msgid "Volume"
 msgstr "Volume"
 
-#: contents/ui/HomeOverlay.qml:148
+#: contents/ui/HomeOverlay.qml:151
 msgid "Network"
 msgstr "Rete"
 
-#: contents/ui/HomeOverlay.qml:149
+#: contents/ui/HomeOverlay.qml:152
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: contents/ui/HomeOverlay.qml:150
+#: contents/ui/HomeOverlay.qml:153
 msgid "Back to XMB"
 msgstr "Torna alla XMB"
 
-#: contents/ui/HomeOverlay.qml:154
+#: contents/ui/HomeOverlay.qml:158
 msgid "Sleep"
 msgstr "Sospendi"
 
-#: contents/ui/HomeOverlay.qml:155
-msgid "Hibernate"
-msgstr "Ibernazione"
-
-#: contents/ui/HomeOverlay.qml:156
+#: contents/ui/HomeOverlay.qml:159
 msgid "Restart"
 msgstr "Riavvia"
 
-#: contents/ui/HomeOverlay.qml:157
+#: contents/ui/HomeOverlay.qml:160
 msgid "Shut down"
 msgstr "Spegni"
 
-#: contents/ui/HomeOverlay.qml:158
+#: contents/ui/HomeOverlay.qml:161
 msgid "Log out"
 msgstr "Esci"
 
-#: contents/ui/HomeOverlay.qml:159
-msgid "Switch user"
-msgstr "Cambia utente"
-
-#: contents/ui/HomeOverlay.qml:160
-msgid "Lock"
-msgstr "Blocca"
-
-#: contents/ui/HomeOverlay.qml:161
+#: contents/ui/HomeOverlay.qml:162
 msgid "Exit to desktop"
 msgstr "Esci sul desktop"
 
-#: contents/ui/HomeOverlay.qml:164
+#: contents/ui/HomeOverlay.qml:165
 msgid "System settings"
 msgstr "Impostazioni di sistema"
 
-#: contents/ui/HomeOverlay.qml:165 contents/ui/XmbSettings.qml:356
+#: contents/ui/HomeOverlay.qml:166 contents/ui/XmbSettings.qml:356
 msgid "XMB settings"
 msgstr "Impostazioni XMB"
 
-#: contents/ui/HomeOverlay.qml:178
+#: contents/ui/HomeOverlay.qml:183
 msgid "Open"
 msgstr "Apri"
 
-#: contents/ui/HomeOverlay.qml:418
+#: contents/ui/HomeOverlay.qml:426
+msgid ""
+"The login screen needs a mouse and keyboard; without them, restart the "
+"machine to come back. Press again to log out."
+msgstr ""
+"La schermata di accesso richiede mouse e tastiera; senza, riavvia il "
+"computer per rientrare. Premi di nuovo per uscire."
+
+#: contents/ui/HomeOverlay.qml:436
 msgid "No open apps"
 msgstr "Nessuna app aperta"
 
-#: contents/ui/HomeOverlay.qml:526
+#: contents/ui/HomeOverlay.qml:544
 msgid "Close"
 msgstr "Chiudi"
 
@@ -286,6 +282,15 @@ msgstr ""
 "Sposta il puntatore del mouse con lo stick sinistro e scorre gli elenchi con "
 "il destro, con L3 come clic. I giochi vedono sempre la disposizione fisica. "
 "Si applica dal prossimo accesso."
+
+#~ msgid "Hibernate"
+#~ msgstr "Ibernazione"
+
+#~ msgid "Switch user"
+#~ msgstr "Cambia utente"
+
+#~ msgid "Lock"
+#~ msgstr "Blocca"
 
 #~ msgid "Keyboard"
 #~ msgstr "Tastiera"

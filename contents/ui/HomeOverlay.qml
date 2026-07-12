@@ -62,6 +62,7 @@ Window {
         expanded = ""
         engaged = false
         closePrompt = false
+        confirmLogout = false
         visible = false
     }
     function toggle() { visible ? hideOverlay() : showOverlay() }
@@ -69,6 +70,8 @@ Window {
     function back() {
         if (engaged)
             engaged = false
+        else if (confirmLogout)
+            confirmLogout = false
         else if (closePrompt)
             closePrompt = false
         else if (expanded !== "")
@@ -150,14 +153,12 @@ Window {
         { act: "home",     label: i18n("Back to XMB") }
     ].filter(i => i.on !== false)
 
+    // No Lock or Switch user: they land on password screens a pad cannot drive.
     readonly property var powerItems: [
         { act: "suspend",    label: i18n("Sleep"),       on: session ? session.canSuspend : false },
-        { act: "hibernate",  label: i18n("Hibernate"),   on: session ? session.canHibernate : false },
         { act: "reboot",     label: i18n("Restart"),     on: session ? session.canReboot : false },
         { act: "shutdown",   label: i18n("Shut down"),   on: session ? session.canShutdown : false },
         { act: "logout",     label: i18n("Log out"),     on: session ? session.canLogout : false },
-        { act: "switchuser", label: i18n("Switch user"), on: session ? session.canSwitchUser : false },
-        { act: "lock",       label: i18n("Lock"),        on: session ? session.canLock : false },
         { act: "swapsession", label: i18n("Exit to desktop"), on: Bigscreen.Global.launchReason === "swap" }
     ].filter(a => a.on !== false)
     readonly property var settingsItems: [
@@ -167,6 +168,10 @@ Window {
 
     // "" or the act of the open drop-down ("power"/"settings").
     property string expanded: ""
+    // Log out is armed on the first press and fires on the second, with a warning
+    // in between: the login screen is unreachable by pad, only a reboot comes back.
+    property bool confirmLogout: false
+    onExpandedChanged: confirmLogout = false
     readonly property var expandedItems:
         expanded === "power" ? powerItems : expanded === "settings" ? settingsItems : []
 
@@ -197,12 +202,11 @@ Window {
         case "network":    system.openSettings("kcm_mediacenter_wifi"); hideOverlay(); return
         case "home":       goHome(); return
         case "suspend":    session.suspend(); hideOverlay(); return
-        case "hibernate":  session.hibernate(); hideOverlay(); return
         case "reboot":     session.requestReboot(); hideOverlay(); return
         case "shutdown":   session.requestShutdown(); hideOverlay(); return
-        case "logout":     session.requestLogout(); hideOverlay(); return
-        case "switchuser": session.switchUser(); hideOverlay(); return
-        case "lock":       session.lock(); hideOverlay(); return
+        case "logout":
+            if (!confirmLogout) { confirmLogout = true; tick.play(); return }
+            session.requestLogout(); hideOverlay(); return
         case "swapsession": Bigscreen.Global.swapSession(); hideOverlay(); return
         case "allsettings": system.openSettings(""); hideOverlay(); return
         case "config":     configRequested(); hideOverlay(); return
@@ -413,6 +417,20 @@ Window {
         }
 
         Text {
+            visible: overlay.confirmLogout
+            x: subList.x
+            anchors.top: subList.bottom
+            anchors.topMargin: Math.round(overlay.labelSize * 0.9)
+            width: Math.round(overlay.labelSize * 18)
+            wrapMode: Text.WordWrap
+            text: i18n("The login screen needs a mouse and keyboard; without them, restart the machine to come back. Press again to log out.")
+            color: "white"
+            opacity: 0.85
+            font.pixelSize: Math.round(overlay.labelSize * 0.72)
+            font.weight: Font.Light
+        }
+
+        Text {
             anchors.centerIn: parent
             visible: overlay.taskItems.length === 0
             text: i18n("No open apps")
@@ -595,6 +613,7 @@ Window {
             if (overlay.engaged) {
                 overlay.engaged = false
             } else if (overlay.expanded !== "") {
+                overlay.confirmLogout = false
                 var i = subList.currentIndex
                 subList.decrementCurrentIndex()
                 if (subList.currentIndex !== i) tick.play()
@@ -609,6 +628,7 @@ Window {
             if (overlay.engaged) {
                 overlay.engaged = false
             } else if (overlay.expanded !== "") {
+                overlay.confirmLogout = false
                 var i = subList.currentIndex
                 subList.incrementCurrentIndex()
                 if (subList.currentIndex !== i) tick.play()
