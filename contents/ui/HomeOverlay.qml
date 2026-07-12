@@ -159,8 +159,7 @@ Window {
         { act: "swapsession", label: i18n("Exit to desktop"), on: Bigscreen.Global.launchReason === "swap" }
     ].filter(a => a.on !== false)
     readonly property var settingsItems: [
-        { act: "audio",       label: i18n("Audio device") },
-        { act: "allsettings", label: i18n("All settings") },
+        { act: "allsettings", label: i18n("System settings") },
         { act: "config",      label: i18n("XMB settings") }
     ]
 
@@ -203,7 +202,6 @@ Window {
         case "switchuser": session.switchUser(); hideOverlay(); return
         case "lock":       session.lock(); hideOverlay(); return
         case "swapsession": Bigscreen.Global.swapSession(); hideOverlay(); return
-        case "audio":      system.openSettings("kcm_mediacenter_audiodevice"); hideOverlay(); return
         case "allsettings": system.openSettings(""); hideOverlay(); return
         case "config":     configRequested(); hideOverlay(); return
         }
