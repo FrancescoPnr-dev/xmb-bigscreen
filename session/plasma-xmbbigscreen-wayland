@@ -55,9 +55,8 @@ xmb-bigscreen-stick-swap >/dev/null 2>&1 || true
 . plasma-bigscreen-common-env
 export PLASMA_DEFAULT_SHELL=org.kde.plasma.xmbbigscreen
 
-# Bigscreen forces the compositor keyboard (plasma-keyboard, if installed) onto
-# every focused text field. Drop the override: the XMB brings its own gamepad
-# keyboard, and apps get the compositor one per KWin's normal rules.
+# Bigscreen force-shows the compositor keyboard regardless of KWin's visibility
+# mode; drop the override, the mode is configured explicitly below.
 unset KWIN_IM_SHOW_ALWAYS
 
 # TV defaults regardless of the desktop session's kwinrc: one virtual desktop, no
@@ -99,6 +98,20 @@ BorderActivateAll[$i]=9
 [TabBox]
 BorderActivate[$i]=9
 BorderAlternativeActivate[$i]=9
+
+[Wayland]
+VirtualKeyboardEnabled[$i]=true
+VirtualKeyboardMode[$i]=2
+EOF
+
+# Compositor keyboard (plasma-keyboard, if installed) for regular apps: shown
+# whenever a text field activates (VirtualKeyboardMode=2 above), compact instead
+# of full-width, and navigable with the pad arrows. The XMB's own fields are
+# read-only to the input method and bring their own keyboard instead.
+cat > "$xmb_conf/plasmakeyboardrc" <<'EOF'
+[General]
+keyboardNavigationEnabled[$i]=true
+panelFillScreenWidth[$i]=false
 EOF
 
 # Icon theme chosen in the XMB settings (a plain theme id, if any): pin it into the

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 18:41+0200\n"
+"POT-Creation-Date: 2026-07-12 18:51+0200\n"
 "PO-Revision-Date: 2026-07-02 12:00+0200\n"
 "Last-Translator: Francesco Panarese <FrancescoPnr-dev@proton.me>\n"
 "Language-Team: Italian\n"
@@ -35,66 +35,62 @@ msgid "Network"
 msgstr "Rete"
 
 #: contents/ui/HomeOverlay.qml:149
-msgid "Keyboard"
-msgstr "Tastiera"
-
-#: contents/ui/HomeOverlay.qml:150
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: contents/ui/HomeOverlay.qml:151
+#: contents/ui/HomeOverlay.qml:150
 msgid "Back to XMB"
 msgstr "Torna alla XMB"
 
-#: contents/ui/HomeOverlay.qml:155
+#: contents/ui/HomeOverlay.qml:154
 msgid "Sleep"
 msgstr "Sospendi"
 
-#: contents/ui/HomeOverlay.qml:156
+#: contents/ui/HomeOverlay.qml:155
 msgid "Hibernate"
 msgstr "Ibernazione"
 
-#: contents/ui/HomeOverlay.qml:157
+#: contents/ui/HomeOverlay.qml:156
 msgid "Restart"
 msgstr "Riavvia"
 
-#: contents/ui/HomeOverlay.qml:158
+#: contents/ui/HomeOverlay.qml:157
 msgid "Shut down"
 msgstr "Spegni"
 
-#: contents/ui/HomeOverlay.qml:159
+#: contents/ui/HomeOverlay.qml:158
 msgid "Log out"
 msgstr "Esci"
 
-#: contents/ui/HomeOverlay.qml:160
+#: contents/ui/HomeOverlay.qml:159
 msgid "Switch user"
 msgstr "Cambia utente"
 
-#: contents/ui/HomeOverlay.qml:161
+#: contents/ui/HomeOverlay.qml:160
 msgid "Lock"
 msgstr "Blocca"
 
-#: contents/ui/HomeOverlay.qml:162
+#: contents/ui/HomeOverlay.qml:161
 msgid "Exit to desktop"
 msgstr "Esci sul desktop"
 
-#: contents/ui/HomeOverlay.qml:165
+#: contents/ui/HomeOverlay.qml:164
 msgid "System settings"
 msgstr "Impostazioni di sistema"
 
-#: contents/ui/HomeOverlay.qml:166 contents/ui/XmbSettings.qml:356
+#: contents/ui/HomeOverlay.qml:165 contents/ui/XmbSettings.qml:356
 msgid "XMB settings"
 msgstr "Impostazioni XMB"
 
-#: contents/ui/HomeOverlay.qml:179
+#: contents/ui/HomeOverlay.qml:178
 msgid "Open"
 msgstr "Apri"
 
-#: contents/ui/HomeOverlay.qml:420
+#: contents/ui/HomeOverlay.qml:418
 msgid "No open apps"
 msgstr "Nessuna app aperta"
 
-#: contents/ui/HomeOverlay.qml:528
+#: contents/ui/HomeOverlay.qml:526
 msgid "Close"
 msgstr "Chiudi"
 
@@ -122,7 +118,7 @@ msgstr "Un'applicazione sta usando il controller"
 msgid "Controller back to the system"
 msgstr "Controller di nuovo al sistema"
 
-#: contents/ui/SystemControl.qml:122
+#: contents/ui/SystemControl.qml:108
 msgid "XMB BigScreen is preventing the system from sleeping"
 msgstr "XMB BigScreen sta impedendo la sospensione del sistema"
 
@@ -290,6 +286,9 @@ msgstr ""
 "Sposta il puntatore del mouse con lo stick sinistro e scorre gli elenchi con "
 "il destro, con L3 come clic. I giochi vedono sempre la disposizione fisica. "
 "Si applica dal prossimo accesso."
+
+#~ msgid "Keyboard"
+#~ msgstr "Tastiera"
 
 #~ msgid "General"
 #~ msgstr "Generale"

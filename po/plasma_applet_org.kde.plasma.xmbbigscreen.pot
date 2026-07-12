@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 18:41+0200\n"
+"POT-Creation-Date: 2026-07-12 18:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,66 +38,62 @@ msgid "Network"
 msgstr ""
 
 #: contents/ui/HomeOverlay.qml:149
-msgid "Keyboard"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:150
 msgid "Settings"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:151
+#: contents/ui/HomeOverlay.qml:150
 msgid "Back to XMB"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:155
+#: contents/ui/HomeOverlay.qml:154
 msgid "Sleep"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:156
+#: contents/ui/HomeOverlay.qml:155
 msgid "Hibernate"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:157
+#: contents/ui/HomeOverlay.qml:156
 msgid "Restart"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:158
+#: contents/ui/HomeOverlay.qml:157
 msgid "Shut down"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:159
+#: contents/ui/HomeOverlay.qml:158
 msgid "Log out"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:160
+#: contents/ui/HomeOverlay.qml:159
 msgid "Switch user"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:161
+#: contents/ui/HomeOverlay.qml:160
 msgid "Lock"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:162
+#: contents/ui/HomeOverlay.qml:161
 msgid "Exit to desktop"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:165
+#: contents/ui/HomeOverlay.qml:164
 msgid "System settings"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:166 contents/ui/XmbSettings.qml:356
+#: contents/ui/HomeOverlay.qml:165 contents/ui/XmbSettings.qml:356
 msgid "XMB settings"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:179
+#: contents/ui/HomeOverlay.qml:178
 msgid "Open"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:420
+#: contents/ui/HomeOverlay.qml:418
 msgid "No open apps"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:528
+#: contents/ui/HomeOverlay.qml:526
 msgid "Close"
 msgstr ""
 
@@ -125,7 +121,7 @@ msgstr ""
 msgid "Controller back to the system"
 msgstr ""
 
-#: contents/ui/SystemControl.qml:122
+#: contents/ui/SystemControl.qml:108
 msgid "XMB BigScreen is preventing the system from sleeping"
 msgstr ""
 

@@ -70,6 +70,9 @@ The XMB is the session's homescreen — always there, with apps launching on top
 - **Triangle** — search with an on-screen keyboard: d-pad moves the key
   highlight, **Cross** inserts, **Square** deletes, **L1/R1** move through
   the results, **Circle** closes.
+- **Text fields in regular apps** — with the optional `plasma-keyboard`
+  package installed, a compact keyboard pops up on the focused field and the
+  d-pad navigates it: **Cross** types, its ⏎/hide keys finish.
 - **PS/Guide button or Meta** — home overlay over the running app: open apps,
   power actions, volume/brightness, quick settings.
 - **Back / Esc** — close the overlay.

@@ -146,7 +146,6 @@ Window {
         { act: "bri",      label: i18n("Brightness"), stepper: true, on: briAvailable },
         { act: "vol",      label: i18n("Volume"),     stepper: true, on: volAvailable },
         { act: "network",  label: i18n("Network") },
-        { act: "keyboard", label: i18n("Keyboard") },
         { act: "settings", label: i18n("Settings"),   expand: true },
         { act: "home",     label: i18n("Back to XMB") }
     ].filter(i => i.on !== false)
@@ -196,7 +195,6 @@ Window {
         case "vol":
             engaged = !engaged; tick.play(); return
         case "network":    system.openSettings("kcm_mediacenter_wifi"); hideOverlay(); return
-        case "keyboard":   system.showVirtualKeyboard(); hideOverlay(); return
         case "home":       goHome(); return
         case "suspend":    session.suspend(); hideOverlay(); return
         case "hibernate":  session.hibernate(); hideOverlay(); return

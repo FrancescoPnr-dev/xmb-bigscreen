@@ -83,20 +83,6 @@ Item {
             + "systemctl --user restart \"app-org.kde.plasma.bigscreen.inputhandler@*.service\"'")
     }
 
-    // The compositor keyboard activates for the focused text field, so wait for
-    // the overlay to close and the app to take focus back before forcing it up.
-    function showVirtualKeyboard() { vkTimer.restart() }
-    Timer {
-        id: vkTimer
-        interval: 450
-        onTriggered: DBus.SessionBus.asyncCall({
-            service: "org.kde.KWin",
-            path: "/VirtualKeyboard",
-            iface: "org.kde.kwin.VirtualKeyboard",
-            member: "forceActivate"
-        })
-    }
-
     // Bigscreen's own TV settings app; a kcmId deep-links a mediacenter module.
     function openSettings(kcmId) {
         launcher.connectSource(kcmId && kcmId.length > 0
