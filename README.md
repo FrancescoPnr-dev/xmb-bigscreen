@@ -88,9 +88,14 @@ connection type (USB and Bluetooth count as different controllers).
 
 ## Configuration
 
-From the home overlay pick *Settings → XMB settings*, or hover the top edge with
-a mouse. Sections for appearance, behaviour, the wave background and colour,
-sounds, and visible categories. Each section has its own "reset to defaults".
+Open the system band (PS/Guide button, Meta, or hover the top edge) and pick
+*Settings → XMB settings*. The settings window is styled after Plasma Bigscreen's
+own TV settings — a sidebar of sections (appearance, wave background with live
+RGB preview, clock, sounds, visible categories, favorites, language, icons) and
+native delegates, fully navigable by controller or remote. Changes apply live.
+
+The **icon theme** chosen there applies to the XMB session only, from the next
+login, and never touches your desktop session's theme.
 
 <img width="3554" height="2069" alt="4" src="https://github.com/user-attachments/assets/c402e973-104d-451d-b1d1-cb7f422db742" />
 

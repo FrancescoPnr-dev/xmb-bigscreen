@@ -48,6 +48,12 @@ SPDX-License-Identifier: GPL-3.0-only
             <default></default>
         </entry>
 
+        <!-- Icon theme for the XMB session; empty = system default. Applied by the
+             session script into the immutable per-session cascade at next login. -->
+        <entry name="iconTheme" type="String">
+            <default></default>
+        </entry>
+
         <!-- Display names of categories the user chose to hide from the bar. -->
         <entry name="hiddenCategories" type="StringList">
             <default></default>

@@ -80,7 +80,13 @@ ContainmentItem {
         system: systemControl
         navTickSource: dashboard.navSoundSource
         navTickVolume: dashboard.navSoundVolume
-        onConfigRequested: Plasmoid.internalAction("configure").trigger()
+        onConfigRequested: xmbSettings.show()
+    }
+
+    XmbSettings {
+        id: xmbSettings
+        config: Plasmoid.configuration
+        translate: dashboard.tr
     }
 
     // Home button (controller PS/Guide or remote) and the Meta key raise the system
