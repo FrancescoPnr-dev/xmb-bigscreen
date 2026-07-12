@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 03:08+0200\n"
+"POT-Creation-Date: 2026-07-12 03:10+0200\n"
 "PO-Revision-Date: 2026-07-02 12:00+0200\n"
 "Last-Translator: Francesco Panarese <FrancescoPnr-dev@proton.me>\n"
 "Language-Team: Italian\n"
@@ -14,176 +14,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contents/config/config.qml:12
-msgid "General"
-msgstr "Generale"
-
-#: contents/config/config.qml:17 contents/ui/Dashboard.qml:249
-#: contents/ui/XmbSettings.qml:131
+#: contents/ui/Dashboard.qml:249 contents/ui/XmbSettings.qml:131
 msgid "Favorites"
 msgstr "Preferiti"
-
-#: contents/ui/config/ConfigFavorites.qml:63
-msgid "Pick the applications to show in the dashboard's Favorites category."
-msgstr ""
-"Scegli le applicazioni da mostrare nella categoria Preferiti della dashboard."
-
-#: contents/ui/config/ConfigFavorites.qml:70
-msgid "Search applications…"
-msgstr "Cerca applicazioni…"
-
-#: contents/ui/config/ConfigFavorites.qml:133
-msgid "No applications found."
-msgstr "Nessuna applicazione trovata."
-
-#: contents/ui/config/ConfigGeneral.qml:93 contents/ui/XmbSettings.qml:126
-msgid "Appearance"
-msgstr "Aspetto"
-
-#: contents/ui/config/ConfigGeneral.qml:98
-msgid "Background opacity:"
-msgstr "Opacità dello sfondo:"
-
-#: contents/ui/config/ConfigGeneral.qml:113
-msgid "Category icon size (px):"
-msgstr "Dimensione icone categoria (px):"
-
-#: contents/ui/config/ConfigGeneral.qml:119
-msgid "App icon size (px):"
-msgstr "Dimensione icone applicazioni (px):"
-
-#: contents/ui/config/ConfigGeneral.qml:124
-msgid "Cross position (from left):"
-msgstr "Posizione della croce (da sinistra):"
-
-#: contents/ui/config/ConfigGeneral.qml:138
-#: contents/ui/config/ConfigGeneral.qml:186
-#: contents/ui/config/ConfigGeneral.qml:257
-msgid "Reset section to defaults"
-msgstr "Ripristina i valori predefiniti della sezione"
-
-#: contents/ui/config/ConfigGeneral.qml:144 contents/ui/XmbSettings.qml:132
-#: contents/ui/XmbSettings.qml:679
-msgid "Language"
-msgstr "Lingua"
-
-#: contents/ui/config/ConfigGeneral.qml:150
-msgid "Language:"
-msgstr "Lingua:"
-
-#: contents/ui/config/ConfigGeneral.qml:153
-#: contents/ui/config/ConfigGeneral.qml:170
-#: contents/ui/config/ConfigGeneral.qml:177 contents/ui/XmbSettings.qml:506
-#: contents/ui/XmbSettings.qml:514 contents/ui/XmbSettings.qml:680
-msgid "System"
-msgstr "Sistema"
-
-#: contents/ui/config/ConfigGeneral.qml:162 contents/ui/XmbSettings.qml:128
-msgid "Clock"
-msgstr "Orologio"
-
-#: contents/ui/config/ConfigGeneral.qml:168
-msgid "Time format:"
-msgstr "Formato dell'ora:"
-
-#: contents/ui/config/ConfigGeneral.qml:170 contents/ui/XmbSettings.qml:506
-msgid "12-hour"
-msgstr "12 ore"
-
-#: contents/ui/config/ConfigGeneral.qml:170 contents/ui/XmbSettings.qml:506
-msgid "24-hour"
-msgstr "24 ore"
-
-#: contents/ui/config/ConfigGeneral.qml:175
-msgid "Date format:"
-msgstr "Formato della data:"
-
-#: contents/ui/config/ConfigGeneral.qml:177 contents/ui/XmbSettings.qml:514
-msgid "Day/month"
-msgstr "Giorno/mese"
-
-#: contents/ui/config/ConfigGeneral.qml:177 contents/ui/XmbSettings.qml:514
-msgid "Month/day"
-msgstr "Mese/giorno"
-
-#: contents/ui/config/ConfigGeneral.qml:182
-msgid "Show date:"
-msgstr "Mostra la data:"
-
-#: contents/ui/config/ConfigGeneral.qml:192 contents/ui/XmbSettings.qml:129
-msgid "Sounds"
-msgstr "Suoni"
-
-#: contents/ui/config/ConfigGeneral.qml:198
-msgid "Navigation tick:"
-msgstr "Suono di navigazione:"
-
-#: contents/ui/config/ConfigGeneral.qml:200
-#: contents/ui/config/ConfigGeneral.qml:231 contents/ui/XmbSettings.qml:541
-#: contents/ui/XmbSettings.qml:556
-msgid "XMB (default)"
-msgstr "XMB (predefinito)"
-
-#: contents/ui/config/ConfigGeneral.qml:200
-#: contents/ui/config/ConfigGeneral.qml:231
-msgid "Custom file…"
-msgstr "File personalizzato…"
-
-#: contents/ui/config/ConfigGeneral.qml:200
-#: contents/ui/config/ConfigGeneral.qml:231 contents/ui/XmbSettings.qml:541
-#: contents/ui/XmbSettings.qml:556
-msgid "Off"
-msgstr "Disattivato"
-
-#: contents/ui/config/ConfigGeneral.qml:205
-msgid "Custom sound file:"
-msgstr "File audio personalizzato:"
-
-#: contents/ui/config/ConfigGeneral.qml:208
-msgid "/path/to/sound.wav or .mp3"
-msgstr "/percorso/del/suono.wav o .mp3"
-
-#: contents/ui/config/ConfigGeneral.qml:215
-msgid ""
-"The original PS3 sound is not bundled (Sony copyright). Point this at your "
-"own local copy. WAV gives the lowest latency."
-msgstr ""
-"Il suono originale della PS3 non è incluso (copyright Sony). Indica qui una "
-"tua copia locale. Il formato WAV ha la latenza più bassa."
-
-#: contents/ui/config/ConfigGeneral.qml:219
-#: contents/ui/config/ConfigGeneral.qml:250
-msgid "Volume:"
-msgstr "Volume:"
-
-#: contents/ui/config/ConfigGeneral.qml:229
-msgid "Background ambience:"
-msgstr "Ambiente di sottofondo:"
-
-#: contents/ui/config/ConfigGeneral.qml:236
-msgid "Custom ambience file:"
-msgstr "File dell'ambiente personalizzato:"
-
-#: contents/ui/config/ConfigGeneral.qml:239
-msgid "/path/to/loop.wav or .mp3"
-msgstr "/percorso/del/loop.wav o .mp3"
-
-#: contents/ui/config/ConfigGeneral.qml:246
-msgid ""
-"The file loops while the dashboard is open. WAV loops gaplessly; mp3/ogg may "
-"have a small seam at the loop point."
-msgstr ""
-"Il file si ripete in loop mentre la dashboard è aperta. Il WAV si ripete "
-"senza interruzioni; mp3/ogg possono avere un piccolo stacco al punto di "
-"ripetizione."
-
-#: contents/ui/config/ConfigGeneral.qml:263 contents/ui/XmbSettings.qml:130
-msgid "Visible categories"
-msgstr "Categorie visibili"
-
-#: contents/ui/config/ConfigGeneral.qml:296
-msgid "Show all categories"
-msgstr "Mostra tutte le categorie"
 
 #: contents/ui/HomeOverlay.qml:145
 msgid "Power"
@@ -293,9 +126,29 @@ msgstr "XMB BigScreen sta impedendo la sospensione del sistema"
 msgid "System default"
 msgstr "Predefinito di sistema"
 
+#: contents/ui/XmbSettings.qml:126
+msgid "Appearance"
+msgstr "Aspetto"
+
 #: contents/ui/XmbSettings.qml:127
 msgid "Background"
 msgstr "Sfondo"
+
+#: contents/ui/XmbSettings.qml:128
+msgid "Clock"
+msgstr "Orologio"
+
+#: contents/ui/XmbSettings.qml:129
+msgid "Sounds"
+msgstr "Suoni"
+
+#: contents/ui/XmbSettings.qml:130
+msgid "Visible categories"
+msgstr "Categorie visibili"
+
+#: contents/ui/XmbSettings.qml:132 contents/ui/XmbSettings.qml:679
+msgid "Language"
+msgstr "Lingua"
 
 #: contents/ui/XmbSettings.qml:133
 msgid "Icons"
@@ -343,9 +196,30 @@ msgstr "Blu"
 msgid "Time format"
 msgstr "Formato ora"
 
+#: contents/ui/XmbSettings.qml:506 contents/ui/XmbSettings.qml:514
+#: contents/ui/XmbSettings.qml:680
+msgid "System"
+msgstr "Sistema"
+
+#: contents/ui/XmbSettings.qml:506
+msgid "12-hour"
+msgstr "12 ore"
+
+#: contents/ui/XmbSettings.qml:506
+msgid "24-hour"
+msgstr "24 ore"
+
 #: contents/ui/XmbSettings.qml:513
 msgid "Date format"
 msgstr "Formato data"
+
+#: contents/ui/XmbSettings.qml:514
+msgid "Day/month"
+msgstr "Giorno/mese"
+
+#: contents/ui/XmbSettings.qml:514
+msgid "Month/day"
+msgstr "Mese/giorno"
 
 #: contents/ui/XmbSettings.qml:522
 msgid "Show date"
@@ -356,8 +230,16 @@ msgid "Navigation tick"
 msgstr "Tick di navigazione"
 
 #: contents/ui/XmbSettings.qml:541 contents/ui/XmbSettings.qml:556
+msgid "XMB (default)"
+msgstr "XMB (predefinito)"
+
+#: contents/ui/XmbSettings.qml:541 contents/ui/XmbSettings.qml:556
 msgid "Custom file"
 msgstr "File personalizzato"
+
+#: contents/ui/XmbSettings.qml:541 contents/ui/XmbSettings.qml:556
+msgid "Off"
+msgstr "Disattivato"
 
 #: contents/ui/XmbSettings.qml:548
 msgid "Tick volume"
@@ -386,6 +268,89 @@ msgid ""
 msgstr ""
 "Il tema icone vale solo per la sessione XMB, dal prossimo accesso. La "
 "sessione desktop non viene modificata."
+
+#~ msgid "General"
+#~ msgstr "Generale"
+
+#~ msgid "Pick the applications to show in the dashboard's Favorites category."
+#~ msgstr ""
+#~ "Scegli le applicazioni da mostrare nella categoria Preferiti della "
+#~ "dashboard."
+
+#~ msgid "Search applications…"
+#~ msgstr "Cerca applicazioni…"
+
+#~ msgid "No applications found."
+#~ msgstr "Nessuna applicazione trovata."
+
+#~ msgid "Background opacity:"
+#~ msgstr "Opacità dello sfondo:"
+
+#~ msgid "Category icon size (px):"
+#~ msgstr "Dimensione icone categoria (px):"
+
+#~ msgid "App icon size (px):"
+#~ msgstr "Dimensione icone applicazioni (px):"
+
+#~ msgid "Cross position (from left):"
+#~ msgstr "Posizione della croce (da sinistra):"
+
+#~ msgid "Reset section to defaults"
+#~ msgstr "Ripristina i valori predefiniti della sezione"
+
+#~ msgid "Language:"
+#~ msgstr "Lingua:"
+
+#~ msgid "Time format:"
+#~ msgstr "Formato dell'ora:"
+
+#~ msgid "Date format:"
+#~ msgstr "Formato della data:"
+
+#~ msgid "Show date:"
+#~ msgstr "Mostra la data:"
+
+#~ msgid "Navigation tick:"
+#~ msgstr "Suono di navigazione:"
+
+#~ msgid "Custom file…"
+#~ msgstr "File personalizzato…"
+
+#~ msgid "Custom sound file:"
+#~ msgstr "File audio personalizzato:"
+
+#~ msgid "/path/to/sound.wav or .mp3"
+#~ msgstr "/percorso/del/suono.wav o .mp3"
+
+#~ msgid ""
+#~ "The original PS3 sound is not bundled (Sony copyright). Point this at "
+#~ "your own local copy. WAV gives the lowest latency."
+#~ msgstr ""
+#~ "Il suono originale della PS3 non è incluso (copyright Sony). Indica qui "
+#~ "una tua copia locale. Il formato WAV ha la latenza più bassa."
+
+#~ msgid "Volume:"
+#~ msgstr "Volume:"
+
+#~ msgid "Background ambience:"
+#~ msgstr "Ambiente di sottofondo:"
+
+#~ msgid "Custom ambience file:"
+#~ msgstr "File dell'ambiente personalizzato:"
+
+#~ msgid "/path/to/loop.wav or .mp3"
+#~ msgstr "/percorso/del/loop.wav o .mp3"
+
+#~ msgid ""
+#~ "The file loops while the dashboard is open. WAV loops gaplessly; mp3/ogg "
+#~ "may have a small seam at the loop point."
+#~ msgstr ""
+#~ "Il file si ripete in loop mentre la dashboard è aperta. Il WAV si ripete "
+#~ "senza interruzioni; mp3/ogg possono avere un piccolo stacco al punto di "
+#~ "ripetizione."
+
+#~ msgid "Show all categories"
+#~ msgstr "Mostra tutte le categorie"
 
 #~ msgid "Audio device"
 #~ msgstr "Dispositivo audio"

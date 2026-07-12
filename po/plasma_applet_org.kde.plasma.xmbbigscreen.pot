@@ -14,172 +14,11 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: contents/config/config.qml:12
-msgid "General"
-msgstr ""
-
-#: contents/config/config.qml:17 contents/ui/Dashboard.qml:249
-#: contents/ui/XmbSettings.qml:131
+#: contents/ui/Dashboard.qml:249 contents/ui/XmbSettings.qml:131
 msgid "Favorites"
-msgstr ""
-
-#: contents/ui/config/ConfigFavorites.qml:63
-msgid "Pick the applications to show in the dashboard's Favorites category."
-msgstr ""
-
-#: contents/ui/config/ConfigFavorites.qml:70
-msgid "Search applications…"
-msgstr ""
-
-#: contents/ui/config/ConfigFavorites.qml:133
-msgid "No applications found."
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:93 contents/ui/XmbSettings.qml:126
-msgid "Appearance"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:98
-msgid "Background opacity:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:113
-msgid "Category icon size (px):"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:119
-msgid "App icon size (px):"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:124
-msgid "Cross position (from left):"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:138
-#: contents/ui/config/ConfigGeneral.qml:186
-#: contents/ui/config/ConfigGeneral.qml:257
-msgid "Reset section to defaults"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:144 contents/ui/XmbSettings.qml:132
-#: contents/ui/XmbSettings.qml:679
-msgid "Language"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:150
-msgid "Language:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:153
-#: contents/ui/config/ConfigGeneral.qml:170
-#: contents/ui/config/ConfigGeneral.qml:177 contents/ui/XmbSettings.qml:506
-#: contents/ui/XmbSettings.qml:514 contents/ui/XmbSettings.qml:680
-msgid "System"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:162 contents/ui/XmbSettings.qml:128
-msgid "Clock"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:168
-msgid "Time format:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:170 contents/ui/XmbSettings.qml:506
-msgid "12-hour"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:170 contents/ui/XmbSettings.qml:506
-msgid "24-hour"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:175
-msgid "Date format:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:177 contents/ui/XmbSettings.qml:514
-msgid "Day/month"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:177 contents/ui/XmbSettings.qml:514
-msgid "Month/day"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:182
-msgid "Show date:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:192 contents/ui/XmbSettings.qml:129
-msgid "Sounds"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:198
-msgid "Navigation tick:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:200
-#: contents/ui/config/ConfigGeneral.qml:231 contents/ui/XmbSettings.qml:541
-#: contents/ui/XmbSettings.qml:556
-msgid "XMB (default)"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:200
-#: contents/ui/config/ConfigGeneral.qml:231
-msgid "Custom file…"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:200
-#: contents/ui/config/ConfigGeneral.qml:231 contents/ui/XmbSettings.qml:541
-#: contents/ui/XmbSettings.qml:556
-msgid "Off"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:205
-msgid "Custom sound file:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:208
-msgid "/path/to/sound.wav or .mp3"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:215
-msgid ""
-"The original PS3 sound is not bundled (Sony copyright). Point this at your "
-"own local copy. WAV gives the lowest latency."
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:219
-#: contents/ui/config/ConfigGeneral.qml:250
-msgid "Volume:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:229
-msgid "Background ambience:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:236
-msgid "Custom ambience file:"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:239
-msgid "/path/to/loop.wav or .mp3"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:246
-msgid ""
-"The file loops while the dashboard is open. WAV loops gaplessly; mp3/ogg may "
-"have a small seam at the loop point."
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:263 contents/ui/XmbSettings.qml:130
-msgid "Visible categories"
-msgstr ""
-
-#: contents/ui/config/ConfigGeneral.qml:296
-msgid "Show all categories"
 msgstr ""
 
 #: contents/ui/HomeOverlay.qml:145
@@ -290,8 +129,28 @@ msgstr ""
 msgid "System default"
 msgstr ""
 
+#: contents/ui/XmbSettings.qml:126
+msgid "Appearance"
+msgstr ""
+
 #: contents/ui/XmbSettings.qml:127
 msgid "Background"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:128
+msgid "Clock"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:129
+msgid "Sounds"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:130
+msgid "Visible categories"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:132 contents/ui/XmbSettings.qml:679
+msgid "Language"
 msgstr ""
 
 #: contents/ui/XmbSettings.qml:133
@@ -338,8 +197,29 @@ msgstr ""
 msgid "Time format"
 msgstr ""
 
+#: contents/ui/XmbSettings.qml:506 contents/ui/XmbSettings.qml:514
+#: contents/ui/XmbSettings.qml:680
+msgid "System"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:506
+msgid "12-hour"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:506
+msgid "24-hour"
+msgstr ""
+
 #: contents/ui/XmbSettings.qml:513
 msgid "Date format"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:514
+msgid "Day/month"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:514
+msgid "Month/day"
 msgstr ""
 
 #: contents/ui/XmbSettings.qml:522
@@ -351,7 +231,15 @@ msgid "Navigation tick"
 msgstr ""
 
 #: contents/ui/XmbSettings.qml:541 contents/ui/XmbSettings.qml:556
+msgid "XMB (default)"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:541 contents/ui/XmbSettings.qml:556
 msgid "Custom file"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:541 contents/ui/XmbSettings.qml:556
+msgid "Off"
 msgstr ""
 
 #: contents/ui/XmbSettings.qml:548
