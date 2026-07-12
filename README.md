@@ -133,7 +133,7 @@ Changes apply live.
   used under its MIT licence. That project in turn credits [Alphardex]'s CodePen
   prototype and Sony's original XMB design.
 - The settings window replicates the Plasma Bigscreen settings app UI
-  (GPL-2.0-or-later, by the KDE contributors credited in the file).
+  (GPL-2.0-or-later, by the KDE contributors Marco Martin <mart@kde.org>, Aditya Mehra <aix.m@outlook.com>, Devin Lin <devin@kde.org>).
 - All sounds are original synthesis (see `tools/`); no PlayStation audio is bundled.
 - App data comes from Plasma's own menu model (the same one Kickoff uses).
 
