@@ -91,6 +91,16 @@ BorderActivateAll[$i]=9
 BorderActivate[$i]=9
 BorderAlternativeActivate[$i]=9
 EOF
+
+# Icon theme chosen in the XMB settings (a plain theme id, if any): pin it into the
+# session-only cascade as an immutable key so it wins over the shared kdeglobals
+# without ever touching the desktop's theme. Empty/missing = system default.
+xmb_icons="$xmb_conf/icontheme"
+rm -f "$xmb_conf/kdeglobals"
+if [ -r "$xmb_icons" ]; then
+    theme=$(head -n1 "$xmb_icons" 2>/dev/null | tr -cd 'A-Za-z0-9_.+-')
+    [ -n "$theme" ] && printf '[Icons]\nTheme[$i]=%s\n' "$theme" > "$xmb_conf/kdeglobals"
+fi
 export XDG_CONFIG_DIRS="$xmb_conf:$XDG_CONFIG_DIRS"
 
 startplasma-wayland --xwayland --libinput --exit-with-session=/usr/lib/startplasma-waylandsession
