@@ -12,6 +12,7 @@ xmb-log.txt
 # File di sistema
 .DS_Store
 Thumbs.db
+.directory
 
 # Editor / IDE
 .vscode/

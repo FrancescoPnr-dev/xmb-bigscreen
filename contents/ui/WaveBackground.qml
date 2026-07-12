@@ -1,10 +1,8 @@
 // SPDX-FileCopyrightText: 2025 Mart (https://github.com/linkev/PlayStation-3-XMB, MIT)
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only AND MIT
-//
-// Native Qt6 port of linkev/PlayStation-3-XMB. Three ShaderEffect layers drawn in
-// order: gradient, wave mesh, particles. The wave is displaced per-vertex on a
-// GridMesh rather than per-pixel to keep the GPU cost down.
+// Qt6 port of linkev/PlayStation-3-XMB: gradient, wave mesh and particles as
+// ShaderEffect layers; the wave displaces a GridMesh per-vertex to save GPU.
 import QtQuick
 
 Item {

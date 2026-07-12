@@ -1,8 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// Icon + label cell shared by the category bar and the app column. It owns the XMB
-// focus emphasis (selected item big and opaque, neighbours shrink and fade), animated
-// here so both views feel the same. The view only sets `selected` and `neighbourDistance`.
+// Icon + label cell shared by both arms of the cross; owns the XMB focus emphasis
+// animations. The view only sets `selected` and `neighbourDistance`.
 import QtQuick
 import QtQuick.Effects
 import org.kde.kirigami as Kirigami
@@ -120,9 +119,8 @@ Item {
     }
 
     MouseArea {
-        // App style: cover just the icon+label so the hand cursor / click area matches the
-        // app, not the full column width. Category style: fill the cell to swallow stray
-        // clicks (so they don't fall through and close the dashboard).
+        // Apps: cover icon+label only, so the click area matches the app. Categories:
+        // fill the cell to swallow stray clicks.
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         width: delegate.labelBelow ? delegate.width : appRow.width

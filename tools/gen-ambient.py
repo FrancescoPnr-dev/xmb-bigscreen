@@ -52,9 +52,8 @@ def pad(side):
     return s*(0.82+0.18*np.cos(2*np.pi*t/26.0))     # slow breathing swell (period | L)
 padL,padR=pad('L'),pad('R')
 
-# The ethereal bed ducks out for the long low third note and the wind interlude, then
-# eases back in before the loop wraps (gate is 1.0 at both t=0 and t=L, so the loop
-# stays seamless).
+# The bed ducks out for the low third note and the wind interlude, easing back
+# before the wrap (gate is 1.0 at both ends, so the loop stays seamless).
 fo0,fo1=11.0,12.2; fi0,fi1=24.0,26.0
 padGate=np.ones(n)
 mo=(t>=fo0)&(t<fo1); padGate[mo]=0.5+0.5*np.cos(np.pi*(t[mo]-fo0)/(fo1-fo0))
@@ -115,9 +114,8 @@ wind2A=0.16*air2*w2env                                # louder than the mid gust
 pan2=0.5+0.3*np.cos(2*np.pi*(t-ia)/2.5)
 wind2L=wind2A*pan2; wind2R=wind2A*(1-pan2)
 
-# Light harmonious strings over the wind: a warm low-mid bowed chord (A2-E3-A3-C#4),
-# gentle ensemble detune + vibrato, swelling in and out with the same wind window.
-# Deliberately low (no acute harmonics) so it accompanies rather than cuts through.
+# Light strings over the wind: a warm low bowed chord swelling with the same wind
+# window, kept low so it accompanies rather than cuts through.
 strL=np.zeros(n); strR=np.zeros(n)
 chord=[110,165,220,277]                               # A2, E3, A3, C#4 — warm register
 for i,f in enumerate(chord):

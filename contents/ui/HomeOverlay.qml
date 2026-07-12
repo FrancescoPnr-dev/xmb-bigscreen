@@ -1,9 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// System overlay: a top band with the system controls (power and settings
-// drop-downs, volume/brightness adjusted after Enter with left/right) and a
-// centred row of live window previews for the open apps, alt-tab style.
-// Up/down always switches between the band and the cards.
+// System overlay: a top band with the system controls and drop-downs, plus a
+// centred alt-tab row of live app previews. Up/down switches between the two.
 import QtQuick
 import QtQuick.Effects
 import org.kde.taskmanager as TaskManager

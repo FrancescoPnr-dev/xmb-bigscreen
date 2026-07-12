@@ -1,9 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// Vertical arm of the XMB cross: the current app is pinned at the intersection and the
-// list glides up/down around it. Changing category swaps the whole model, resets to the
-// top and cross-fades. `model` is a kicker AbstractModel with display/decoration roles
-// and trigger(row, actionId, argument).
+// Vertical arm of the cross: the current app pins at the intersection and the list
+// glides around it; category changes swap the model, reset to the top and cross-fade.
 import QtQuick
 
 Item {
@@ -69,9 +67,8 @@ Item {
         spacing: column.listSpacing
         currentIndex: 0
         keyNavigationEnabled: false
-        // Non-interactive on purpose: an interactive ListView would flick with inertia, so
-        // a fast wheel overshoots and snaps imprecisely. Dashboard's WheelHandler drives it
-        // one app per notch instead (and gates the wheelLocked case).
+        // Non-interactive on purpose: inertial flicks would overshoot; Dashboard's
+        // WheelHandler steps it one app per notch instead.
         interactive: false
 
         // Pin the current app to the intersection; glide the rest around it.

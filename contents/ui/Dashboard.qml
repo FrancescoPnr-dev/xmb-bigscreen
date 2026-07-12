@@ -340,7 +340,6 @@ Item {
             id: pointerTracker
         }
 
-        // Horizontal arm
         CategoryBar {
             id: categoryBar
             width: parent.width
@@ -365,7 +364,6 @@ Item {
             onCommitted: (index) => dashboard.committedIndex = index
         }
 
-        // Vertical arm
         AppColumn {
             id: appColumn
             x: content.interX - dashboard.appIconSize / 2
@@ -389,7 +387,6 @@ Item {
                 : null
         }
 
-        // Navigation
         Keys.onLeftPressed:  categoryBar.goPrev()
         Keys.onRightPressed: categoryBar.goNext()
         Keys.onUpPressed:    appColumn.up()
@@ -397,9 +394,8 @@ Item {
         Keys.onReturnPressed: appColumn.launchCurrent()
         Keys.onEnterPressed:  appColumn.launchCurrent()
 
-        // Type-to-search: a printable char opens the KRunner overlay seeded with it;
-        // pad Triangle (KEY_GAMES: evdev 417, xkb 425) opens it empty with the
-        // on-screen keyboard; nav keys (empty text) fall through to the handlers above.
+        // Type-to-search: printable chars open the KRunner overlay seeded; pad Triangle
+        // (KEY_GAMES: evdev 417, xkb 425) opens it empty with the on-screen keyboard.
         Keys.onPressed: (event) => {
             if (!searchOverlay.active
                     && (event.nativeScanCode === 417 || event.nativeScanCode === 425)) {

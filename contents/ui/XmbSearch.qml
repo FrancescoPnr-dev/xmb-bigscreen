@@ -1,9 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// Type-to-search over KRunner (Milou) results, shown at the top of the dashboard,
-// with an on-screen keyboard for gamepad text entry (arrows navigate the keys,
-// Cross inserts, Square deletes). Enter or middle-click runs the selection;
-// Esc, Circle or Triangle exits.
+// Type-to-search over KRunner (Milou) results, with an on-screen keyboard for the
+// pad. Enter or middle-click runs the selection; Esc, Circle or Triangle exits.
 import QtQuick
 import org.kde.kirigami as Kirigami
 import org.kde.milou as Milou
@@ -94,10 +92,8 @@ FocusScope {
             Keys.onDownPressed: osk.move(0, 1)
             Keys.onLeftPressed: osk.move(-1, 0)
             Keys.onRightPressed: osk.move(1, 0)
-            // L1/R1 arrive as Shift+Tab/Tab and move the result selection; Triangle
-            // arrives as KEY_GAMES (evdev 417, xkb 425) and closes; Square arrives
-            // as KEY_MENU (evdev 139, xkb 147) and deletes, like Backspace; printable
-            // characters from a real keyboard are appended by hand.
+            // L1/R1 (Shift+Tab/Tab) move the selection; Triangle (KEY_GAMES 417/425) closes;
+            // Square (KEY_MENU 139/147) deletes; printable keys are appended by hand.
             Keys.onPressed: (event) => {
                 if (event.nativeScanCode === 417 || event.nativeScanCode === 425) {
                     search.stop()

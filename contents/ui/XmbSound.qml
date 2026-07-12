@@ -1,8 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// One-shot or looping sound player for UI feedback (navigation tick, ambience).
-// WAV goes through SoundEffect (low latency, clean retrigger, gapless loop);
-// anything else via MediaPlayer. play() restarts from the start; empty source = silent.
+// UI sound player: WAV via SoundEffect (low latency, gapless loop), anything else
+// via MediaPlayer. play() restarts from the start; empty source = silent.
 import QtQuick
 import QtMultimedia
 
@@ -17,9 +16,8 @@ Item {
                                                       : playerLoader.item ? playerLoader.item.playing : false
     property bool active: false
 
-    // QtMultimedia players stay wired to the output they were created with — a dead one,
-    // if we started before any sink existed (session start, HDMI handshake) — and setting
-    // audioDevice on a live player is inert; rebuild them whenever the default changes.
+    // QtMultimedia never rebinds a player to a new sink and setting audioDevice live
+    // is inert: rebuild the players whenever the default output changes.
     MediaDevices { id: mediaDevices }
     readonly property string outputId: mediaDevices.defaultAudioOutput.description
     onOutputIdChanged: {

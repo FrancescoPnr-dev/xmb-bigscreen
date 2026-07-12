@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 # SPDX-FileCopyrightText: 2026 Francesco Panarese
 # SPDX-License-Identifier: GPL-3.0-only
-# Generates the per-controller SDL mapping for the Bigscreen input handler and
-# is run automatically at every XMB session login. Triangle always emits the
-# Games key (toggles the XMB search; the Menu key won't do — the native
-# Bigscreen homescreen leaves a global shortcut on it) and Square keeps the
-# Menu key (deletes in the on-screen keyboard); the analog sticks are swapped
-# (pointer on the left, list navigation on the right, L3 as click) only when
-# enabled from the XMB settings or with --on. Only the input handler's systemd
-# unit loads the file, so games keep the physical layout.
+# Per-controller SDL mapping for the Bigscreen input handler only (games keep the
+# physical layout): Triangle -> Games key; sticks swapped when enabled (--on/--off).
 import ctypes
 import os
 import sys

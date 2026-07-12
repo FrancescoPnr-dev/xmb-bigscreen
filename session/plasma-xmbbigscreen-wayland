@@ -2,10 +2,8 @@
 # SPDX-FileCopyrightText: 2026 Francesco Panarese
 # SPDX-License-Identifier: GPL-3.0-only
 
-# WirePlumber keeps one per-user audio state (volumes, mutes, default device), so the
-# TV and desktop sessions would trample each other's. Give each its own persistent
-# slot and swap them around the session; the parked desktop slot doubles as the
-# crash marker, so an unclean exit heals on the next swap.
+# WirePlumber keeps one per-user audio state: give each session its own slot and
+# swap on enter/exit; the parked desktop slot doubles as the crash marker.
 wp_state="${XDG_STATE_HOME:-$HOME/.local/state}/wireplumber"
 wp_desktop="$wp_state.desktop-session"
 wp_xmb="$wp_state.xmb-session"
@@ -34,9 +32,8 @@ audio_state_exit() {
     rm -rf "$wp_xmb"
     [ -d "$wp_state" ] && mv "$wp_state" "$wp_xmb"
     [ -d "$wp_desktop" ] && mv "$wp_desktop" "$wp_state"
-    # Restart only after the logout churn settles: a USB DAC re-probed too early loses
-    # its analog profile. The transient timer outlives this session; if the whole user
-    # manager goes down with it, the next login starts wireplumber fresh anyway.
+    # Restart only after the logout churn settles: a USB DAC re-probed too early
+    # loses its analog profile. A dead user manager just means a fresh start instead.
     systemd-run --user --on-active=5 systemctl --user start wireplumber 2>/dev/null \
         || systemctl --user start wireplumber 2>/dev/null
 }
@@ -48,9 +45,8 @@ stop_stale_inputhandlers() {
 }
 
 audio_wait_ready() {
-    # The wireplumber restarted by the state swap needs a moment to export the real
-    # sinks; if plasmashell starts while only the dummy output exists, QtMultimedia
-    # binds its outputs to nothing and the XMB sounds stay silent all session.
+    # Wait for real sinks: if plasmashell starts while only the dummy output exists,
+    # QtMultimedia binds to nothing and the XMB sounds stay silent all session.
     i=0
     while [ "$i" -lt 40 ]; do
         pw-dump 2>/dev/null | grep -qE '"node\.name": *"(alsa|bluez)_output' && return
@@ -75,9 +71,8 @@ export PLASMA_DEFAULT_SHELL=org.kde.plasma.xmbbigscreen
 # mode; drop the override, the mode is configured explicitly below.
 unset KWIN_IM_SHOW_ALWAYS
 
-# TV defaults regardless of the desktop session's kwinrc: one virtual desktop, no
-# hot edges or corners. The [$i] locks apply only through this session's
-# XDG_CONFIG_DIRS cascade; the shared ~/.config/kwinrc is never touched.
+# TV defaults regardless of the desktop's kwinrc: the [$i] locks apply only through
+# this session's XDG_CONFIG_DIRS cascade; the shared ~/.config/kwinrc is untouched.
 xmb_conf="${XDG_CONFIG_HOME:-$HOME/.config}/xmb-bigscreen"
 mkdir -p "$xmb_conf"
 cat > "$xmb_conf/kwinrc" <<'EOF'
@@ -121,27 +116,23 @@ VirtualKeyboardMode[$i]=2
 EOF
 
 # The lock screen is a dead end without a keyboard: never lock this session by
-# itself, neither on idle (the desktop's shared timeout would apply) nor when
-# resuming from sleep.
+# itself, neither on idle nor when resuming from sleep.
 cat > "$xmb_conf/kscreenlockerrc" <<'EOF'
 [Daemon]
 Autolock[$i]=false
 LockOnResume[$i]=false
 EOF
 
-# Compositor keyboard (plasma-keyboard, if installed) for regular apps: shown
-# whenever a text field activates (VirtualKeyboardMode=2 above), compact instead
-# of full-width, and navigable with the pad arrows. The XMB's own fields are
-# read-only to the input method and bring their own keyboard instead.
+# Compositor keyboard (plasma-keyboard, if installed) for regular apps: compact,
+# pad-navigable, shown when a text field activates. XMB fields bring their own.
 cat > "$xmb_conf/plasmakeyboardrc" <<'EOF'
 [General]
 keyboardNavigationEnabled[$i]=true
 panelFillScreenWidth[$i]=false
 EOF
 
-# Icon theme chosen in the XMB settings (a plain theme id, if any): pin it into the
-# session-only cascade as an immutable key so it wins over the shared kdeglobals
-# without ever touching the desktop's theme. Empty/missing = system default.
+# Icon theme chosen in the XMB settings: pinned as an immutable key in the
+# session-only cascade, so it beats the shared kdeglobals without touching it.
 xmb_icons="$xmb_conf/icontheme"
 rm -f "$xmb_conf/kdeglobals"
 if [ -r "$xmb_icons" ]; then

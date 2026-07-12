@@ -3,11 +3,8 @@
 // SPDX-FileCopyrightText: 2019 Aditya Mehra <aix.m@outlook.com>
 // SPDX-FileCopyrightText: 2025 Devin Lin <devin@kde.org>
 // SPDX-License-Identifier: GPL-3.0-only
-// The XMB settings window, a faithful copy of the Bigscreen system settings
-// UI (settingsapp Main/ConfigWindowSidebar/SidebarDelegate, GPL-2.0-or-later,
-// relicensed into this file's GPL-3.0-only): translucent sidebar with a tall
-// light header, edge shadow, opaque main pane with the module title in the
-// same style. Writes straight into the plasmoid configuration.
+// The XMB settings window, a faithful copy of the Bigscreen settingsapp UI
+// (GPL-2.0-or-later, relicensed here into GPL-3.0-only).
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -740,9 +737,8 @@ Window {
                             id: favSearch
                             Layout.fillWidth: true
                             placeholderText: win.translate("Search applications")
-                            // Read-only with manual insertion, like the search overlay.
-                            // Enter opens the on-screen keyboard; while it is up the
-                            // arrows drive it and its hide key (or Back) closes it.
+                            // Read-only with manual insertion; Enter opens the on-screen keyboard,
+                            // arrows drive it while up, its hide key or Back closes it.
                             readOnly: true
                             onActiveFocusChanged: if (!activeFocus) favoritesPage.oskOpen = false
                             Keys.onReturnPressed: {

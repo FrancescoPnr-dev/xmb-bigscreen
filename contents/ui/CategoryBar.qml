@@ -1,10 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// Horizontal arm of the XMB cross. One source of truth: `position`, a fractional index.
-// No ListView/Flickable on purpose — it's a plain strip translated by `position`, so
-// there's no inertial momentum to overshoot the ends; position is clamped and integrated
-// directly. Keyboard/click glide to an integer and commit at once; the mouse edge hot
-// zones integrate at a distance-based speed and commit on snap.
+// Horizontal arm of the cross, a plain strip translated by `position` (fractional
+// index, clamped and integrated directly) so nothing ever overshoots the ends.
 import QtQuick
 
 Item {
@@ -66,8 +63,7 @@ Item {
 
     readonly property bool scrolling: scrollDirection !== 0 && count > 1
 
-    // While scrolling with the mouse, commit each category the instant it becomes current
-    // (like the keyboard) so the app column loads live. Gated so it doesn't fire during
+    // Mouse scrolling commits each category as it becomes current; gated off during
     // keyboard/click glides, which commit through selectIndex.
     onCurrentIndexChanged: if (scrolling) committed(currentIndex)
 

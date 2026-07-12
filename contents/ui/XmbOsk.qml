@@ -1,9 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// PS3-style on-screen keyboard: a passive grid the caller drives with move()
-// and activate() from its own key handlers (d-pad arrows and Enter from the
-// pad), so it needs no input-method plumbing and works on any text it is
-// wired to. Keys are also mouse-tappable.
+// PS3-style on-screen keyboard: a passive grid the caller drives via move() and
+// activate(), so it needs no input-method plumbing. Keys are also mouse-tappable.
 import QtQuick
 
 Item {

@@ -1,8 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// Single gateway to the session backends shared by the dashboard, top bar and
-// home overlay: volume (plasma-pa), display brightness (powerdevil), the shell
-// OSD, power/session actions, the Bigscreen settings app and sleep inhibition.
+// Single gateway to the session backends: volume, brightness, OSD, power/session
+// actions, the Bigscreen settings app and sleep inhibition.
 import QtQuick
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.plasma.private.sessions as Sessions
@@ -71,10 +70,8 @@ Item {
         })
     }
 
-    // A controller plugged in mid-session may be new to the mapping file: regenerate
-    // it and, only when it actually changed, restart the input handler so SDL reloads
-    // it (mappings are read once at daemon start). The change guard prevents loops,
-    // since the restarted daemon announces the pad again.
+    // Hotplugged pads may be new to the mapping file: regenerate it and restart the
+    // input handler only when it changed (SDL reads it once; the guard prevents loops).
     function refreshPadMapping() {
         launcher.connectSource("sh -c '"
             + "f=\"${XDG_CONFIG_HOME:-$HOME/.config}/xmb-bigscreen/gamecontroller-swap.txt\"; "

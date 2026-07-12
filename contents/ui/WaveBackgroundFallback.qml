@@ -1,8 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-//
-// Static gradient used when ShaderEffect is unavailable (e.g. the software backend).
-// Mirrors WaveBackground's property set so Dashboard can bind either one.
+// Static gradient for when ShaderEffect is unavailable; mirrors WaveBackground's
+// property set so Dashboard can bind either one.
 import QtQuick
 
 Item {
