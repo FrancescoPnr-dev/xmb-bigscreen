@@ -9,9 +9,7 @@ Plasma Wayland session on top of Plasma Bigscreen, with the classic wave backgro
 search and subtle sounds. Born as an independent fork of
 [XMB Dashboard](https://github.com/FrancescoPnr-dev/xmb-dashboard).
 
-> Built and tested on Plasma 6.7 / Qt 6.
-
-<img width="640" height="360" alt="output_compresso" src="https://github.com/user-attachments/assets/50e8aa85-5891-46c0-b3a4-89c56a1cb6be" />
+> Built and tested on Plasma BigScreen 6.7 / Qt 6.
 
 
 
