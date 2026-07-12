@@ -56,7 +56,7 @@ Bigscreen's, the Wayland session and the pad-mapping tool. Remove everything wit
 
 > **Tip:** the [YAMIS](https://store.kde.org/p/2303161) monochrome icon theme
 > (KDE Store, GPL-3.0, by DIRN) fits the XMB look perfectly. Install it, then pick it
-> in *XMB settings → Icons* — it applies to the XMB session only, your desktop keeps
+> in *XMB settings → Icons* — it applies to the XMB session only (need logout-login), your desktop keeps
 > its own theme.
 
 > **Note:** the `tools/` and `po/` folders are development sources only (sound
