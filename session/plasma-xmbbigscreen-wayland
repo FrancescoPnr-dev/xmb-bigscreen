@@ -47,6 +47,10 @@ stop_stale_inputhandlers() {
 stop_stale_inputhandlers
 audio_state_enter
 
+# Refresh the pad mappings for the controllers present at login: the search keys
+# work out of the box, sticks swapped only if enabled in the XMB settings.
+xmb-bigscreen-stick-swap >/dev/null 2>&1 || true
+
 # Reuse Bigscreen's environment, then load our shell instead of the native one.
 . plasma-bigscreen-common-env
 export PLASMA_DEFAULT_SHELL=org.kde.plasma.xmbbigscreen

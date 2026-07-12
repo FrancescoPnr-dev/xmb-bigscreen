@@ -40,6 +40,7 @@ var catalogs = {
   "Visible categories": "Categorie visibili",
   "Language": "Lingua",
   "Icons": "Icone",
+  "Controller": "Controller",
   "Background opacity": "Opacità sfondo",
   "Category icon size": "Dimensione icone categorie",
   "App icon size": "Dimensione icone app",
@@ -66,6 +67,8 @@ var catalogs = {
   "Ambience volume": "Volume ambiente",
   "Search applications": "Cerca applicazioni",
   "Icon theme": "Tema icone",
-  "The icon theme applies to the XMB session only, from the next login. Your desktop session is not affected.": "Il tema icone vale solo per la sessione XMB, dal prossimo accesso. La sessione desktop non viene modificata."
+  "The icon theme applies to the XMB session only, from the next login. Your desktop session is not affected.": "Il tema icone vale solo per la sessione XMB, dal prossimo accesso. La sessione desktop non viene modificata.",
+  "Pointer on the left stick": "Puntatore sullo stick sinistro",
+  "Moves the mouse pointer with the left stick and scrolls lists with the right, with L3 as click. Games always see the physical layout. Applies from the next login.": "Sposta il puntatore del mouse con lo stick sinistro e scorre gli elenchi con il destro, con L3 come clic. I giochi vedono sempre la disposizione fisica. Si applica dal prossimo accesso."
  }
 }

@@ -47,6 +47,7 @@ Window {
         engagedRow = null
         sidebar.forceActiveFocus()
         iconThemeQuery.refresh()
+        stickSwapQuery.refresh()
     }
     function hide() {
         engagedRow = null
@@ -121,6 +122,24 @@ Window {
             iconThemeWriter.connectSource("sh -c 'mkdir -p " + dir + " && printf \"%s\\n\" \"" + safe + "\" > " + dir + "/icontheme'")
     }
 
+    // ---- stick-swap preference (flag file read by the session script) ----
+    property bool stickSwap: false
+    P5Support.DataSource {
+        id: stickSwapQuery
+        engine: "executable"
+        function refresh() {
+            connectSource("sh -c 'test -e \"${XDG_CONFIG_HOME:-$HOME/.config}/xmb-bigscreen/stickswap\" && echo 1 || echo 0'")
+        }
+        onNewData: (src, data) => {
+            win.stickSwap = ((data["stdout"] || "") + "").trim() === "1"
+            disconnectSource(src)
+        }
+    }
+    function setStickSwap(enabled) {
+        stickSwap = enabled
+        iconThemeWriter.connectSource("xmb-bigscreen-stick-swap " + (enabled ? "--on" : "--off"))
+    }
+
     // ---- sections ----
     readonly property var sections: [
         { id: "appearance", label: win.translate("Appearance"),        icon: "preferences-desktop-theme" },
@@ -130,7 +149,8 @@ Window {
         { id: "categories", label: win.translate("Visible categories"), icon: "view-list-symbolic" },
         { id: "favorites",  label: win.translate("Favorites"),         icon: "bookmarks" },
         { id: "language",   label: win.translate("Language"),          icon: "preferences-desktop-locale" },
-        { id: "icons",      label: win.translate("Icons"),             icon: "preferences-desktop-icons" }
+        { id: "icons",      label: win.translate("Icons"),             icon: "preferences-desktop-icons" },
+        { id: "controller", label: win.translate("Controller"),        icon: "input-gamepad" }
     ]
 
     // A label that scrolls horizontally when focused and too long to fit,
@@ -721,6 +741,31 @@ Window {
                             }
                         }
                         function focusFirst() { ic0.forceActiveFocus() }
+                    }
+
+                    // 8 — Controller
+                    SettingsFlick {
+                        id: controllerPage
+                        ColumnLayout {
+                            width: controllerPage.width
+                            spacing: Kirigami.Units.smallSpacing
+                            Bigscreen.SwitchDelegate {
+                                id: ct0; focus: true
+                                Layout.fillWidth: true
+                                text: win.translate("Pointer on the left stick")
+                                checked: win.stickSwap
+                                onToggled: win.setStickSwap(checked)
+                                Keys.onLeftPressed: sidebar.forceActiveFocus()
+                            }
+                            QQC2.Label {
+                                Layout.fillWidth: true
+                                Layout.topMargin: Kirigami.Units.smallSpacing
+                                wrapMode: Text.WordWrap
+                                opacity: 0.8
+                                text: win.translate("Moves the mouse pointer with the left stick and scrolls lists with the right, with L3 as click. Games always see the physical layout. Applies from the next login.")
+                            }
+                        }
+                        function focusFirst() { ct0.forceActiveFocus() }
                     }
                 }
             }

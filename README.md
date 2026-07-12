@@ -54,7 +54,7 @@ sudo ./install.sh     # remove with: sudo ./uninstall.sh
 Log out and pick **XMB BigScreen** at the login manager, next to your normal
 Plasma and Plasma Bigscreen sessions. The installer deploys the homescreen
 containment, a thin shell profile on top of Bigscreen's, the Wayland session,
-and the optional stick-swap tool.
+and the pad-mapping tool.
 
 > **Note:** the `tools/` and `po/` folders are development sources only (sound
 > generators, translation files, packaging). Nothing from them ever runs on
@@ -67,29 +67,26 @@ The XMB is the session's homescreen — always there, with apps launching on top
 - **Arrows / D-pad / left stick / wheel / screen edges** — move between apps and categories.
 - **Enter / South button or left-click** the highlighted app, or **middle-click anywhere** — launch it.
 - **Start typing** — search; Enter or middle-click runs the top result.
-- **Triangle (with the remap tool below)** — search with an on-screen keyboard:
-  d-pad moves the key highlight, **Cross** inserts, **Square** deletes,
-  **L1/R1** move through the results, **Circle** closes.
+- **Triangle** — search with an on-screen keyboard: d-pad moves the key
+  highlight, **Cross** inserts, **Square** deletes, **L1/R1** move through
+  the results, **Circle** closes.
 - **PS/Guide button or Meta** — home overlay over the running app: open apps,
   power actions, volume/brightness, quick settings.
 - **Back / Esc** — close the overlay.
 
-### Remapping the pad
+### Pad mapping
 
-By default the Bigscreen input handler moves the mouse pointer with the **right**
-stick, navigates lists with the left, and gives Triangle and Square no useful
-role. The remap tool puts the pointer on the left stick (with list scrolling and
-L3-as-click accordingly) and wires Triangle to the XMB search and Square to
-delete in its on-screen keyboard:
+Controllers work out of the box: the session refreshes the pad mapping at every
+login, so Triangle (search) and Square (delete) are always wired. Only the
+system input handler sees the mapping — games keep the physical layout.
 
-```bash
-xmb-bigscreen-stick-swap        # with the controller connected
-xmb-bigscreen-stick-swap --off  # back to the physical layout
-```
-
-Takes effect at the next XMB session login. Only the system input handler sees
-the remap — games keep the physical layout. Run it once per controller and
-connection type (USB and Bluetooth count as different controllers).
+By default the Bigscreen input handler moves the mouse pointer with the
+**right** stick and navigates lists with the left. To put the pointer on the
+left stick (with list scrolling and L3-as-click accordingly), flip *Settings →
+XMB settings → Controller → Pointer on the left stick*, or run
+`xmb-bigscreen-stick-swap --on` (`--off` to go back). It applies from the next
+login. A controller must have been connected at least once at login for its
+special keys to work (USB and Bluetooth count as different controllers).
 
 ## Configuration
 

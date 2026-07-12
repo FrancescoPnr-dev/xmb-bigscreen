@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 03:10+0200\n"
+"POT-Creation-Date: 2026-07-12 17:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: contents/ui/Dashboard.qml:249 contents/ui/XmbSettings.qml:131
+#: contents/ui/Dashboard.qml:249 contents/ui/XmbSettings.qml:150
 msgid "Favorites"
 msgstr ""
 
@@ -81,7 +81,7 @@ msgstr ""
 msgid "System settings"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:165 contents/ui/XmbSettings.qml:336
+#: contents/ui/HomeOverlay.qml:165 contents/ui/XmbSettings.qml:356
 msgid "XMB settings"
 msgstr ""
 
@@ -125,145 +125,160 @@ msgstr ""
 msgid "XMB BigScreen is preventing the system from sleeping"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:83 contents/ui/XmbSettings.qml:96
+#: contents/ui/XmbSettings.qml:84 contents/ui/XmbSettings.qml:97
 msgid "System default"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:126
+#: contents/ui/XmbSettings.qml:145
 msgid "Appearance"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:127
+#: contents/ui/XmbSettings.qml:146
 msgid "Background"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:128
+#: contents/ui/XmbSettings.qml:147
 msgid "Clock"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:129
+#: contents/ui/XmbSettings.qml:148
 msgid "Sounds"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:130
+#: contents/ui/XmbSettings.qml:149
 msgid "Visible categories"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:132 contents/ui/XmbSettings.qml:679
+#: contents/ui/XmbSettings.qml:151 contents/ui/XmbSettings.qml:707
 msgid "Language"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:133
+#: contents/ui/XmbSettings.qml:152
 msgid "Icons"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:409
+#: contents/ui/XmbSettings.qml:153
+msgid "Controller"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:429
 msgid "Background opacity"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:416
+#: contents/ui/XmbSettings.qml:436
 msgid "Category icon size"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:423
+#: contents/ui/XmbSettings.qml:443
 msgid "App icon size"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:430
+#: contents/ui/XmbSettings.qml:450
 msgid "Cross position"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:437 contents/ui/XmbSettings.qml:484
+#: contents/ui/XmbSettings.qml:457 contents/ui/XmbSettings.qml:504
 msgid "Reset section"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:462
+#: contents/ui/XmbSettings.qml:482
 msgid "Adjust the wave colour behind the cross. Changes preview live."
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:466
+#: contents/ui/XmbSettings.qml:486
 msgid "Red"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:472
+#: contents/ui/XmbSettings.qml:492
 msgid "Green"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:478
+#: contents/ui/XmbSettings.qml:498
 msgid "Blue"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:505
+#: contents/ui/XmbSettings.qml:525
 msgid "Time format"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:506 contents/ui/XmbSettings.qml:514
-#: contents/ui/XmbSettings.qml:680
+#: contents/ui/XmbSettings.qml:526 contents/ui/XmbSettings.qml:534
+#: contents/ui/XmbSettings.qml:708
 msgid "System"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:506
+#: contents/ui/XmbSettings.qml:526
 msgid "12-hour"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:506
+#: contents/ui/XmbSettings.qml:526
 msgid "24-hour"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:513
+#: contents/ui/XmbSettings.qml:533
 msgid "Date format"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:514
+#: contents/ui/XmbSettings.qml:534
 msgid "Day/month"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:514
+#: contents/ui/XmbSettings.qml:534
 msgid "Month/day"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:522
+#: contents/ui/XmbSettings.qml:542
 msgid "Show date"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:540
+#: contents/ui/XmbSettings.qml:560
 msgid "Navigation tick"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:541 contents/ui/XmbSettings.qml:556
+#: contents/ui/XmbSettings.qml:561 contents/ui/XmbSettings.qml:576
 msgid "XMB (default)"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:541 contents/ui/XmbSettings.qml:556
+#: contents/ui/XmbSettings.qml:561 contents/ui/XmbSettings.qml:576
 msgid "Custom file"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:541 contents/ui/XmbSettings.qml:556
+#: contents/ui/XmbSettings.qml:561 contents/ui/XmbSettings.qml:576
 msgid "Off"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:548
+#: contents/ui/XmbSettings.qml:568
 msgid "Tick volume"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:555
+#: contents/ui/XmbSettings.qml:575
 msgid "Background ambience"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:563
+#: contents/ui/XmbSettings.qml:583
 msgid "Ambience volume"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:638
+#: contents/ui/XmbSettings.qml:658
 msgid "Search applications"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:697
+#: contents/ui/XmbSettings.qml:725
 msgid "Icon theme"
 msgstr ""
 
-#: contents/ui/XmbSettings.qml:712
+#: contents/ui/XmbSettings.qml:740
 msgid ""
 "The icon theme applies to the XMB session only, from the next login. Your "
 "desktop session is not affected."
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:755
+msgid "Pointer on the left stick"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:765
+msgid ""
+"Moves the mouse pointer with the left stick and scrolls lists with the "
+"right, with L3 as click. Games always see the physical layout. Applies from "
+"the next login."
 msgstr ""
