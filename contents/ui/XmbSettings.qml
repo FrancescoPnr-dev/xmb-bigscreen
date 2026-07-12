@@ -1,8 +1,9 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
 // The XMB settings window, styled after the system settings in the Bigscreen
-// session: an opaque dark window with a flat sidebar and a darker main pane of
-// native Bigscreen delegates. Writes straight into the plasmoid configuration.
+// session: a transparent sidebar over the dimmed waves and an opaque dark main
+// pane of native Bigscreen delegates. Writes straight into the plasmoid
+// configuration.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -25,17 +26,9 @@ Window {
     visible: false
     property real dim: visible ? 1.0 : 0.0
     Behavior on dim { NumberAnimation { duration: 180; easing.type: Easing.OutQuad } }
-    color: Qt.alpha(windowPalette.bg, dim)
+    // Transparent base: the sidebar sits on the dimmed waves, the main pane is opaque.
+    color: Qt.rgba(0, 0, 0, 0.62 * dim)
     flags: Qt.FramelessWindowHint
-
-    // The Window color set gives the sidebar base, like the system settings.
-    Item {
-        id: windowPalette
-        visible: false
-        Kirigami.Theme.inherit: false
-        Kirigami.Theme.colorSet: Kirigami.Theme.Window
-        readonly property color bg: Kirigami.Theme.backgroundColor
-    }
 
     LayerShell.Window.scope: "overlay"
     LayerShell.Window.anchors: LayerShell.Window.AnchorTop | LayerShell.Window.AnchorBottom
