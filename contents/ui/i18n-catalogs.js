@@ -44,7 +44,7 @@ var catalogs = {
   "App icon size": "Dimensione icone app",
   "Cross position": "Posizione della croce",
   "Reset section": "Ripristina sezione",
-  "Adjust the wave colour behind the cross. Changes preview live.": "Regola il colore dell'onda dietro la croce. Le modifiche si vedono in tempo reale.",
+  "Adjust the wave colour behind the cross.": "Regola il colore dell'onda dietro la croce.",
   "Red": "Rosso",
   "Green": "Verde",
   "Blue": "Blu",

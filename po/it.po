@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 19:56+0200\n"
+"POT-Creation-Date: 2026-07-12 22:28+0200\n"
 "PO-Revision-Date: 2026-07-02 12:00+0200\n"
 "Last-Translator: Francesco Panarese <FrancescoPnr-dev@proton.me>\n"
 "Language-Team: Italian\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: contents/ui/Dashboard.qml:249 contents/ui/XmbSettings.qml:150
+#: contents/ui/Dashboard.qml:249 contents/ui/XmbSettings.qml:160
 msgid "Favorites"
 msgstr "Preferiti"
 
@@ -66,7 +66,7 @@ msgstr "Esci sul desktop"
 msgid "System settings"
 msgstr "Impostazioni di sistema"
 
-#: contents/ui/HomeOverlay.qml:166 contents/ui/XmbSettings.qml:356
+#: contents/ui/HomeOverlay.qml:166 contents/ui/XmbSettings.qml:357
 msgid "XMB settings"
 msgstr "Impostazioni XMB"
 
@@ -118,150 +118,148 @@ msgstr "Controller di nuovo al sistema"
 msgid "XMB BigScreen is preventing the system from sleeping"
 msgstr "XMB BigScreen sta impedendo la sospensione del sistema"
 
-#: contents/ui/XmbSettings.qml:84 contents/ui/XmbSettings.qml:97
+#: contents/ui/XmbSettings.qml:94 contents/ui/XmbSettings.qml:107
 msgid "System default"
 msgstr "Predefinito di sistema"
 
-#: contents/ui/XmbSettings.qml:145
+#: contents/ui/XmbSettings.qml:155
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: contents/ui/XmbSettings.qml:146
+#: contents/ui/XmbSettings.qml:156
 msgid "Background"
 msgstr "Sfondo"
 
-#: contents/ui/XmbSettings.qml:147
+#: contents/ui/XmbSettings.qml:157
 msgid "Clock"
 msgstr "Orologio"
 
-#: contents/ui/XmbSettings.qml:148
+#: contents/ui/XmbSettings.qml:158
 msgid "Sounds"
 msgstr "Suoni"
 
-#: contents/ui/XmbSettings.qml:149
+#: contents/ui/XmbSettings.qml:159
 msgid "Visible categories"
 msgstr "Categorie visibili"
 
-#: contents/ui/XmbSettings.qml:151 contents/ui/XmbSettings.qml:719
+#: contents/ui/XmbSettings.qml:161 contents/ui/XmbSettings.qml:746
 msgid "Language"
 msgstr "Lingua"
 
-#: contents/ui/XmbSettings.qml:152
+#: contents/ui/XmbSettings.qml:162
 msgid "Icons"
 msgstr "Icone"
 
-#: contents/ui/XmbSettings.qml:153
+#: contents/ui/XmbSettings.qml:163
 msgid "Controller"
 msgstr "Controller"
 
-#: contents/ui/XmbSettings.qml:429
+#: contents/ui/XmbSettings.qml:433
 msgid "Background opacity"
 msgstr "Opacità sfondo"
 
-#: contents/ui/XmbSettings.qml:436
+#: contents/ui/XmbSettings.qml:440
 msgid "Category icon size"
 msgstr "Dimensione icone categorie"
 
-#: contents/ui/XmbSettings.qml:443
+#: contents/ui/XmbSettings.qml:447
 msgid "App icon size"
 msgstr "Dimensione icone app"
 
-#: contents/ui/XmbSettings.qml:450
+#: contents/ui/XmbSettings.qml:454
 msgid "Cross position"
 msgstr "Posizione della croce"
 
-#: contents/ui/XmbSettings.qml:457 contents/ui/XmbSettings.qml:504
+#: contents/ui/XmbSettings.qml:461 contents/ui/XmbSettings.qml:517
 msgid "Reset section"
 msgstr "Ripristina sezione"
 
-#: contents/ui/XmbSettings.qml:482
-msgid "Adjust the wave colour behind the cross. Changes preview live."
-msgstr ""
-"Regola il colore dell'onda dietro la croce. Le modifiche si vedono in tempo "
-"reale."
-
 #: contents/ui/XmbSettings.qml:486
+msgid "Adjust the wave colour behind the cross."
+msgstr "Regola il colore dell'onda dietro la croce."
+
+#: contents/ui/XmbSettings.qml:499
 msgid "Red"
 msgstr "Rosso"
 
-#: contents/ui/XmbSettings.qml:492
+#: contents/ui/XmbSettings.qml:505
 msgid "Green"
 msgstr "Verde"
 
-#: contents/ui/XmbSettings.qml:498
+#: contents/ui/XmbSettings.qml:511
 msgid "Blue"
 msgstr "Blu"
 
-#: contents/ui/XmbSettings.qml:525
+#: contents/ui/XmbSettings.qml:538
 msgid "Time format"
 msgstr "Formato ora"
 
-#: contents/ui/XmbSettings.qml:526 contents/ui/XmbSettings.qml:534
-#: contents/ui/XmbSettings.qml:720
+#: contents/ui/XmbSettings.qml:539 contents/ui/XmbSettings.qml:547
+#: contents/ui/XmbSettings.qml:747
 msgid "System"
 msgstr "Sistema"
 
-#: contents/ui/XmbSettings.qml:526
+#: contents/ui/XmbSettings.qml:539
 msgid "12-hour"
 msgstr "12 ore"
 
-#: contents/ui/XmbSettings.qml:526
+#: contents/ui/XmbSettings.qml:539
 msgid "24-hour"
 msgstr "24 ore"
 
-#: contents/ui/XmbSettings.qml:533
+#: contents/ui/XmbSettings.qml:546
 msgid "Date format"
 msgstr "Formato data"
 
-#: contents/ui/XmbSettings.qml:534
+#: contents/ui/XmbSettings.qml:547
 msgid "Day/month"
 msgstr "Giorno/mese"
 
-#: contents/ui/XmbSettings.qml:534
+#: contents/ui/XmbSettings.qml:547
 msgid "Month/day"
 msgstr "Mese/giorno"
 
-#: contents/ui/XmbSettings.qml:542
+#: contents/ui/XmbSettings.qml:555
 msgid "Show date"
 msgstr "Mostra data"
 
-#: contents/ui/XmbSettings.qml:560
+#: contents/ui/XmbSettings.qml:573
 msgid "Navigation tick"
 msgstr "Tick di navigazione"
 
-#: contents/ui/XmbSettings.qml:561 contents/ui/XmbSettings.qml:576
+#: contents/ui/XmbSettings.qml:574 contents/ui/XmbSettings.qml:589
 msgid "XMB (default)"
 msgstr "XMB (predefinito)"
 
-#: contents/ui/XmbSettings.qml:561 contents/ui/XmbSettings.qml:576
+#: contents/ui/XmbSettings.qml:574 contents/ui/XmbSettings.qml:589
 msgid "Custom file"
 msgstr "File personalizzato"
 
-#: contents/ui/XmbSettings.qml:561 contents/ui/XmbSettings.qml:576
+#: contents/ui/XmbSettings.qml:574 contents/ui/XmbSettings.qml:589
 msgid "Off"
 msgstr "Disattivato"
 
-#: contents/ui/XmbSettings.qml:568
+#: contents/ui/XmbSettings.qml:581
 msgid "Tick volume"
 msgstr "Volume tick"
 
-#: contents/ui/XmbSettings.qml:575
+#: contents/ui/XmbSettings.qml:588
 msgid "Background ambience"
 msgstr "Ambiente di sottofondo"
 
-#: contents/ui/XmbSettings.qml:583
+#: contents/ui/XmbSettings.qml:596
 msgid "Ambience volume"
 msgstr "Volume ambiente"
 
-#: contents/ui/XmbSettings.qml:658
+#: contents/ui/XmbSettings.qml:672
 msgid "Search applications"
 msgstr "Cerca applicazioni"
 
-#: contents/ui/XmbSettings.qml:737
+#: contents/ui/XmbSettings.qml:764
 msgid "Icon theme"
 msgstr "Tema icone"
 
-#: contents/ui/XmbSettings.qml:752
+#: contents/ui/XmbSettings.qml:779
 msgid ""
 "The icon theme applies to the XMB session only, from the next login. Your "
 "desktop session is not affected."
@@ -269,11 +267,11 @@ msgstr ""
 "Il tema icone vale solo per la sessione XMB, dal prossimo accesso. La "
 "sessione desktop non viene modificata."
 
-#: contents/ui/XmbSettings.qml:767
+#: contents/ui/XmbSettings.qml:794
 msgid "Pointer on the left stick"
 msgstr "Puntatore sullo stick sinistro"
 
-#: contents/ui/XmbSettings.qml:777
+#: contents/ui/XmbSettings.qml:804
 msgid ""
 "Moves the mouse pointer with the left stick and scrolls lists with the "
 "right, with L3 as click. Games always see the physical layout. Applies from "

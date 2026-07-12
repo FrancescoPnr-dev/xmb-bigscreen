@@ -12,26 +12,34 @@ Item {
     signal keyPressed(string text)
     signal backspacePressed()
     signal accepted()
+    signal dismissed()
 
+    property bool showHideKey: false
     property int page: 0
     property bool shift: false
     property int row: 1
     property int col: 0
 
+    // The optional hide key squeezes into the bottom row, plasma-keyboard style.
+    function bottomRow(pageLabel, punct) {
+        return showHideKey
+            ? [{k:"page",label:pageLabel,w:2},{k:"space",label:"",w:4.5},{t:punct},{k:"hide",label:"⌨︎",w:1.5},{k:"enter",label:"⏎",w:2}]
+            : [{k:"page",label:pageLabel,w:2.5},{k:"space",label:"",w:5},{t:punct},{k:"enter",label:"⏎",w:2.5}]
+    }
     readonly property var pages: [
         [
             [{t:"1"},{t:"2"},{t:"3"},{t:"4"},{t:"5"},{t:"6"},{t:"7"},{t:"8"},{t:"9"},{t:"0"}],
             [{t:"q"},{t:"w"},{t:"e"},{t:"r"},{t:"t"},{t:"y"},{t:"u"},{t:"i"},{t:"o"},{t:"p"}],
             [{t:"a"},{t:"s"},{t:"d"},{t:"f"},{t:"g"},{t:"h"},{t:"j"},{t:"k"},{t:"l"},{t:"'"}],
             [{k:"shift",label:"⇧",w:1.5},{t:"z"},{t:"x"},{t:"c"},{t:"v"},{t:"b"},{t:"n"},{t:"m"},{k:"back",label:"⌫",w:1.5}],
-            [{k:"page",label:"&123",w:2.5},{k:"space",label:"",w:5},{t:"."},{k:"enter",label:"⏎",w:2.5}]
+            bottomRow("&123", ".")
         ],
         [
             [{t:"1"},{t:"2"},{t:"3"},{t:"4"},{t:"5"},{t:"6"},{t:"7"},{t:"8"},{t:"9"},{t:"0"}],
             [{t:"!"},{t:"\""},{t:"£"},{t:"$"},{t:"%"},{t:"&"},{t:"/"},{t:"("},{t:")"},{t:"="}],
             [{t:"+"},{t:"-"},{t:"*"},{t:"_"},{t:":"},{t:";"},{t:"@"},{t:"#"},{t:"?"},{t:"^"}],
             [{t:"à"},{t:"è"},{t:"é"},{t:"ì"},{t:"ò"},{t:"ù"},{t:"ç"},{t:"€"},{k:"back",label:"⌫",w:1.5}],
-            [{k:"page",label:"abc",w:2.5},{k:"space",label:"",w:5},{t:","},{k:"enter",label:"⏎",w:2.5}]
+            bottomRow("abc", ",")
         ]
     ]
     readonly property var rows: pages[page]
@@ -84,6 +92,7 @@ Item {
         if (key.k === "shift")      shift = !shift
         else if (key.k === "page")  page = page === 0 ? 1 : 0
         else if (key.k === "back")  backspacePressed()
+        else if (key.k === "hide")  dismissed()
         else if (key.k === "enter") accepted()
         else if (key.k === "space") keyPressed(" ")
         else {

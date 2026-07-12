@@ -1,9 +1,8 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// The XMB settings window, styled after Plasma Bigscreen's own TV settings: a
-// left sidebar of sections and a right pane of native Bigscreen delegates.
-// Writes straight into the plasmoid configuration, so the wave/RGB preview is
-// live behind the semi-transparent window.
+// The XMB settings window, styled after the system settings in the Bigscreen
+// session: an opaque dark window with a flat sidebar and a darker main pane of
+// native Bigscreen delegates. Writes straight into the plasmoid configuration.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -24,10 +23,19 @@ Window {
     signal iconThemeWriteRequested(string theme)
 
     visible: false
-    property real dim: visible ? 0.62 : 0.0
+    property real dim: visible ? 1.0 : 0.0
     Behavior on dim { NumberAnimation { duration: 180; easing.type: Easing.OutQuad } }
-    color: Qt.rgba(0, 0, 0, dim)
+    color: Qt.alpha(windowPalette.bg, dim)
     flags: Qt.FramelessWindowHint
+
+    // The Window color set gives the sidebar base, like the system settings.
+    Item {
+        id: windowPalette
+        visible: false
+        Kirigami.Theme.inherit: false
+        Kirigami.Theme.colorSet: Kirigami.Theme.Window
+        readonly property color bg: Kirigami.Theme.backgroundColor
+    }
 
     LayerShell.Window.scope: "overlay"
     LayerShell.Window.anchors: LayerShell.Window.AnchorTop | LayerShell.Window.AnchorBottom
@@ -51,10 +59,12 @@ Window {
     }
     function hide() {
         engagedRow = null
+        favoritesPage.oskOpen = false
         visible = false
     }
     function toggle() { visible ? hide() : show() }
     function back() {
+        if (favoritesPage.oskOpen) { favoritesPage.oskOpen = false; return }
         if (engagedRow) { engagedRow = null; return }
         if (win.activeFocusItem && win.activeFocusItem !== sidebar && !isDescendant(win.activeFocusItem, sidebar)) {
             sidebar.forceActiveFocus()
@@ -325,27 +335,18 @@ Window {
         id: content
         anchors.fill: parent
         focus: true
-        opacity: win.dim / 0.62
-
-        // Click on the dim area closes.
-        TapHandler {
-            onTapped: (eventPoint) => {
-                if (eventPoint.position.x > sidebarRect.width + pageArea.width)
-                    win.hide()
-            }
-        }
+        opacity: win.dim
+        Keys.onEscapePressed: win.back()
 
         RowLayout {
             anchors.fill: parent
             spacing: 0
 
-            // ---- Sidebar ----
-            Rectangle {
+            // ---- Sidebar (transparent, over the window base) ----
+            Item {
                 id: sidebarRect
                 Layout.fillHeight: true
                 Layout.preferredWidth: Kirigami.Units.gridUnit * 16
-                color: Qt.rgba(Kirigami.Theme.backgroundColor.r, Kirigami.Theme.backgroundColor.g,
-                               Kirigami.Theme.backgroundColor.b, 0.85)
 
                 ColumnLayout {
                     anchors.fill: parent
@@ -386,11 +387,14 @@ Window {
                 }
             }
 
-            // ---- Page area ----
-            Item {
+            Kirigami.Separator { Layout.fillHeight: true }
+
+            // ---- Page area (darker main pane, like the system settings) ----
+            Rectangle {
                 id: pageArea
                 Layout.fillHeight: true
-                Layout.preferredWidth: Kirigami.Units.gridUnit * 30
+                Layout.fillWidth: true
+                color: Kirigami.Theme.backgroundColor
 
                 function enterPage() {
                     var item = pageStack.children[sidebar.currentIndex]
@@ -403,7 +407,7 @@ Window {
                     anchors.top: parent.top
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    anchors.margins: Kirigami.Units.largeSpacing
+                    anchors.margins: Kirigami.Units.gridUnit
                     text: win.sections[sidebar.currentIndex].label
                     font.pixelSize: 32
                     font.weight: Font.Light
@@ -415,7 +419,7 @@ Window {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
-                    anchors.margins: Kirigami.Units.largeSpacing
+                    anchors.margins: Kirigami.Units.gridUnit
                     currentIndex: sidebar.currentIndex
 
                     // 0 — Appearance
@@ -479,7 +483,16 @@ Window {
                                 Layout.bottomMargin: Kirigami.Units.smallSpacing
                                 wrapMode: Text.WordWrap
                                 opacity: 0.8
-                                text: win.translate("Adjust the wave colour behind the cross. Changes preview live.")
+                                text: win.translate("Adjust the wave colour behind the cross.")
+                            }
+                            Rectangle {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: Kirigami.Units.gridUnit * 2
+                                Layout.bottomMargin: Kirigami.Units.smallSpacing
+                                radius: Kirigami.Units.smallSpacing
+                                color: Qt.rgba(bgR.value / 255, bgG.value / 255, bgB.value / 255, 1)
+                                border.color: Qt.rgba(1, 1, 1, 0.15)
+                                border.width: 1
                             }
                             SliderRow {
                                 id: bgR; focus: true
@@ -632,6 +645,7 @@ Window {
                     // 5 — Favorites
                     Item {
                         id: favoritesPage
+                        property bool oskOpen: false
                         Kicker.RootModel {
                             id: favAllApps
                             autoPopulate: true
@@ -656,22 +670,36 @@ Window {
                                 id: favSearch
                                 Layout.fillWidth: true
                                 placeholderText: win.translate("Search applications")
-                                // Read-only with manual insertion, like the search overlay:
-                                // arrows drive the on-screen keyboard, whose Enter key moves
-                                // to the list; Square (KEY_MENU) or Backspace deletes.
+                                // Read-only with manual insertion, like the search overlay.
+                                // Enter opens the on-screen keyboard; while it is up the
+                                // arrows drive it and its hide key (or Back) closes it.
                                 readOnly: true
-                                Keys.onReturnPressed: settingsOsk.activate()
-                                Keys.onEnterPressed: settingsOsk.activate()
-                                Keys.onUpPressed: settingsOsk.move(0, -1)
-                                Keys.onDownPressed: settingsOsk.move(0, 1)
-                                Keys.onLeftPressed: settingsOsk.move(-1, 0)
-                                Keys.onRightPressed: settingsOsk.move(1, 0)
+                                onActiveFocusChanged: if (!activeFocus) favoritesPage.oskOpen = false
+                                Keys.onReturnPressed: {
+                                    if (favoritesPage.oskOpen) settingsOsk.activate()
+                                    else favoritesPage.oskOpen = true
+                                }
+                                Keys.onEnterPressed: {
+                                    if (favoritesPage.oskOpen) settingsOsk.activate()
+                                    else favoritesPage.oskOpen = true
+                                }
+                                Keys.onUpPressed: if (favoritesPage.oskOpen) settingsOsk.move(0, -1)
+                                Keys.onDownPressed: {
+                                    if (favoritesPage.oskOpen) settingsOsk.move(0, 1)
+                                    else favList.forceActiveFocus()
+                                }
+                                Keys.onLeftPressed: {
+                                    if (favoritesPage.oskOpen) settingsOsk.move(-1, 0)
+                                    else win.focusSidebar()
+                                }
+                                Keys.onRightPressed: if (favoritesPage.oskOpen) settingsOsk.move(1, 0)
                                 Keys.onPressed: (event) => {
                                     if (event.key === Qt.Key_Backspace || event.key === Qt.Key_Menu
                                             || event.nativeScanCode === 139 || event.nativeScanCode === 147) {
                                         text = text.slice(0, -1)
                                         event.accepted = true
                                     } else if (event.text.length === 1
+                                               && event.text.charCodeAt(0) >= 32 && event.text.charCodeAt(0) !== 127
                                                && (event.text.trim().length === 1 || event.key === Qt.Key_Space)
                                                && !(event.modifiers & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {
                                         text += event.text
@@ -781,23 +809,22 @@ Window {
                     }
                 }
             }
-
-            // Right gutter: the live wave shows through here.
-            Item { Layout.fillWidth: true; Layout.fillHeight: true }
         }
     }
 
-    // Gamepad on-screen keyboard, shown while the favorites filter has focus.
+    // Gamepad on-screen keyboard, opened with Enter on the favorites filter.
     XmbOsk {
         id: settingsOsk
-        visible: favSearch.activeFocus
+        visible: favSearch.activeFocus && favoritesPage.oskOpen
+        showHideKey: true
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Kirigami.Units.largeSpacing
         width: Math.min(win.width, Math.round(win.height * 1.1))
         onKeyPressed: (text) => favSearch.text += text
         onBackspacePressed: favSearch.text = favSearch.text.slice(0, -1)
-        onAccepted: favList.forceActiveFocus()
+        onAccepted: { favoritesPage.oskOpen = false; favList.forceActiveFocus() }
+        onDismissed: favoritesPage.oskOpen = false
     }
 
     // A scrollable page body that keeps the focused row in view.

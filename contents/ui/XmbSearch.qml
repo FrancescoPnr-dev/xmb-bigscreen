@@ -113,6 +113,7 @@ FocusScope {
                     input.text = input.text.slice(0, -1)
                     event.accepted = true
                 } else if (event.text.length === 1
+                           && event.text.charCodeAt(0) >= 32 && event.text.charCodeAt(0) !== 127
                            && (event.text.trim().length === 1 || event.key === Qt.Key_Space)
                            && !(event.modifiers & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {
                     input.text += event.text
