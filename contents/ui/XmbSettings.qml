@@ -133,6 +133,36 @@ Window {
         { id: "icons",      label: win.translate("Icons"),             icon: "preferences-desktop-icons" }
     ]
 
+    // A label that scrolls horizontally when focused and too long to fit,
+    // otherwise elides — so long section labels never overlap the controls.
+    component MarqueeLabel: Item {
+        id: ml
+        property string text: ""
+        property bool active: false
+        implicitHeight: mlText.implicitHeight
+        implicitWidth: mlText.implicitWidth
+        clip: true
+        readonly property real overflow: Math.max(0, mlText.implicitWidth - width)
+        readonly property bool scrolling: active && overflow > 0
+        onActiveChanged: if (!active) mlText.x = 0
+        Text {
+            id: mlText
+            text: ml.text
+            color: Kirigami.Theme.textColor
+            font.pixelSize: Bigscreen.Units.defaultFontPixelSize
+            elide: ml.scrolling ? Text.ElideNone : Text.ElideRight
+            width: ml.scrolling ? implicitWidth : ml.width
+            SequentialAnimation on x {
+                running: ml.scrolling
+                loops: Animation.Infinite
+                PauseAnimation { duration: 900 }
+                NumberAnimation { from: 0; to: -ml.overflow; duration: Math.max(600, ml.overflow * 16); easing.type: Easing.InOutSine }
+                PauseAnimation { duration: 900 }
+                NumberAnimation { from: -ml.overflow; to: 0; duration: Math.max(600, ml.overflow * 16); easing.type: Easing.InOutSine }
+            }
+        }
+    }
+
     // A native-styled slider row (label + slider + value), engaged with Enter,
     // adjusted with left/right — matching the Bigscreen ScaleDialog interaction.
     component SliderRow: FocusScope {
@@ -166,14 +196,15 @@ Window {
             anchors.leftMargin: Kirigami.Units.gridUnit
             anchors.rightMargin: Kirigami.Units.gridUnit
             spacing: Kirigami.Units.largeSpacing
-            QQC2.Label {
+            MarqueeLabel {
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignVCenter
                 text: sr.label
-                font.pixelSize: Bigscreen.Units.defaultFontPixelSize
-                Layout.preferredWidth: Kirigami.Units.gridUnit * 11
+                active: sr.activeFocus || sr.engaged
             }
             QQC2.Slider {
                 id: slider
-                Layout.fillWidth: true
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 11
                 from: sr.from; to: sr.to; stepSize: sr.step
                 value: sr.value
                 onMoved: { sr.value = value; sr.moved(value) }
@@ -235,10 +266,11 @@ Window {
             anchors.leftMargin: Kirigami.Units.gridUnit
             anchors.rightMargin: Kirigami.Units.gridUnit
             spacing: Kirigami.Units.largeSpacing
-            QQC2.Label {
-                text: cr.label
-                font.pixelSize: Bigscreen.Units.defaultFontPixelSize
+            MarqueeLabel {
                 Layout.fillWidth: true
+                Layout.alignment: Qt.AlignVCenter
+                text: cr.label
+                active: cr.activeFocus || cr.engaged
             }
             QQC2.Label {
                 readonly property string opt: (cr.currentIndex >= 0 && cr.currentIndex < cr.options.length)
@@ -246,6 +278,8 @@ Window {
                 text: cr.engaged ? "◂ " + opt + " ▸" : opt
                 font.pixelSize: Bigscreen.Units.defaultFontPixelSize
                 horizontalAlignment: Text.AlignRight
+                elide: Text.ElideRight
+                Layout.maximumWidth: Kirigami.Units.gridUnit * 13
                 opacity: cr.engaged ? 1.0 : 0.85
             }
         }
