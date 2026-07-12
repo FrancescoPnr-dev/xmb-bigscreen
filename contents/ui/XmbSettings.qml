@@ -146,7 +146,7 @@ Window {
         { id: "background", label: win.translate("Background"),         icon: "preferences-desktop-wallpaper" },
         { id: "clock",      label: win.translate("Clock"),             icon: "clock" },
         { id: "sounds",     label: win.translate("Sounds"),            icon: "preferences-desktop-sound" },
-        { id: "categories", label: win.translate("Visible categories"), icon: "view-list-symbolic" },
+        { id: "categories", label: win.translate("Visible categories"), icon: "preferences-desktop-activities" },
         { id: "favorites",  label: win.translate("Favorites"),         icon: "bookmarks" },
         { id: "language",   label: win.translate("Language"),          icon: "preferences-desktop-locale" },
         { id: "icons",      label: win.translate("Icons"),             icon: "preferences-desktop-icons" },
