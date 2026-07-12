@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 01:38+0200\n"
+"POT-Creation-Date: 2026-07-12 02:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,7 @@ msgid "General"
 msgstr ""
 
 #: contents/config/config.qml:17 contents/ui/Dashboard.qml:249
+#: contents/ui/XmbSettings.qml:131
 msgid "Favorites"
 msgstr ""
 
@@ -37,7 +38,7 @@ msgstr ""
 msgid "No applications found."
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:93
+#: contents/ui/config/ConfigGeneral.qml:93 contents/ui/XmbSettings.qml:126
 msgid "Appearance"
 msgstr ""
 
@@ -63,7 +64,8 @@ msgstr ""
 msgid "Reset section to defaults"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:144
+#: contents/ui/config/ConfigGeneral.qml:144 contents/ui/XmbSettings.qml:132
+#: contents/ui/XmbSettings.qml:645
 msgid "Language"
 msgstr ""
 
@@ -73,11 +75,12 @@ msgstr ""
 
 #: contents/ui/config/ConfigGeneral.qml:153
 #: contents/ui/config/ConfigGeneral.qml:170
-#: contents/ui/config/ConfigGeneral.qml:177
+#: contents/ui/config/ConfigGeneral.qml:177 contents/ui/XmbSettings.qml:472
+#: contents/ui/XmbSettings.qml:480 contents/ui/XmbSettings.qml:646
 msgid "System"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:162
+#: contents/ui/config/ConfigGeneral.qml:162 contents/ui/XmbSettings.qml:128
 msgid "Clock"
 msgstr ""
 
@@ -85,11 +88,11 @@ msgstr ""
 msgid "Time format:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:170
+#: contents/ui/config/ConfigGeneral.qml:170 contents/ui/XmbSettings.qml:472
 msgid "12-hour"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:170
+#: contents/ui/config/ConfigGeneral.qml:170 contents/ui/XmbSettings.qml:472
 msgid "24-hour"
 msgstr ""
 
@@ -97,11 +100,11 @@ msgstr ""
 msgid "Date format:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:177
+#: contents/ui/config/ConfigGeneral.qml:177 contents/ui/XmbSettings.qml:480
 msgid "Day/month"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:177
+#: contents/ui/config/ConfigGeneral.qml:177 contents/ui/XmbSettings.qml:480
 msgid "Month/day"
 msgstr ""
 
@@ -109,7 +112,7 @@ msgstr ""
 msgid "Show date:"
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:192
+#: contents/ui/config/ConfigGeneral.qml:192 contents/ui/XmbSettings.qml:129
 msgid "Sounds"
 msgstr ""
 
@@ -118,7 +121,8 @@ msgid "Navigation tick:"
 msgstr ""
 
 #: contents/ui/config/ConfigGeneral.qml:200
-#: contents/ui/config/ConfigGeneral.qml:231
+#: contents/ui/config/ConfigGeneral.qml:231 contents/ui/XmbSettings.qml:507
+#: contents/ui/XmbSettings.qml:522
 msgid "XMB (default)"
 msgstr ""
 
@@ -128,7 +132,8 @@ msgid "Custom file…"
 msgstr ""
 
 #: contents/ui/config/ConfigGeneral.qml:200
-#: contents/ui/config/ConfigGeneral.qml:231
+#: contents/ui/config/ConfigGeneral.qml:231 contents/ui/XmbSettings.qml:507
+#: contents/ui/XmbSettings.qml:522
 msgid "Off"
 msgstr ""
 
@@ -169,7 +174,7 @@ msgid ""
 "have a small seam at the loop point."
 msgstr ""
 
-#: contents/ui/config/ConfigGeneral.qml:263
+#: contents/ui/config/ConfigGeneral.qml:263 contents/ui/XmbSettings.qml:130
 msgid "Visible categories"
 msgstr ""
 
@@ -234,53 +239,143 @@ msgid "Exit to desktop"
 msgstr ""
 
 #: contents/ui/HomeOverlay.qml:162
-msgid "Audio device"
+msgid "System settings"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:163
-msgid "All settings"
-msgstr ""
-
-#: contents/ui/HomeOverlay.qml:164
+#: contents/ui/HomeOverlay.qml:163 contents/ui/XmbSettings.qml:302
 msgid "XMB settings"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:177
+#: contents/ui/HomeOverlay.qml:176
 msgid "Open"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:418
+#: contents/ui/HomeOverlay.qml:416
 msgid "No open apps"
 msgstr ""
 
-#: contents/ui/HomeOverlay.qml:523
+#: contents/ui/HomeOverlay.qml:521
 msgid "Close"
 msgstr ""
 
-#: contents/ui/main.qml:93
+#: contents/ui/main.qml:99
 msgid "Controller connected: %1"
 msgstr ""
 
-#: contents/ui/main.qml:94
+#: contents/ui/main.qml:100
 msgid "Controller disconnected: %1"
 msgstr ""
 
-#: contents/ui/main.qml:95
+#: contents/ui/main.qml:101
 msgid "Remote connected: %1"
 msgstr ""
 
-#: contents/ui/main.qml:96
+#: contents/ui/main.qml:102
 msgid "Remote disconnected: %1"
 msgstr ""
 
-#: contents/ui/main.qml:100
+#: contents/ui/main.qml:106
 msgid "An application is using the controller"
 msgstr ""
 
-#: contents/ui/main.qml:100
+#: contents/ui/main.qml:106
 msgid "Controller back to the system"
 msgstr ""
 
 #: contents/ui/SystemControl.qml:96
 msgid "XMB BigScreen is preventing the system from sleeping"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:83 contents/ui/XmbSettings.qml:96
+msgid "System default"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:127
+msgid "Background"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:133
+msgid "Icons"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:375
+msgid "Background opacity"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:382
+msgid "Category icon size"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:389
+msgid "App icon size"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:396
+msgid "Cross position"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:403 contents/ui/XmbSettings.qml:450
+msgid "Reset section"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:428
+msgid "Adjust the wave colour behind the cross. Changes preview live."
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:432
+msgid "Red"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:438
+msgid "Green"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:444
+msgid "Blue"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:471
+msgid "Time format"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:479
+msgid "Date format"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:488
+msgid "Show date"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:506
+msgid "Navigation tick"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:507 contents/ui/XmbSettings.qml:522
+msgid "Custom file"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:514
+msgid "Tick volume"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:521
+msgid "Background ambience"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:529
+msgid "Ambience volume"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:604
+msgid "Search applications"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:663
+msgid "Icon theme"
+msgstr ""
+
+#: contents/ui/XmbSettings.qml:678
+msgid ""
+"The icon theme applies to the XMB session only, from the next login. Your "
+"desktop session is not affected."
 msgstr ""
