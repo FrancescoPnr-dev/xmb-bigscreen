@@ -19,8 +19,11 @@ audio_state_enter() {
         if [ -d "$wp_xmb" ]; then
             mv "$wp_xmb" "$wp_state"
         elif [ -d "$wp_desktop" ]; then
-            # First TV login: seed from the desktop so devices and volumes start sane.
+            # First TV login: seed from the desktop so devices and volumes start sane,
+            # but never inherit muted notification sounds - they carry the XMB ticks.
             cp -a "$wp_desktop" "$wp_state"
+            sed -i '/media.role:Notification/s/"mute":true/"mute":false/' \
+                "$wp_state/stream-properties" 2>/dev/null || true
         fi
         systemctl --user start wireplumber 2>/dev/null
     fi
