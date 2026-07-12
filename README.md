@@ -4,7 +4,7 @@
 # XMB BigScreen
 
 A console-like fullscreen launcher for KDE Plasma, inspired by the PlayStation 3 / PSP
-**XrossMediaBar** — built for the living room: TV, couch and gamepad. It runs as a real
+**XrossMediaBar** built for the living room: TV, couch and gamepad. It runs as a real
 Plasma Wayland session on top of Plasma Bigscreen, with the classic wave background,
 search and subtle sounds. Born as an independent fork of
 [XMB Dashboard](https://github.com/FrancescoPnr-dev/xmb-dashboard).
