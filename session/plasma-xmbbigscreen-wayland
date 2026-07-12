@@ -44,8 +44,21 @@ stop_stale_inputhandlers() {
     systemctl --user stop 'app-org.kde.plasma.bigscreen.inputhandler@*.service' 2>/dev/null
 }
 
+audio_wait_ready() {
+    # The wireplumber restarted by the state swap needs a moment to export the real
+    # sinks; if plasmashell starts while only the dummy output exists, QtMultimedia
+    # binds its outputs to nothing and the XMB sounds stay silent all session.
+    i=0
+    while [ "$i" -lt 40 ]; do
+        pw-dump 2>/dev/null | grep -qE '"node\.name": *"(alsa|bluez)_output' && return
+        i=$((i + 1))
+        sleep 0.25
+    done
+}
+
 stop_stale_inputhandlers
 audio_state_enter
+audio_wait_ready
 
 # Refresh the pad mappings for the controllers present at login: the search keys
 # work out of the box, sticks swapped only if enabled in the XMB settings.
