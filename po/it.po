@@ -26,9 +26,7 @@ msgstr "Preferiti"
 #: contents/ui/config/ConfigFavorites.qml:63
 msgid "Pick the applications to show in the dashboard's Favorites category."
 msgstr ""
-"Scegli le applicazioni da mostrare nella categoria Preferiti della "
-"dashboard.Scegli le applicazioni da mostrare nella categoria Preferiti della "
-"dashboard."
+"Scegli le applicazioni da mostrare nella categoria Preferiti della dashboard."
 
 #: contents/ui/config/ConfigFavorites.qml:70
 msgid "Search applications…"

@@ -7,7 +7,7 @@ var catalogs = {
  "it": {
   "General": "Generale",
   "Favorites": "Preferiti",
-  "Pick the applications to show in the dashboard's Favorites category.": "Scegli le applicazioni da mostrare nella categoria Preferiti della dashboard.Scegli le applicazioni da mostrare nella categoria Preferiti della dashboard.",
+  "Pick the applications to show in the dashboard's Favorites category.": "Scegli le applicazioni da mostrare nella categoria Preferiti della dashboard.",
   "Search applications…": "Cerca applicazioni…",
   "No applications found.": "Nessuna applicazione trovata.",
   "Appearance": "Aspetto",
