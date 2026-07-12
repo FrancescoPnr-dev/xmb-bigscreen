@@ -36,7 +36,7 @@ search and subtle sounds. Born as an independent fork of
   repositories (XMB BigScreen reuses its session backend: controller input,
   TV settings, environment).
 - The Qt6 Multimedia QML module, for the sounds. Most distros ship it with Plasma;
-  if not: `qt6-multimedia` (Arch/Solus), `qml6-module-qtmultimedia` (Debian/Ubuntu),
+  if not: `qt6-multimedia` (Arch), `qml6-module-qtmultimedia` (Debian/Ubuntu),
   `qt6-qtmultimedia` (Fedora/openSUSE).
 - Optional: `plasma-keyboard`, so text fields inside regular apps also get a compact
   pad-navigable keyboard.
