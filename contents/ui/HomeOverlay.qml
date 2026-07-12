@@ -87,7 +87,9 @@ Window {
         filterByScreen: false
         filterByVirtualDesktop: false
         filterByActivity: false
-        filterHidden: true
+        // Match the native Bigscreen switcher (unfiltered): filterHidden would drop
+        // minimized windows, so "Back to XMB" apps vanish from the cards.
+        filterHidden: false
 
         function minimizeAllTasks() {
             for (var i = 0; i < tasksModel.count; i++) {
@@ -514,17 +516,30 @@ Window {
                     Behavior on opacity { NumberAnimation { duration: 120 } }
                 }
 
+                // Always shown under the card; breathes when armed (down on the
+                // focused card), like the dashboard's selected-item glow.
                 Text {
+                    id: closeLabel
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: frame.horizontalCenter
-                    visible: card.focused && overlay.closePrompt
+                    readonly property bool armed: card.focused && overlay.closePrompt
                     text: i18n("Close")
                     color: "white"
                     font.pixelSize: Math.round(overlay.labelSize * 0.9)
                     font.weight: Font.Light
                     font.letterSpacing: 1
 
-                    layer.enabled: visible
+                    property real pulse: 0.35
+                    SequentialAnimation on pulse {
+                        running: closeLabel.armed && overlay.visible
+                        loops: Animation.Infinite
+                        NumberAnimation { from: 0.35; to: 1.0; duration: 800; easing.type: Easing.InOutSine }
+                        NumberAnimation { from: 1.0; to: 0.35; duration: 800; easing.type: Easing.InOutSine }
+                    }
+                    opacity: armed ? (0.55 + 0.45 * pulse) : (card.focused ? 0.6 : 0.28)
+                    Behavior on opacity { enabled: !closeLabel.armed; NumberAnimation { duration: 140 } }
+
+                    layer.enabled: armed
                     layer.effect: MultiEffect {
                         autoPaddingEnabled: true
                         blurMax: 24
@@ -533,7 +548,7 @@ Window {
                         shadowBlur: 1.0
                         shadowVerticalOffset: 0
                         shadowHorizontalOffset: 0
-                        shadowOpacity: 0.7
+                        shadowOpacity: closeLabel.pulse
                     }
 
                     TapHandler {
