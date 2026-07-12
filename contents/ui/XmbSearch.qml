@@ -3,7 +3,7 @@
 // Type-to-search over KRunner (Milou) results, shown at the top of the dashboard,
 // with an on-screen keyboard for gamepad text entry (arrows navigate the keys,
 // Cross inserts, Square deletes). Enter or middle-click runs the selection;
-// Esc, Circle or the Menu key (pad Triangle) exits.
+// Esc, Circle or Triangle exits.
 import QtQuick
 import org.kde.kirigami as Kirigami
 import org.kde.milou as Milou
@@ -94,11 +94,12 @@ FocusScope {
             Keys.onDownPressed: osk.move(0, 1)
             Keys.onLeftPressed: osk.move(-1, 0)
             Keys.onRightPressed: osk.move(1, 0)
-            // L1/R1 arrive as Shift+Tab/Tab and move the result selection; Square
-            // arrives as KEY_GAMES (evdev 417, xkb 425) and deletes; printable
+            // L1/R1 arrive as Shift+Tab/Tab and move the result selection; Triangle
+            // arrives as KEY_GAMES (evdev 417, xkb 425) and closes; Square arrives
+            // as KEY_MENU (evdev 139, xkb 147) and deletes, like Backspace; printable
             // characters from a real keyboard are appended by hand.
             Keys.onPressed: (event) => {
-                if (event.key === Qt.Key_Menu) {
+                if (event.nativeScanCode === 417 || event.nativeScanCode === 425) {
                     search.stop()
                     event.accepted = true
                 } else if (event.key === Qt.Key_Tab) {
@@ -107,8 +108,8 @@ FocusScope {
                 } else if (event.key === Qt.Key_Backtab) {
                     list.decrementCurrentIndex()
                     event.accepted = true
-                } else if (event.key === Qt.Key_Backspace
-                           || event.nativeScanCode === 417 || event.nativeScanCode === 425) {
+                } else if (event.key === Qt.Key_Backspace || event.key === Qt.Key_Menu
+                           || event.nativeScanCode === 139 || event.nativeScanCode === 147) {
                     input.text = input.text.slice(0, -1)
                     event.accepted = true
                 } else if (event.text.length === 1

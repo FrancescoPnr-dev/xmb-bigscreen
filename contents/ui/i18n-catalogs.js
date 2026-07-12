@@ -10,6 +10,7 @@ var catalogs = {
   "Brightness": "Luminosità",
   "Volume": "Volume",
   "Network": "Rete",
+  "Keyboard": "Tastiera",
   "Settings": "Impostazioni",
   "Back to XMB": "Torna alla XMB",
   "Sleep": "Sospendi",

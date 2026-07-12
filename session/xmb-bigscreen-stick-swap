@@ -3,11 +3,12 @@
 # SPDX-License-Identifier: GPL-3.0-only
 # Generates the per-controller SDL mapping for the Bigscreen input handler and
 # is run automatically at every XMB session login. Triangle always emits the
-# Menu key (opens the XMB search) and Square the Games key (deletes in the
-# on-screen keyboard); the analog sticks are swapped (pointer on the left,
-# list navigation on the right, L3 as click) only when enabled from the XMB
-# settings or with --on. Only the input handler's systemd unit loads the file,
-# so games keep the physical layout.
+# Games key (toggles the XMB search; the Menu key won't do — the native
+# Bigscreen homescreen leaves a global shortcut on it) and Square keeps the
+# Menu key (deletes in the on-screen keyboard); the analog sticks are swapped
+# (pointer on the left, list navigation on the right, L3 as click) only when
+# enabled from the XMB settings or with --on. Only the input handler's systemd
+# unit loads the file, so games keep the physical layout.
 import ctypes
 import os
 import sys
@@ -16,7 +17,7 @@ CONF_DIR = os.path.join(os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/
                         "xmb-bigscreen")
 CONFIG = os.path.join(CONF_DIR, "gamecontroller-swap.txt")
 FLAG = os.path.join(CONF_DIR, "stickswap")
-BUTTONS = {"y": "x", "x": "start", "start": "y"}
+BUTTONS = {"y": "start", "start": "y"}
 STICKS = {"leftx": "rightx", "rightx": "leftx", "lefty": "righty", "righty": "lefty",
           "leftstick": "rightstick", "rightstick": "leftstick"}
 

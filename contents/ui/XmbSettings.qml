@@ -658,7 +658,7 @@ Window {
                                 placeholderText: win.translate("Search applications")
                                 // Read-only with manual insertion, like the search overlay:
                                 // arrows drive the on-screen keyboard, whose Enter key moves
-                                // to the list; Square (KEY_GAMES) or Backspace deletes.
+                                // to the list; Square (KEY_MENU) or Backspace deletes.
                                 readOnly: true
                                 Keys.onReturnPressed: settingsOsk.activate()
                                 Keys.onEnterPressed: settingsOsk.activate()
@@ -667,8 +667,8 @@ Window {
                                 Keys.onLeftPressed: settingsOsk.move(-1, 0)
                                 Keys.onRightPressed: settingsOsk.move(1, 0)
                                 Keys.onPressed: (event) => {
-                                    if (event.key === Qt.Key_Backspace
-                                            || event.nativeScanCode === 417 || event.nativeScanCode === 425) {
+                                    if (event.key === Qt.Key_Backspace || event.key === Qt.Key_Menu
+                                            || event.nativeScanCode === 139 || event.nativeScanCode === 147) {
                                         text = text.slice(0, -1)
                                         event.accepted = true
                                     } else if (event.text.length === 1

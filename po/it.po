@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: plasma_applet_org.kde.plasma.xmbbigscreen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-12 17:54+0200\n"
+"POT-Creation-Date: 2026-07-12 18:41+0200\n"
 "PO-Revision-Date: 2026-07-02 12:00+0200\n"
 "Last-Translator: Francesco Panarese <FrancescoPnr-dev@proton.me>\n"
 "Language-Team: Italian\n"
@@ -35,90 +35,94 @@ msgid "Network"
 msgstr "Rete"
 
 #: contents/ui/HomeOverlay.qml:149
+msgid "Keyboard"
+msgstr "Tastiera"
+
+#: contents/ui/HomeOverlay.qml:150
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: contents/ui/HomeOverlay.qml:150
+#: contents/ui/HomeOverlay.qml:151
 msgid "Back to XMB"
 msgstr "Torna alla XMB"
 
-#: contents/ui/HomeOverlay.qml:154
+#: contents/ui/HomeOverlay.qml:155
 msgid "Sleep"
 msgstr "Sospendi"
 
-#: contents/ui/HomeOverlay.qml:155
+#: contents/ui/HomeOverlay.qml:156
 msgid "Hibernate"
 msgstr "Ibernazione"
 
-#: contents/ui/HomeOverlay.qml:156
+#: contents/ui/HomeOverlay.qml:157
 msgid "Restart"
 msgstr "Riavvia"
 
-#: contents/ui/HomeOverlay.qml:157
+#: contents/ui/HomeOverlay.qml:158
 msgid "Shut down"
 msgstr "Spegni"
 
-#: contents/ui/HomeOverlay.qml:158
+#: contents/ui/HomeOverlay.qml:159
 msgid "Log out"
 msgstr "Esci"
 
-#: contents/ui/HomeOverlay.qml:159
+#: contents/ui/HomeOverlay.qml:160
 msgid "Switch user"
 msgstr "Cambia utente"
 
-#: contents/ui/HomeOverlay.qml:160
+#: contents/ui/HomeOverlay.qml:161
 msgid "Lock"
 msgstr "Blocca"
 
-#: contents/ui/HomeOverlay.qml:161
+#: contents/ui/HomeOverlay.qml:162
 msgid "Exit to desktop"
 msgstr "Esci sul desktop"
 
-#: contents/ui/HomeOverlay.qml:164
+#: contents/ui/HomeOverlay.qml:165
 msgid "System settings"
 msgstr "Impostazioni di sistema"
 
-#: contents/ui/HomeOverlay.qml:165 contents/ui/XmbSettings.qml:356
+#: contents/ui/HomeOverlay.qml:166 contents/ui/XmbSettings.qml:356
 msgid "XMB settings"
 msgstr "Impostazioni XMB"
 
-#: contents/ui/HomeOverlay.qml:178
+#: contents/ui/HomeOverlay.qml:179
 msgid "Open"
 msgstr "Apri"
 
-#: contents/ui/HomeOverlay.qml:418
+#: contents/ui/HomeOverlay.qml:420
 msgid "No open apps"
 msgstr "Nessuna app aperta"
 
-#: contents/ui/HomeOverlay.qml:526
+#: contents/ui/HomeOverlay.qml:528
 msgid "Close"
 msgstr "Chiudi"
 
-#: contents/ui/main.qml:99
+#: contents/ui/main.qml:101
 msgid "Controller connected: %1"
 msgstr "Controller connesso: %1"
 
-#: contents/ui/main.qml:100
+#: contents/ui/main.qml:103
 msgid "Controller disconnected: %1"
 msgstr "Controller disconnesso: %1"
 
-#: contents/ui/main.qml:101
+#: contents/ui/main.qml:104
 msgid "Remote connected: %1"
 msgstr "Telecomando connesso: %1"
 
-#: contents/ui/main.qml:102
+#: contents/ui/main.qml:105
 msgid "Remote disconnected: %1"
 msgstr "Telecomando disconnesso: %1"
 
-#: contents/ui/main.qml:106
+#: contents/ui/main.qml:109
 msgid "An application is using the controller"
 msgstr "Un'applicazione sta usando il controller"
 
-#: contents/ui/main.qml:106
+#: contents/ui/main.qml:109
 msgid "Controller back to the system"
 msgstr "Controller di nuovo al sistema"
 
-#: contents/ui/SystemControl.qml:96
+#: contents/ui/SystemControl.qml:122
 msgid "XMB BigScreen is preventing the system from sleeping"
 msgstr "XMB BigScreen sta impedendo la sospensione del sistema"
 
@@ -146,7 +150,7 @@ msgstr "Suoni"
 msgid "Visible categories"
 msgstr "Categorie visibili"
 
-#: contents/ui/XmbSettings.qml:151 contents/ui/XmbSettings.qml:707
+#: contents/ui/XmbSettings.qml:151 contents/ui/XmbSettings.qml:719
 msgid "Language"
 msgstr "Lingua"
 
@@ -201,7 +205,7 @@ msgid "Time format"
 msgstr "Formato ora"
 
 #: contents/ui/XmbSettings.qml:526 contents/ui/XmbSettings.qml:534
-#: contents/ui/XmbSettings.qml:708
+#: contents/ui/XmbSettings.qml:720
 msgid "System"
 msgstr "Sistema"
 
@@ -261,11 +265,11 @@ msgstr "Volume ambiente"
 msgid "Search applications"
 msgstr "Cerca applicazioni"
 
-#: contents/ui/XmbSettings.qml:725
+#: contents/ui/XmbSettings.qml:737
 msgid "Icon theme"
 msgstr "Tema icone"
 
-#: contents/ui/XmbSettings.qml:740
+#: contents/ui/XmbSettings.qml:752
 msgid ""
 "The icon theme applies to the XMB session only, from the next login. Your "
 "desktop session is not affected."
@@ -273,11 +277,11 @@ msgstr ""
 "Il tema icone vale solo per la sessione XMB, dal prossimo accesso. La "
 "sessione desktop non viene modificata."
 
-#: contents/ui/XmbSettings.qml:755
+#: contents/ui/XmbSettings.qml:767
 msgid "Pointer on the left stick"
 msgstr "Puntatore sullo stick sinistro"
 
-#: contents/ui/XmbSettings.qml:765
+#: contents/ui/XmbSettings.qml:777
 msgid ""
 "Moves the mouse pointer with the left stick and scrolls lists with the "
 "right, with L3 as click. Games always see the physical layout. Applies from "
