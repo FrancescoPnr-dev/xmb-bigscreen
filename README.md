@@ -106,8 +106,6 @@ and the power menu has no Lock entry — a password prompt is a dead end on a TV
 Logging out still reaches the login screen: the overlay warns first, and rebooting
 autologs back in.
 
-<img width="3554" height="2069" alt="4" src="https://github.com/user-attachments/assets/c402e973-104d-451d-b1d1-cb7f422db742" />
-
 
 ## Settings
 
