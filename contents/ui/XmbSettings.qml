@@ -656,13 +656,25 @@ Window {
                                 id: favSearch
                                 Layout.fillWidth: true
                                 placeholderText: win.translate("Search applications")
-                                KeyNavigation.down: favList
-                                Keys.onLeftPressed: sidebar.forceActiveFocus()
-                                onAccepted: favList.forceActiveFocus()
-                                // Square arrives as KEY_GAMES (evdev 417, xkb 425) and deletes.
+                                // Read-only with manual insertion, like the search overlay:
+                                // arrows drive the on-screen keyboard, whose Enter key moves
+                                // to the list; Square (KEY_GAMES) or Backspace deletes.
+                                readOnly: true
+                                Keys.onReturnPressed: settingsOsk.activate()
+                                Keys.onEnterPressed: settingsOsk.activate()
+                                Keys.onUpPressed: settingsOsk.move(0, -1)
+                                Keys.onDownPressed: settingsOsk.move(0, 1)
+                                Keys.onLeftPressed: settingsOsk.move(-1, 0)
+                                Keys.onRightPressed: settingsOsk.move(1, 0)
                                 Keys.onPressed: (event) => {
-                                    if (event.nativeScanCode === 417 || event.nativeScanCode === 425) {
+                                    if (event.key === Qt.Key_Backspace
+                                            || event.nativeScanCode === 417 || event.nativeScanCode === 425) {
                                         text = text.slice(0, -1)
+                                        event.accepted = true
+                                    } else if (event.text.length === 1
+                                               && (event.text.trim().length === 1 || event.key === Qt.Key_Space)
+                                               && !(event.modifiers & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {
+                                        text += event.text
                                         event.accepted = true
                                     }
                                 }
@@ -776,12 +788,16 @@ Window {
     }
 
     // Gamepad on-screen keyboard, shown while the favorites filter has focus.
-    Loader {
-        active: favSearch.activeFocus
+    XmbOsk {
+        id: settingsOsk
+        visible: favSearch.activeFocus
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        width: Math.min(win.width, Math.round(win.height * 1.3))
-        source: "XmbOsk.qml"
+        anchors.bottomMargin: Kirigami.Units.largeSpacing
+        width: Math.min(win.width, Math.round(win.height * 1.1))
+        onKeyPressed: (text) => favSearch.text += text
+        onBackspacePressed: favSearch.text = favSearch.text.slice(0, -1)
+        onAccepted: favList.forceActiveFocus()
     }
 
     // A scrollable page body that keeps the focused row in view.

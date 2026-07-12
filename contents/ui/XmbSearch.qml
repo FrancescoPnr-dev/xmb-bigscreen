@@ -13,6 +13,8 @@ FocusScope {
 
     property bool active: false
     readonly property alias queryText: input.text
+    readonly property alias oskRow: osk.row
+    readonly property alias oskCol: osk.col
     signal launched()    // a result was run -> dashboard should close
     signal closed()      // search dismissed -> return focus to the dashboard
 
@@ -81,14 +83,20 @@ FocusScope {
             horizontalAlignment: TextInput.AlignHCenter
             color: "white"
             font: queryFont.font
-            selectByMouse: true
+            // Read-only with manual insertion: the field never activates an input
+            // method, so the compositor keyboard cannot pop up over the XMB one.
+            readOnly: true
+            cursorVisible: search.active
             Keys.onEscapePressed: search.stop()
-            Keys.onReturnPressed: search.runCurrent()
-            Keys.onEnterPressed: search.runCurrent()
-            Keys.onUpPressed: list.decrementCurrentIndex()
-            Keys.onDownPressed: list.incrementCurrentIndex()
-            // L1/R1 arrive as Shift+Tab/Tab and move the result selection while the
-            // OSK owns the arrows; Square arrives as KEY_GAMES (evdev 417, xkb 425).
+            Keys.onReturnPressed: osk.activate()
+            Keys.onEnterPressed: osk.activate()
+            Keys.onUpPressed: osk.move(0, -1)
+            Keys.onDownPressed: osk.move(0, 1)
+            Keys.onLeftPressed: osk.move(-1, 0)
+            Keys.onRightPressed: osk.move(1, 0)
+            // L1/R1 arrive as Shift+Tab/Tab and move the result selection; Square
+            // arrives as KEY_GAMES (evdev 417, xkb 425) and deletes; printable
+            // characters from a real keyboard are appended by hand.
             Keys.onPressed: (event) => {
                 if (event.key === Qt.Key_Menu) {
                     search.stop()
@@ -99,8 +107,14 @@ FocusScope {
                 } else if (event.key === Qt.Key_Backtab) {
                     list.decrementCurrentIndex()
                     event.accepted = true
-                } else if (event.nativeScanCode === 417 || event.nativeScanCode === 425) {
+                } else if (event.key === Qt.Key_Backspace
+                           || event.nativeScanCode === 417 || event.nativeScanCode === 425) {
                     input.text = input.text.slice(0, -1)
+                    event.accepted = true
+                } else if (event.text.length === 1
+                           && (event.text.trim().length === 1 || event.key === Qt.Key_Space)
+                           && !(event.modifiers & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {
+                    input.text += event.text
                     event.accepted = true
                 }
             }
@@ -158,12 +172,15 @@ FocusScope {
         }
     }
 
-    Loader {
-        active: search.active
+    XmbOsk {
+        id: osk
+        visible: search.active
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Math.round(search.height * 0.03)
-        width: Math.min(parent.width, Math.round(parent.height * 1.3))
-        source: "XmbOsk.qml"
+        width: Math.min(parent.width, Math.round(parent.height * 1.1))
+        onKeyPressed: (text) => input.text += text
+        onBackspacePressed: input.text = input.text.slice(0, -1)
+        onAccepted: search.runCurrent()
     }
 }
