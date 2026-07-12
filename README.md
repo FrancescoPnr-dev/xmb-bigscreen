@@ -67,15 +67,20 @@ The XMB is the session's homescreen — always there, with apps launching on top
 - **Arrows / D-pad / left stick / wheel / screen edges** — move between apps and categories.
 - **Enter / South button or left-click** the highlighted app, or **middle-click anywhere** — launch it.
 - **Start typing** — search; Enter or middle-click runs the top result.
+- **Triangle (with the remap tool below)** — search with an on-screen keyboard:
+  d-pad moves the key highlight, **Cross** inserts, **Square** deletes,
+  **L1/R1** move through the results, **Circle** closes.
 - **PS/Guide button or Meta** — home overlay over the running app: open apps,
   power actions, volume/brightness, quick settings.
 - **Back / Esc** — close the overlay.
 
-### Swapping the analog sticks
+### Remapping the pad
 
 By default the Bigscreen input handler moves the mouse pointer with the **right**
-stick and navigates lists with the left. If you prefer the pointer on the left
-stick (and list scrolling plus L3-as-click accordingly):
+stick, navigates lists with the left, and gives Triangle and Square no useful
+role. The remap tool puts the pointer on the left stick (with list scrolling and
+L3-as-click accordingly) and wires Triangle to the XMB search and Square to
+delete in its on-screen keyboard:
 
 ```bash
 xmb-bigscreen-stick-swap        # with the controller connected
@@ -83,7 +88,7 @@ xmb-bigscreen-stick-swap --off  # back to the physical layout
 ```
 
 Takes effect at the next XMB session login. Only the system input handler sees
-the swap — games keep the physical stick layout. Run it once per controller and
+the remap — games keep the physical layout. Run it once per controller and
 connection type (USB and Bluetooth count as different controllers).
 
 ## Configuration

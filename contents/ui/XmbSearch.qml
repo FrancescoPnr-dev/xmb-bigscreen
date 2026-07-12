@@ -1,7 +1,9 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// Type-to-search over KRunner (Milou) results, shown at the top of the dashboard.
-// Enter or middle-click runs the selection; Esc or emptying the query exits.
+// Type-to-search over KRunner (Milou) results, shown at the top of the dashboard,
+// with an on-screen keyboard for gamepad text entry (arrows navigate the keys,
+// Cross inserts, Square deletes). Enter or middle-click runs the selection;
+// Esc, Circle or the Menu key (pad Triangle) exits.
 import QtQuick
 import org.kde.kirigami as Kirigami
 import org.kde.milou as Milou
@@ -10,6 +12,7 @@ FocusScope {
     id: search
 
     property bool active: false
+    readonly property alias queryText: input.text
     signal launched()    // a result was run -> dashboard should close
     signal closed()      // search dismissed -> return focus to the dashboard
 
@@ -79,12 +82,28 @@ FocusScope {
             color: "white"
             font: queryFont.font
             selectByMouse: true
-            onTextEdited: if (text.length === 0) search.stop()
             Keys.onEscapePressed: search.stop()
             Keys.onReturnPressed: search.runCurrent()
             Keys.onEnterPressed: search.runCurrent()
             Keys.onUpPressed: list.decrementCurrentIndex()
             Keys.onDownPressed: list.incrementCurrentIndex()
+            // L1/R1 arrive as Shift+Tab/Tab and move the result selection while the
+            // OSK owns the arrows; Square arrives as KEY_GAMES (evdev 417, xkb 425).
+            Keys.onPressed: (event) => {
+                if (event.key === Qt.Key_Menu) {
+                    search.stop()
+                    event.accepted = true
+                } else if (event.key === Qt.Key_Tab) {
+                    list.incrementCurrentIndex()
+                    event.accepted = true
+                } else if (event.key === Qt.Key_Backtab) {
+                    list.decrementCurrentIndex()
+                    event.accepted = true
+                } else if (event.nativeScanCode === 417 || event.nativeScanCode === 425) {
+                    input.text = input.text.slice(0, -1)
+                    event.accepted = true
+                }
+            }
 
             Rectangle {   // subtle underline
                 anchors.bottom: parent.bottom
@@ -100,7 +119,8 @@ FocusScope {
             property int rowHeight: Math.round(search.height * 0.05)
             width: parent.width
             // compact, grows with the results, anchored right below the search bar
-            height: Math.min(list.count, 9) * list.rowHeight
+            // and capped so the list never runs under the on-screen keyboard
+            height: Math.min(list.count, 7) * list.rowHeight
             clip: true
             model: rmodel
             currentIndex: 0
@@ -136,5 +156,14 @@ FocusScope {
                 }
             }
         }
+    }
+
+    Loader {
+        active: search.active
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Math.round(search.height * 0.03)
+        width: Math.min(parent.width, Math.round(parent.height * 1.3))
+        source: "XmbOsk.qml"
     }
 }

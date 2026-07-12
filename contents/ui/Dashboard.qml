@@ -398,8 +398,14 @@ Item {
         Keys.onEnterPressed:  appColumn.launchCurrent()
 
         // Type-to-search: a printable char opens the KRunner overlay seeded with it;
+        // the Menu key (pad Triangle) opens it empty with the on-screen keyboard;
         // nav keys (empty text) fall through to the handlers above.
         Keys.onPressed: (event) => {
+            if (event.key === Qt.Key_Menu && !searchOverlay.active) {
+                searchOverlay.start("")
+                event.accepted = true
+                return
+            }
             if (!searchOverlay.active
                     && event.text.length === 1 && event.text.trim().length === 1
                     && !(event.modifiers & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {

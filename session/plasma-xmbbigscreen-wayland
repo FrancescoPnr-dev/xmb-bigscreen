@@ -51,6 +51,10 @@ audio_state_enter
 . plasma-bigscreen-common-env
 export PLASMA_DEFAULT_SHELL=org.kde.plasma.xmbbigscreen
 
+# In-process Qt VirtualKeyboard input context, so the shell's search and settings
+# can show their gamepad-navigable on-screen keyboard.
+export QT_IM_MODULE=qtvirtualkeyboard
+
 # TV defaults regardless of the desktop session's kwinrc: one virtual desktop, no
 # hot edges or corners. The [$i] locks apply only through this session's
 # XDG_CONFIG_DIRS cascade; the shared ~/.config/kwinrc is never touched.

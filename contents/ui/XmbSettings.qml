@@ -638,6 +638,14 @@ Window {
                                 placeholderText: win.translate("Search applications")
                                 KeyNavigation.down: favList
                                 Keys.onLeftPressed: sidebar.forceActiveFocus()
+                                onAccepted: favList.forceActiveFocus()
+                                // Square arrives as KEY_GAMES (evdev 417, xkb 425) and deletes.
+                                Keys.onPressed: (event) => {
+                                    if (event.nativeScanCode === 417 || event.nativeScanCode === 425) {
+                                        text = text.slice(0, -1)
+                                        event.accepted = true
+                                    }
+                                }
                             }
                             ListView {
                                 id: favList
@@ -720,6 +728,15 @@ Window {
             // Right gutter: the live wave shows through here.
             Item { Layout.fillWidth: true; Layout.fillHeight: true }
         }
+    }
+
+    // Gamepad on-screen keyboard, shown while the favorites filter has focus.
+    Loader {
+        active: favSearch.activeFocus
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        width: Math.min(win.width, Math.round(win.height * 1.3))
+        source: "XmbOsk.qml"
     }
 
     // A scrollable page body that keeps the focused row in view.
