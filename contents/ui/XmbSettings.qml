@@ -1,9 +1,13 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
+// SPDX-FileCopyrightText: 2019 Marco Martin <mart@kde.org>
+// SPDX-FileCopyrightText: 2019 Aditya Mehra <aix.m@outlook.com>
+// SPDX-FileCopyrightText: 2025 Devin Lin <devin@kde.org>
 // SPDX-License-Identifier: GPL-3.0-only
-// The XMB settings window, styled after the system settings in the Bigscreen
-// session: a transparent sidebar over the dimmed waves and an opaque dark main
-// pane of native Bigscreen delegates. Writes straight into the plasmoid
-// configuration.
+// The XMB settings window, a faithful copy of the Bigscreen system settings
+// UI (settingsapp Main/ConfigWindowSidebar/SidebarDelegate, GPL-2.0-or-later,
+// relicensed into this file's GPL-3.0-only): translucent sidebar with a tall
+// light header, edge shadow, opaque main pane with the module title in the
+// same style. Writes straight into the plasmoid configuration.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -25,10 +29,13 @@ Window {
 
     visible: false
     property real dim: visible ? 1.0 : 0.0
-    Behavior on dim { NumberAnimation { duration: 180; easing.type: Easing.OutQuad } }
-    // Transparent base: the sidebar sits on the dimmed waves, the main pane is opaque.
-    color: Qt.rgba(0, 0, 0, 0.62 * dim)
+    Behavior on dim { NumberAnimation { duration: 400; easing.type: Easing.OutCubic } }
+    color: "transparent"
     flags: Qt.FramelessWindowHint
+
+    // Same metrics as the native settings app.
+    readonly property real headerHeight: Kirigami.Units.gridUnit * 7
+    readonly property real horizontalMargin: Kirigami.Units.gridUnit + Kirigami.Units.largeSpacing
 
     LayerShell.Window.scope: "overlay"
     LayerShell.Window.anchors: LayerShell.Window.AnchorTop | LayerShell.Window.AnchorBottom
@@ -37,7 +44,7 @@ Window {
     LayerShell.Window.keyboardInteractivity: LayerShell.Window.KeyboardInteractivityOnDemand
     LayerShell.Window.exclusionZone: -1
 
-    Kirigami.Theme.colorSet: Kirigami.Theme.View
+    Kirigami.Theme.colorSet: Kirigami.Theme.Window
     Kirigami.Theme.inherit: false
 
     property var engagedRow: null
@@ -331,478 +338,547 @@ Window {
         opacity: win.dim
         Keys.onEscapePressed: win.back()
 
-        RowLayout {
-            anchors.fill: parent
-            spacing: 0
+        // ---- Sidebar (translucent, like the native ConfigWindowSidebar) ----
+        Rectangle {
+            id: sidebarRect
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            width: Math.max(Kirigami.Units.gridUnit * 20, parent.width * 0.20)
+            color: Qt.rgba(Kirigami.Theme.backgroundColor.r, Kirigami.Theme.backgroundColor.g,
+                           Kirigami.Theme.backgroundColor.b, 0.8)
 
-            // ---- Sidebar (transparent, over the window base) ----
-            Item {
-                id: sidebarRect
-                Layout.fillHeight: true
-                Layout.preferredWidth: Kirigami.Units.gridUnit * 16
+            ColumnLayout {
+                anchors.fill: parent
+                spacing: 0
 
-                ColumnLayout {
-                    anchors.fill: parent
-                    anchors.margins: Kirigami.Units.largeSpacing
-                    spacing: Kirigami.Units.largeSpacing
+                Item {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: win.headerHeight
 
                     Kirigami.Heading {
                         text: win.translate("XMB settings")
-                        level: 1
+                        anchors.fill: parent
+                        padding: win.horizontalMargin
+                        verticalAlignment: Text.AlignBottom
+                        horizontalAlignment: Text.AlignLeft
                         font.weight: Font.Light
-                        Layout.leftMargin: Kirigami.Units.smallSpacing
-                        Layout.topMargin: Kirigami.Units.largeSpacing
-                    }
-
-                    ListView {
-                        id: sidebar
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        clip: true
-                        model: win.sections
-                        spacing: Kirigami.Units.smallSpacing
-                        keyNavigationEnabled: true
-                        activeFocusOnTab: true
-
-                        delegate: Bigscreen.ButtonDelegate {
-                            required property var modelData
-                            required property int index
-                            width: ListView.view.width
-                            text: modelData.label
-                            icon.name: modelData.icon
-                            onClicked: { sidebar.currentIndex = index; pageArea.enterPage() }
-                            Keys.onRightPressed: { sidebar.currentIndex = index; pageArea.enterPage() }
-                            onActiveFocusChanged: if (activeFocus) sidebar.currentIndex = index
-                        }
-
-                        Keys.onEscapePressed: win.hide()
+                        color: Kirigami.Theme.textColor
+                        fontSizeMode: Text.Fit
+                        minimumPixelSize: 16
+                        font.pixelSize: 32
                     }
                 }
-            }
 
-            Kirigami.Separator { Layout.fillHeight: true }
+                ListView {
+                    id: sidebar
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    clip: true
+                    leftMargin: win.horizontalMargin
+                    rightMargin: win.horizontalMargin
+                    topMargin: Kirigami.Units.largeSpacing
+                    bottomMargin: Kirigami.Units.largeSpacing
+                    model: win.sections
+                    spacing: Kirigami.Units.largeSpacing
+                    keyNavigationEnabled: true
+                    activeFocusOnTab: true
 
-            // ---- Page area (darker main pane, like the system settings) ----
-            Rectangle {
-                id: pageArea
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                color: Kirigami.Theme.backgroundColor
+                    delegate: QQC2.Button {
+                        id: sectionButton
+                        required property var modelData
+                        required property int index
+                        width: sidebar.width - sidebar.leftMargin - sidebar.rightMargin
+                        leftPadding: Kirigami.Units.gridUnit * 2
+                        rightPadding: Kirigami.Units.gridUnit * 2
+                        topPadding: Kirigami.Units.largeSpacing
+                        bottomPadding: Kirigami.Units.largeSpacing
+                        onClicked: { sidebar.currentIndex = index; pageArea.enterPage() }
+                        Keys.onRightPressed: { sidebar.currentIndex = index; pageArea.enterPage() }
+                        onActiveFocusChanged: if (activeFocus) sidebar.currentIndex = index
 
-                function enterPage() {
-                    var item = pageStack.children[sidebar.currentIndex]
-                    if (item && item.focusFirst)
-                        item.focusFirst()
-                }
-
-                Kirigami.Heading {
-                    id: pageTitle
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.margins: Kirigami.Units.gridUnit
-                    text: win.sections[sidebar.currentIndex].label
-                    font.pixelSize: 32
-                    font.weight: Font.Light
-                }
-
-                StackLayout {
-                    id: pageStack
-                    anchors.top: pageTitle.bottom
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-                    anchors.margins: Kirigami.Units.gridUnit
-                    currentIndex: sidebar.currentIndex
-
-                    // 0 — Appearance
-                    SettingsFlick {
-                        id: appearancePage
-                        ColumnLayout {
-                            width: appearancePage.width
-                            spacing: Kirigami.Units.smallSpacing
-                            SliderRow {
-                                id: ap0; focus: true
-                                label: win.translate("Background opacity"); percent: true
-                                from: 0.2; to: 1.0; step: 0.05
-                                value: win.getCfg("backgroundOpacity")
-                                onMoved: (v) => win.setCfg("backgroundOpacity", v)
-                                KeyNavigation.down: ap1                            }
-                            SliderRow {
-                                id: ap1
-                                label: win.translate("Category icon size"); suffix: " px"
-                                from: 48; to: 256; step: 8
-                                value: win.getCfg("categoryIconSize")
-                                onMoved: (v) => win.setCfg("categoryIconSize", Math.round(v))
-                                KeyNavigation.up: ap0; KeyNavigation.down: ap2                            }
-                            SliderRow {
-                                id: ap2
-                                label: win.translate("App icon size"); suffix: " px"
-                                from: 24; to: 160; step: 4
-                                value: win.getCfg("appIconSize")
-                                onMoved: (v) => win.setCfg("appIconSize", Math.round(v))
-                                KeyNavigation.up: ap1; KeyNavigation.down: ap3                            }
-                            SliderRow {
-                                id: ap3
-                                label: win.translate("Cross position"); percent: true
-                                from: 0.1; to: 0.5; step: 0.01
-                                value: win.getCfg("intersectionXFraction")
-                                onMoved: (v) => win.setCfg("intersectionXFraction", v)
-                                KeyNavigation.up: ap2; KeyNavigation.down: apReset                            }
-                            Bigscreen.Button {
-                                id: apReset
-                                text: win.translate("Reset section")
-                                icon.name: "edit-undo"
-                                KeyNavigation.up: ap3
-                                Keys.onLeftPressed: sidebar.forceActiveFocus()
-                                onClicked: {
-                                    win.resetKeys(["backgroundOpacity","categoryIconSize","appIconSize","intersectionXFraction"])
-                                    ap0.value = win.getCfg("backgroundOpacity"); ap1.value = win.getCfg("categoryIconSize")
-                                    ap2.value = win.getCfg("appIconSize"); ap3.value = win.getCfg("intersectionXFraction")
-                                }
-                            }
+                        background: Bigscreen.DelegateBackground {
+                            control: sectionButton
+                            raisedBackground: false
+                            translucentHighlight: true
+                            highlighted: sectionButton.ListView.isCurrentItem
+                            borderHighlighted: highlighted && sidebar.activeFocus
+                            scale: (sectionButton.ListView.isCurrentItem && sidebar.activeFocus) ? 1.05 : 1
+                            Behavior on scale { NumberAnimation {} }
                         }
-                        function focusFirst() { ap0.forceActiveFocus() }
-                    }
 
-                    // 1 — Background (wave RGB, live preview)
-                    SettingsFlick {
-                        id: backgroundPage
-                        ColumnLayout {
-                            width: backgroundPage.width
-                            spacing: Kirigami.Units.smallSpacing
-                            QQC2.Label {
+                        contentItem: RowLayout {
+                            spacing: Kirigami.Units.gridUnit
+                            Kirigami.Icon {
+                                id: sectionIcon
+                                source: sectionButton.modelData.icon
+                                Layout.alignment: Qt.AlignLeft
+                                Layout.preferredHeight: Kirigami.Units.iconSizes.medium
+                                Layout.preferredWidth: sectionIcon.height
+                            }
+                            Kirigami.Heading {
+                                text: sectionButton.modelData.label
+                                wrapMode: Text.Wrap
+                                elide: Text.ElideRight
+                                font.weight: Font.Medium
                                 Layout.fillWidth: true
-                                Layout.bottomMargin: Kirigami.Units.smallSpacing
-                                wrapMode: Text.WordWrap
-                                opacity: 0.8
-                                text: win.translate("Adjust the wave colour behind the cross.")
-                            }
-                            Rectangle {
-                                Layout.fillWidth: true
-                                Layout.preferredHeight: Kirigami.Units.gridUnit * 2
-                                Layout.bottomMargin: Kirigami.Units.smallSpacing
-                                radius: Kirigami.Units.smallSpacing
-                                color: Qt.rgba(bgR.value / 255, bgG.value / 255, bgB.value / 255, 1)
-                                border.color: Qt.rgba(1, 1, 1, 0.15)
-                                border.width: 1
-                            }
-                            SliderRow {
-                                id: bgR; focus: true
-                                label: win.translate("Red"); from: 0; to: 255; step: 1
-                                value: win.getCfg("waveColorR")
-                                onMoved: (v) => win.setCfg("waveColorR", Math.round(v))
-                                KeyNavigation.down: bgG                            }
-                            SliderRow {
-                                id: bgG
-                                label: win.translate("Green"); from: 0; to: 255; step: 1
-                                value: win.getCfg("waveColorG")
-                                onMoved: (v) => win.setCfg("waveColorG", Math.round(v))
-                                KeyNavigation.up: bgR; KeyNavigation.down: bgB                            }
-                            SliderRow {
-                                id: bgB
-                                label: win.translate("Blue"); from: 0; to: 255; step: 1
-                                value: win.getCfg("waveColorB")
-                                onMoved: (v) => win.setCfg("waveColorB", Math.round(v))
-                                KeyNavigation.up: bgG; KeyNavigation.down: bgReset                            }
-                            Bigscreen.Button {
-                                id: bgReset
-                                text: win.translate("Reset section")
-                                icon.name: "edit-undo"
-                                KeyNavigation.up: bgB
-                                Keys.onLeftPressed: sidebar.forceActiveFocus()
-                                onClicked: {
-                                    win.resetKeys(["waveColorR","waveColorG","waveColorB"])
-                                    bgR.value = win.getCfg("waveColorR"); bgG.value = win.getCfg("waveColorG"); bgB.value = win.getCfg("waveColorB")
-                                }
-                            }
-                        }
-                        function focusFirst() { bgR.forceActiveFocus() }
-                    }
-
-                    // 2 — Clock
-                    SettingsFlick {
-                        id: clockPage
-                        ColumnLayout {
-                            width: clockPage.width
-                            spacing: Kirigami.Units.smallSpacing
-                            ComboRow {
-                                id: clk0; focus: true
-                                label: win.translate("Time format")
-                                options: [win.translate("System"), win.translate("12-hour"), win.translate("24-hour")]
-                                currentIndex: win.getCfg("clockTimeFormat")
-                                onActivated: (i) => win.setCfg("clockTimeFormat", i)
-                                KeyNavigation.down: clk1
-                            }
-                            ComboRow {
-                                id: clk1
-                                label: win.translate("Date format")
-                                options: [win.translate("System"), win.translate("Day/month"), win.translate("Month/day")]
-                                currentIndex: win.getCfg("clockDateFormat")
-                                onActivated: (i) => win.setCfg("clockDateFormat", i)
-                                KeyNavigation.up: clk0; KeyNavigation.down: clk2
-                            }
-                            Bigscreen.SwitchDelegate {
-                                id: clk2
-                                Layout.fillWidth: true
-                                text: win.translate("Show date")
-                                checked: win.getCfg("clockShowDate")
-                                onToggled: win.setCfg("clockShowDate", checked)
-                                KeyNavigation.up: clk1
-                                Keys.onLeftPressed: sidebar.forceActiveFocus()
-                            }
-                        }
-                        function focusFirst() { clk0.forceActiveFocus() }
-                    }
-
-                    // 3 — Sounds
-                    SettingsFlick {
-                        id: soundsPage
-                        ColumnLayout {
-                            width: soundsPage.width
-                            spacing: Kirigami.Units.smallSpacing
-                            ComboRow {
-                                id: sn0; focus: true
-                                label: win.translate("Navigation tick")
-                                options: [win.translate("XMB (default)"), win.translate("Custom file"), win.translate("Off")]
-                                currentIndex: win.getCfg("navSoundMode")
-                                onActivated: (i) => win.setCfg("navSoundMode", i)
-                                KeyNavigation.down: sn1
-                            }
-                            SliderRow {
-                                id: sn1
-                                label: win.translate("Tick volume"); percent: true
-                                from: 0.0; to: 1.0; step: 0.05
-                                value: win.getCfg("navSoundVolume")
-                                onMoved: (v) => win.setCfg("navSoundVolume", v)
-                                KeyNavigation.up: sn0; KeyNavigation.down: sn2                            }
-                            ComboRow {
-                                id: sn2
-                                label: win.translate("Background ambience")
-                                options: [win.translate("XMB (default)"), win.translate("Custom file"), win.translate("Off")]
-                                currentIndex: win.getCfg("ambientSoundMode")
-                                onActivated: (i) => win.setCfg("ambientSoundMode", i)
-                                KeyNavigation.up: sn1; KeyNavigation.down: sn3
-                            }
-                            SliderRow {
-                                id: sn3
-                                label: win.translate("Ambience volume"); percent: true
-                                from: 0.0; to: 1.0; step: 0.05
-                                value: win.getCfg("ambientSoundVolume")
-                                onMoved: (v) => win.setCfg("ambientSoundVolume", v)
-                                KeyNavigation.up: sn2                            }
-                        }
-                        function focusFirst() { sn0.forceActiveFocus() }
-                    }
-
-                    // 4 — Visible categories
-                    SettingsFlick {
-                        id: categoriesPage
-                        Kicker.RootModel {
-                            id: catModel
-                            autoPopulate: true
-                            showAllApps: false; showAllAppsCategorized: true
-                            showRecentApps: false; showRecentDocs: false; showRecentFolders: false
-                            showPowerSession: false; showFavoritesPlaceholder: false; showSeparators: false
-                        }
-                        ColumnLayout {
-                            width: categoriesPage.width
-                            spacing: Kirigami.Units.smallSpacing
-                            Repeater {
-                                id: catRepeater
-                                model: catModel
-                                Bigscreen.SwitchDelegate {
-                                    required property var model
-                                    required property int index
-                                    readonly property string catKey: model.decoration ? String(model.decoration) : model.display
-                                    Layout.fillWidth: true
-                                    text: model.display
-                                    icon.name: model.decoration ? String(model.decoration) : ""
-                                    checked: (win.getCfg("hiddenCategories") || []).indexOf(catKey) === -1
-                                    onToggled: {
-                                        var arr = (win.getCfg("hiddenCategories") || []).slice()
-                                        var i = arr.indexOf(catKey)
-                                        if (checked && i !== -1) arr.splice(i, 1)
-                                        else if (!checked && i === -1) arr.push(catKey)
-                                        win.setCfg("hiddenCategories", arr)
-                                    }
-                                    KeyNavigation.up: index > 0 ? catRepeater.itemAt(index - 1) : null
-                                    KeyNavigation.down: index < catRepeater.count - 1 ? catRepeater.itemAt(index + 1) : null
-                                    Keys.onLeftPressed: sidebar.forceActiveFocus()
-                                }
-                            }
-                        }
-                        function focusFirst() { if (catRepeater.count > 0) catRepeater.itemAt(0).forceActiveFocus() }
-                    }
-
-                    // 5 — Favorites
-                    Item {
-                        id: favoritesPage
-                        property bool oskOpen: false
-                        Kicker.RootModel {
-                            id: favAllApps
-                            autoPopulate: true
-                            showAllApps: true; showAllAppsCategorized: false
-                            showRecentApps: false; showRecentDocs: false; showRecentFolders: false
-                            showPowerSession: false; showFavoritesPlaceholder: false; showSeparators: false
-                            appNameFormat: 0
-                            onCountChanged: favoritesPage.appsFlat = favAllApps.modelForRow(0)
-                        }
-                        property var appsFlat: null
-                        KItemModels.KSortFilterProxyModel {
-                            id: favFiltered
-                            sourceModel: favoritesPage.appsFlat
-                            filterRoleName: "display"; filterString: favSearch.text
-                            filterCaseSensitivity: Qt.CaseInsensitive
-                            sortRoleName: "display"; sortOrder: Qt.AscendingOrder
-                        }
-                        ColumnLayout {
-                            anchors.fill: parent
-                            spacing: Kirigami.Units.smallSpacing
-                            Bigscreen.TextField {
-                                id: favSearch
-                                Layout.fillWidth: true
-                                placeholderText: win.translate("Search applications")
-                                // Read-only with manual insertion, like the search overlay.
-                                // Enter opens the on-screen keyboard; while it is up the
-                                // arrows drive it and its hide key (or Back) closes it.
-                                readOnly: true
-                                onActiveFocusChanged: if (!activeFocus) favoritesPage.oskOpen = false
-                                Keys.onReturnPressed: {
-                                    if (favoritesPage.oskOpen) settingsOsk.activate()
-                                    else favoritesPage.oskOpen = true
-                                }
-                                Keys.onEnterPressed: {
-                                    if (favoritesPage.oskOpen) settingsOsk.activate()
-                                    else favoritesPage.oskOpen = true
-                                }
-                                Keys.onUpPressed: if (favoritesPage.oskOpen) settingsOsk.move(0, -1)
-                                Keys.onDownPressed: {
-                                    if (favoritesPage.oskOpen) settingsOsk.move(0, 1)
-                                    else favList.forceActiveFocus()
-                                }
-                                Keys.onLeftPressed: {
-                                    if (favoritesPage.oskOpen) settingsOsk.move(-1, 0)
-                                    else win.focusSidebar()
-                                }
-                                Keys.onRightPressed: if (favoritesPage.oskOpen) settingsOsk.move(1, 0)
-                                Keys.onPressed: (event) => {
-                                    if (event.key === Qt.Key_Backspace || event.key === Qt.Key_Menu
-                                            || event.nativeScanCode === 139 || event.nativeScanCode === 147) {
-                                        text = text.slice(0, -1)
-                                        event.accepted = true
-                                    } else if (event.text.length === 1
-                                               && event.text.charCodeAt(0) >= 32 && event.text.charCodeAt(0) !== 127
-                                               && (event.text.trim().length === 1 || event.key === Qt.Key_Space)
-                                               && !(event.modifiers & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {
-                                        text += event.text
-                                        event.accepted = true
-                                    }
-                                }
-                            }
-                            ListView {
-                                id: favList
-                                Layout.fillWidth: true; Layout.fillHeight: true
-                                clip: true; model: favFiltered
-                                spacing: Kirigami.Units.smallSpacing
-                                keyNavigationEnabled: true
-                                KeyNavigation.up: favSearch
-                                delegate: Bigscreen.SwitchDelegate {
-                                    required property var model
-                                    width: ListView.view.width
-                                    text: model.display
-                                    icon.name: model.decoration ? String(model.decoration) : ""
-                                    checked: (win.getCfg("favorites") || []).indexOf(model.favoriteId) !== -1
-                                    onToggled: {
-                                        var arr = (win.getCfg("favorites") || []).slice()
-                                        var i = arr.indexOf(model.favoriteId)
-                                        if (checked && i === -1) arr.push(model.favoriteId)
-                                        else if (!checked && i !== -1) arr.splice(i, 1)
-                                        win.setCfg("favorites", arr)
-                                    }
-                                    Keys.onLeftPressed: sidebar.forceActiveFocus()
-                                }
-                            }
-                        }
-                        function focusFirst() { favSearch.forceActiveFocus() }
-                    }
-
-                    // 6 — Language
-                    SettingsFlick {
-                        id: languagePage
-                        readonly property var codes: [""].concat(Catalogs.languages)
-                        function focusFirst() { lng0.forceActiveFocus() }
-                        ColumnLayout {
-                            width: languagePage.width
-                            spacing: Kirigami.Units.smallSpacing
-                            ComboRow {
-                                id: lng0; focus: true
-                                label: win.translate("Language")
-                                options: languagePage.codes.map(c => c === "" ? win.translate("System")
-                                    : c === "en" ? "English"
-                                    : (Qt.locale(c).nativeLanguageName.charAt(0).toUpperCase() + Qt.locale(c).nativeLanguageName.slice(1)) || c)
-                                currentIndex: Math.max(0, languagePage.codes.indexOf(win.getCfg("language")))
-                                onActivated: (i) => win.setCfg("language", languagePage.codes[i])
                             }
                         }
                     }
 
-                    // 7 — Icons
-                    SettingsFlick {
-                        id: iconsPage
-                        ColumnLayout {
-                            width: iconsPage.width
-                            spacing: Kirigami.Units.smallSpacing
-                            ComboRow {
-                                id: ic0; focus: true
-                                label: win.translate("Icon theme")
-                                options: win.iconThemes.map(t => t.name)
-                                currentIndex: {
-                                    var cur = win.getCfg("iconTheme")
-                                    for (var i = 0; i < win.iconThemes.length; i++)
-                                        if (win.iconThemes[i].id === cur) return i
-                                    return 0
-                                }
-                                onActivated: (i) => win.applyIconTheme(win.iconThemes[i].id)
-                            }
-                            QQC2.Label {
-                                Layout.fillWidth: true
-                                Layout.topMargin: Kirigami.Units.smallSpacing
-                                wrapMode: Text.WordWrap
-                                opacity: 0.8
-                                text: win.translate("The icon theme applies to the XMB session only, from the next login. Your desktop session is not affected.")
-                            }
-                        }
-                        function focusFirst() { ic0.forceActiveFocus() }
-                    }
-
-                    // 8 — Controller
-                    SettingsFlick {
-                        id: controllerPage
-                        ColumnLayout {
-                            width: controllerPage.width
-                            spacing: Kirigami.Units.smallSpacing
-                            Bigscreen.SwitchDelegate {
-                                id: ct0; focus: true
-                                Layout.fillWidth: true
-                                text: win.translate("Pointer on the left stick")
-                                checked: win.stickSwap
-                                onToggled: win.setStickSwap(checked)
-                                Keys.onLeftPressed: sidebar.forceActiveFocus()
-                            }
-                            QQC2.Label {
-                                Layout.fillWidth: true
-                                Layout.topMargin: Kirigami.Units.smallSpacing
-                                wrapMode: Text.WordWrap
-                                opacity: 0.8
-                                text: win.translate("Moves the mouse pointer with the left stick and scrolls lists with the right, with L3 as click. Games always see the physical layout. Applies from the next login.")
-                            }
-                        }
-                        function focusFirst() { ct0.forceActiveFocus() }
-                    }
+                    Keys.onEscapePressed: win.hide()
                 }
             }
         }
+
+        // Shadow over the sidebar edge, like the native settings window.
+        Rectangle {
+            width: Kirigami.Units.largeSpacing
+            anchors.top: parent.top
+            anchors.right: pageArea.left
+            anchors.bottom: parent.bottom
+            opacity: 0.1
+            gradient: Gradient {
+                orientation: Gradient.Horizontal
+                GradientStop { position: 0.0; color: "transparent" }
+                GradientStop { position: 1.0; color: "black" }
+            }
+        }
+
+        // ---- Page area (opaque main pane, like the native KCM holder) ----
+        Rectangle {
+            id: pageArea
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.left: sidebarRect.right
+            color: Kirigami.Theme.backgroundColor
+
+            function enterPage() {
+                var item = pageStack.children[sidebar.currentIndex]
+                if (item && item.focusFirst)
+                    item.focusFirst()
+            }
+
+            Item {
+                id: pageHeader
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: win.headerHeight
+
+                Kirigami.Heading {
+                    id: pageTitle
+                    anchors.fill: parent
+                    padding: win.horizontalMargin
+                    verticalAlignment: Text.AlignBottom
+                    horizontalAlignment: Text.AlignLeft
+                    font.weight: Font.Light
+                    color: Kirigami.Theme.textColor
+                    fontSizeMode: Text.Fit
+                    minimumPixelSize: 16
+                    font.pixelSize: 32
+                    text: win.sections[sidebar.currentIndex].label
+                }
+            }
+
+            StackLayout {
+                id: pageStack
+                anchors.top: pageHeader.bottom
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: win.horizontalMargin
+                anchors.rightMargin: win.horizontalMargin
+                currentIndex: sidebar.currentIndex
+
+                // 0 — Appearance
+                SettingsFlick {
+                    id: appearancePage
+                    ColumnLayout {
+                        width: appearancePage.width
+                        spacing: Kirigami.Units.smallSpacing
+                        SliderRow {
+                            id: ap0; focus: true
+                            label: win.translate("Background opacity"); percent: true
+                            from: 0.2; to: 1.0; step: 0.05
+                            value: win.getCfg("backgroundOpacity")
+                            onMoved: (v) => win.setCfg("backgroundOpacity", v)
+                            KeyNavigation.down: ap1                            }
+                        SliderRow {
+                            id: ap1
+                            label: win.translate("Category icon size"); suffix: " px"
+                            from: 48; to: 256; step: 8
+                            value: win.getCfg("categoryIconSize")
+                            onMoved: (v) => win.setCfg("categoryIconSize", Math.round(v))
+                            KeyNavigation.up: ap0; KeyNavigation.down: ap2                            }
+                        SliderRow {
+                            id: ap2
+                            label: win.translate("App icon size"); suffix: " px"
+                            from: 24; to: 160; step: 4
+                            value: win.getCfg("appIconSize")
+                            onMoved: (v) => win.setCfg("appIconSize", Math.round(v))
+                            KeyNavigation.up: ap1; KeyNavigation.down: ap3                            }
+                        SliderRow {
+                            id: ap3
+                            label: win.translate("Cross position"); percent: true
+                            from: 0.1; to: 0.5; step: 0.01
+                            value: win.getCfg("intersectionXFraction")
+                            onMoved: (v) => win.setCfg("intersectionXFraction", v)
+                            KeyNavigation.up: ap2; KeyNavigation.down: apReset                            }
+                        Bigscreen.Button {
+                            id: apReset
+                            text: win.translate("Reset section")
+                            icon.name: "edit-undo"
+                            KeyNavigation.up: ap3
+                            Keys.onLeftPressed: sidebar.forceActiveFocus()
+                            onClicked: {
+                                win.resetKeys(["backgroundOpacity","categoryIconSize","appIconSize","intersectionXFraction"])
+                                ap0.value = win.getCfg("backgroundOpacity"); ap1.value = win.getCfg("categoryIconSize")
+                                ap2.value = win.getCfg("appIconSize"); ap3.value = win.getCfg("intersectionXFraction")
+                            }
+                        }
+                    }
+                    function focusFirst() { ap0.forceActiveFocus() }
+                }
+
+                // 1 — Background (wave RGB, live preview)
+                SettingsFlick {
+                    id: backgroundPage
+                    ColumnLayout {
+                        width: backgroundPage.width
+                        spacing: Kirigami.Units.smallSpacing
+                        QQC2.Label {
+                            Layout.fillWidth: true
+                            Layout.bottomMargin: Kirigami.Units.smallSpacing
+                            wrapMode: Text.WordWrap
+                            opacity: 0.8
+                            text: win.translate("Adjust the wave colour behind the cross.")
+                        }
+                        Rectangle {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: Kirigami.Units.gridUnit * 2
+                            Layout.bottomMargin: Kirigami.Units.smallSpacing
+                            radius: Kirigami.Units.smallSpacing
+                            color: Qt.rgba(bgR.value / 255, bgG.value / 255, bgB.value / 255, 1)
+                            border.color: Qt.rgba(1, 1, 1, 0.15)
+                            border.width: 1
+                        }
+                        SliderRow {
+                            id: bgR; focus: true
+                            label: win.translate("Red"); from: 0; to: 255; step: 1
+                            value: win.getCfg("waveColorR")
+                            onMoved: (v) => win.setCfg("waveColorR", Math.round(v))
+                            KeyNavigation.down: bgG                            }
+                        SliderRow {
+                            id: bgG
+                            label: win.translate("Green"); from: 0; to: 255; step: 1
+                            value: win.getCfg("waveColorG")
+                            onMoved: (v) => win.setCfg("waveColorG", Math.round(v))
+                            KeyNavigation.up: bgR; KeyNavigation.down: bgB                            }
+                        SliderRow {
+                            id: bgB
+                            label: win.translate("Blue"); from: 0; to: 255; step: 1
+                            value: win.getCfg("waveColorB")
+                            onMoved: (v) => win.setCfg("waveColorB", Math.round(v))
+                            KeyNavigation.up: bgG; KeyNavigation.down: bgReset                            }
+                        Bigscreen.Button {
+                            id: bgReset
+                            text: win.translate("Reset section")
+                            icon.name: "edit-undo"
+                            KeyNavigation.up: bgB
+                            Keys.onLeftPressed: sidebar.forceActiveFocus()
+                            onClicked: {
+                                win.resetKeys(["waveColorR","waveColorG","waveColorB"])
+                                bgR.value = win.getCfg("waveColorR"); bgG.value = win.getCfg("waveColorG"); bgB.value = win.getCfg("waveColorB")
+                            }
+                        }
+                    }
+                    function focusFirst() { bgR.forceActiveFocus() }
+                }
+
+                // 2 — Clock
+                SettingsFlick {
+                    id: clockPage
+                    ColumnLayout {
+                        width: clockPage.width
+                        spacing: Kirigami.Units.smallSpacing
+                        ComboRow {
+                            id: clk0; focus: true
+                            label: win.translate("Time format")
+                            options: [win.translate("System"), win.translate("12-hour"), win.translate("24-hour")]
+                            currentIndex: win.getCfg("clockTimeFormat")
+                            onActivated: (i) => win.setCfg("clockTimeFormat", i)
+                            KeyNavigation.down: clk1
+                        }
+                        ComboRow {
+                            id: clk1
+                            label: win.translate("Date format")
+                            options: [win.translate("System"), win.translate("Day/month"), win.translate("Month/day")]
+                            currentIndex: win.getCfg("clockDateFormat")
+                            onActivated: (i) => win.setCfg("clockDateFormat", i)
+                            KeyNavigation.up: clk0; KeyNavigation.down: clk2
+                        }
+                        Bigscreen.SwitchDelegate {
+                            id: clk2
+                            Layout.fillWidth: true
+                            text: win.translate("Show date")
+                            checked: win.getCfg("clockShowDate")
+                            onToggled: win.setCfg("clockShowDate", checked)
+                            KeyNavigation.up: clk1
+                            Keys.onLeftPressed: sidebar.forceActiveFocus()
+                        }
+                    }
+                    function focusFirst() { clk0.forceActiveFocus() }
+                }
+
+                // 3 — Sounds
+                SettingsFlick {
+                    id: soundsPage
+                    ColumnLayout {
+                        width: soundsPage.width
+                        spacing: Kirigami.Units.smallSpacing
+                        ComboRow {
+                            id: sn0; focus: true
+                            label: win.translate("Navigation tick")
+                            options: [win.translate("XMB (default)"), win.translate("Custom file"), win.translate("Off")]
+                            currentIndex: win.getCfg("navSoundMode")
+                            onActivated: (i) => win.setCfg("navSoundMode", i)
+                            KeyNavigation.down: sn1
+                        }
+                        SliderRow {
+                            id: sn1
+                            label: win.translate("Tick volume"); percent: true
+                            from: 0.0; to: 1.0; step: 0.05
+                            value: win.getCfg("navSoundVolume")
+                            onMoved: (v) => win.setCfg("navSoundVolume", v)
+                            KeyNavigation.up: sn0; KeyNavigation.down: sn2                            }
+                        ComboRow {
+                            id: sn2
+                            label: win.translate("Background ambience")
+                            options: [win.translate("XMB (default)"), win.translate("Custom file"), win.translate("Off")]
+                            currentIndex: win.getCfg("ambientSoundMode")
+                            onActivated: (i) => win.setCfg("ambientSoundMode", i)
+                            KeyNavigation.up: sn1; KeyNavigation.down: sn3
+                        }
+                        SliderRow {
+                            id: sn3
+                            label: win.translate("Ambience volume"); percent: true
+                            from: 0.0; to: 1.0; step: 0.05
+                            value: win.getCfg("ambientSoundVolume")
+                            onMoved: (v) => win.setCfg("ambientSoundVolume", v)
+                            KeyNavigation.up: sn2                            }
+                    }
+                    function focusFirst() { sn0.forceActiveFocus() }
+                }
+
+                // 4 — Visible categories
+                SettingsFlick {
+                    id: categoriesPage
+                    Kicker.RootModel {
+                        id: catModel
+                        autoPopulate: true
+                        showAllApps: false; showAllAppsCategorized: true
+                        showRecentApps: false; showRecentDocs: false; showRecentFolders: false
+                        showPowerSession: false; showFavoritesPlaceholder: false; showSeparators: false
+                    }
+                    ColumnLayout {
+                        width: categoriesPage.width
+                        spacing: Kirigami.Units.smallSpacing
+                        Repeater {
+                            id: catRepeater
+                            model: catModel
+                            Bigscreen.SwitchDelegate {
+                                required property var model
+                                required property int index
+                                readonly property string catKey: model.decoration ? String(model.decoration) : model.display
+                                Layout.fillWidth: true
+                                text: model.display
+                                icon.name: model.decoration ? String(model.decoration) : ""
+                                checked: (win.getCfg("hiddenCategories") || []).indexOf(catKey) === -1
+                                onToggled: {
+                                    var arr = (win.getCfg("hiddenCategories") || []).slice()
+                                    var i = arr.indexOf(catKey)
+                                    if (checked && i !== -1) arr.splice(i, 1)
+                                    else if (!checked && i === -1) arr.push(catKey)
+                                    win.setCfg("hiddenCategories", arr)
+                                }
+                                KeyNavigation.up: index > 0 ? catRepeater.itemAt(index - 1) : null
+                                KeyNavigation.down: index < catRepeater.count - 1 ? catRepeater.itemAt(index + 1) : null
+                                Keys.onLeftPressed: sidebar.forceActiveFocus()
+                            }
+                        }
+                    }
+                    function focusFirst() { if (catRepeater.count > 0) catRepeater.itemAt(0).forceActiveFocus() }
+                }
+
+                // 5 — Favorites
+                Item {
+                    id: favoritesPage
+                    property bool oskOpen: false
+                    Kicker.RootModel {
+                        id: favAllApps
+                        autoPopulate: true
+                        showAllApps: true; showAllAppsCategorized: false
+                        showRecentApps: false; showRecentDocs: false; showRecentFolders: false
+                        showPowerSession: false; showFavoritesPlaceholder: false; showSeparators: false
+                        appNameFormat: 0
+                        onCountChanged: favoritesPage.appsFlat = favAllApps.modelForRow(0)
+                    }
+                    property var appsFlat: null
+                    KItemModels.KSortFilterProxyModel {
+                        id: favFiltered
+                        sourceModel: favoritesPage.appsFlat
+                        filterRoleName: "display"; filterString: favSearch.text
+                        filterCaseSensitivity: Qt.CaseInsensitive
+                        sortRoleName: "display"; sortOrder: Qt.AscendingOrder
+                    }
+                    ColumnLayout {
+                        anchors.fill: parent
+                        spacing: Kirigami.Units.smallSpacing
+                        Bigscreen.TextField {
+                            id: favSearch
+                            Layout.fillWidth: true
+                            placeholderText: win.translate("Search applications")
+                            // Read-only with manual insertion, like the search overlay.
+                            // Enter opens the on-screen keyboard; while it is up the
+                            // arrows drive it and its hide key (or Back) closes it.
+                            readOnly: true
+                            onActiveFocusChanged: if (!activeFocus) favoritesPage.oskOpen = false
+                            Keys.onReturnPressed: {
+                                if (favoritesPage.oskOpen) settingsOsk.activate()
+                                else favoritesPage.oskOpen = true
+                            }
+                            Keys.onEnterPressed: {
+                                if (favoritesPage.oskOpen) settingsOsk.activate()
+                                else favoritesPage.oskOpen = true
+                            }
+                            Keys.onUpPressed: if (favoritesPage.oskOpen) settingsOsk.move(0, -1)
+                            Keys.onDownPressed: {
+                                if (favoritesPage.oskOpen) settingsOsk.move(0, 1)
+                                else favList.forceActiveFocus()
+                            }
+                            Keys.onLeftPressed: {
+                                if (favoritesPage.oskOpen) settingsOsk.move(-1, 0)
+                                else win.focusSidebar()
+                            }
+                            Keys.onRightPressed: if (favoritesPage.oskOpen) settingsOsk.move(1, 0)
+                            Keys.onPressed: (event) => {
+                                if (event.key === Qt.Key_Backspace || event.key === Qt.Key_Menu
+                                        || event.nativeScanCode === 139 || event.nativeScanCode === 147) {
+                                    text = text.slice(0, -1)
+                                    event.accepted = true
+                                } else if (event.text.length === 1
+                                           && event.text.charCodeAt(0) >= 32 && event.text.charCodeAt(0) !== 127
+                                           && (event.text.trim().length === 1 || event.key === Qt.Key_Space)
+                                           && !(event.modifiers & (Qt.ControlModifier | Qt.AltModifier | Qt.MetaModifier))) {
+                                    text += event.text
+                                    event.accepted = true
+                                }
+                            }
+                        }
+                        ListView {
+                            id: favList
+                            Layout.fillWidth: true; Layout.fillHeight: true
+                            clip: true; model: favFiltered
+                            spacing: Kirigami.Units.smallSpacing
+                            keyNavigationEnabled: true
+                            KeyNavigation.up: favSearch
+                            delegate: Bigscreen.SwitchDelegate {
+                                required property var model
+                                width: ListView.view.width
+                                text: model.display
+                                icon.name: model.decoration ? String(model.decoration) : ""
+                                checked: (win.getCfg("favorites") || []).indexOf(model.favoriteId) !== -1
+                                onToggled: {
+                                    var arr = (win.getCfg("favorites") || []).slice()
+                                    var i = arr.indexOf(model.favoriteId)
+                                    if (checked && i === -1) arr.push(model.favoriteId)
+                                    else if (!checked && i !== -1) arr.splice(i, 1)
+                                    win.setCfg("favorites", arr)
+                                }
+                                Keys.onLeftPressed: sidebar.forceActiveFocus()
+                            }
+                        }
+                    }
+                    function focusFirst() { favSearch.forceActiveFocus() }
+                }
+
+                // 6 — Language
+                SettingsFlick {
+                    id: languagePage
+                    readonly property var codes: [""].concat(Catalogs.languages)
+                    function focusFirst() { lng0.forceActiveFocus() }
+                    ColumnLayout {
+                        width: languagePage.width
+                        spacing: Kirigami.Units.smallSpacing
+                        ComboRow {
+                            id: lng0; focus: true
+                            label: win.translate("Language")
+                            options: languagePage.codes.map(c => c === "" ? win.translate("System")
+                                : c === "en" ? "English"
+                                : (Qt.locale(c).nativeLanguageName.charAt(0).toUpperCase() + Qt.locale(c).nativeLanguageName.slice(1)) || c)
+                            currentIndex: Math.max(0, languagePage.codes.indexOf(win.getCfg("language")))
+                            onActivated: (i) => win.setCfg("language", languagePage.codes[i])
+                        }
+                    }
+                }
+
+                // 7 — Icons
+                SettingsFlick {
+                    id: iconsPage
+                    ColumnLayout {
+                        width: iconsPage.width
+                        spacing: Kirigami.Units.smallSpacing
+                        ComboRow {
+                            id: ic0; focus: true
+                            label: win.translate("Icon theme")
+                            options: win.iconThemes.map(t => t.name)
+                            currentIndex: {
+                                var cur = win.getCfg("iconTheme")
+                                for (var i = 0; i < win.iconThemes.length; i++)
+                                    if (win.iconThemes[i].id === cur) return i
+                                return 0
+                            }
+                            onActivated: (i) => win.applyIconTheme(win.iconThemes[i].id)
+                        }
+                        QQC2.Label {
+                            Layout.fillWidth: true
+                            Layout.topMargin: Kirigami.Units.smallSpacing
+                            wrapMode: Text.WordWrap
+                            opacity: 0.8
+                            text: win.translate("The icon theme applies to the XMB session only, from the next login. Your desktop session is not affected.")
+                        }
+                    }
+                    function focusFirst() { ic0.forceActiveFocus() }
+                }
+
+                // 8 — Controller
+                SettingsFlick {
+                    id: controllerPage
+                    ColumnLayout {
+                        width: controllerPage.width
+                        spacing: Kirigami.Units.smallSpacing
+                        Bigscreen.SwitchDelegate {
+                            id: ct0; focus: true
+                            Layout.fillWidth: true
+                            text: win.translate("Pointer on the left stick")
+                            checked: win.stickSwap
+                            onToggled: win.setStickSwap(checked)
+                            Keys.onLeftPressed: sidebar.forceActiveFocus()
+                        }
+                        QQC2.Label {
+                            Layout.fillWidth: true
+                            Layout.topMargin: Kirigami.Units.smallSpacing
+                            wrapMode: Text.WordWrap
+                            opacity: 0.8
+                            text: win.translate("Moves the mouse pointer with the left stick and scrolls lists with the right, with L3 as click. Games always see the physical layout. Applies from the next login.")
+                        }
+                    }
+                    function focusFirst() { ct0.forceActiveFocus() }
+                }
+                }
+            }
     }
 
     // Gamepad on-screen keyboard, opened with Enter on the favorites filter.
