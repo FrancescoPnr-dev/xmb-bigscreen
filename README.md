@@ -65,17 +65,10 @@ The XMB is the session's homescreen always there, with apps launching on top.
 
 A login screen cannot be driven by a controller, so a living-room machine should
 boot straight into the XMB. Enable autologin from *System Settings → Login Screen*
-picking the *XMB BigScreen* session, or drop a file as root:
-
-```ini
-# /etc/plasmalogin.conf.d/xmb-autologin.conf  (SDDM: /etc/sddm.conf.d/)
-[Autologin]
-User=YOUR_USER
-Session=plasma-xmbbigscreen-wayland
-```
+picking the *XMB BigScreen* session.
 
 The XMB session never locks the screen by itself (no idle lock, no lock on resume)
-and the power menu has no Lock entry — a password prompt is a dead end on a TV.
+and the power menu has no Lock entry, a password prompt is a dead end on a TV.
 Logging out still reaches the login screen: the overlay warns first, and rebooting
 autologs back in.
 
