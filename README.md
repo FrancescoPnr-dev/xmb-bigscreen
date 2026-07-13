@@ -60,15 +60,6 @@ The XMB is the session's homescreen always there, with apps launching on top.
 - **Text fields in apps**, with `plasma-keyboard` installed, a compact keyboard
   pops up on the focused field and the d-pad drives it.
 
-### Gamepad
-
-Controllers just work: the session refreshes the pad mapping at every login and
-whenever a controller connects. Only the system input handler sees the mapping,
-games always get the physical layout.
-
-By default the pointer sits on the **right** stick. Prefer it on the left? Flip
-*XMB settings → Controller → Pointer on the left stick* (or run
-`xmb-bigscreen-stick-swap --on`). It applies from the next login.
 
 ### Autologin (couch mode)
 
