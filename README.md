@@ -9,21 +9,6 @@ A console-like fullscreen launcher for KDE Plasma, inspired by the PlayStation 3
 > Built and tested on Plasma BigScreen 6.7 / Qt 6.
 
 
-
-## What you get
-
-- The classic XMB cross: categories horizontal, apps vertical, everything glides.
-- Animated wave background with monthly colour presets, custom RGB and particles.
-- Gamepad works out of the box — navigation, search, settings, power, everything.
-- Search the whole system (KRunner) with a PS3-style on-screen keyboard.
-- A home overlay over running apps: live window previews, volume, brightness, power.
-- A settings window in the native Bigscreen style: appearance, wave colour, clock,
-  sounds, visible categories, favorites, language, icons, controller.
-- Original navigation tick and ambient loop (no Sony audio), replaceable with your
-  own sound files.
-- Mouse and keyboard fully supported too: wheel scrolls apps, screen edges scroll
-  categories, type anywhere to search, middle-click launches.
-
 <img width="3723" height="1433" alt="2" src="https://github.com/user-attachments/assets/7c113a95-f20d-4587-b197-651b6ee3ae72" />
 
 
