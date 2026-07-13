@@ -4,10 +4,7 @@
 # XMB BigScreen
 
 A console-like fullscreen launcher for KDE Plasma, inspired by the PlayStation 3 / PSP
-**XrossMediaBar** built for the living room: TV, couch and gamepad. It runs as a real
-Plasma Wayland session on top of Plasma Bigscreen, with the classic wave background,
-search and subtle sounds. Born as an independent fork of
-[XMB Dashboard](https://github.com/FrancescoPnr-dev/xmb-dashboard).
+**XrossMediaBar** built for the living room: TV, couch and gamepad.
 
 > Built and tested on Plasma BigScreen 6.7 / Qt 6.
 
@@ -65,23 +62,23 @@ Bigscreen's, the Wayland session and the pad-mapping tool. Remove everything wit
 
 ## Using it
 
-The XMB is the session's homescreen — always there, with apps launching on top.
+The XMB is the session's homescreen always there, with apps launching on top.
 
-- **D-pad / left stick / arrows / wheel / screen edges** — move around the cross.
-- **Cross / Enter / click** — launch the highlighted app.
-- **Triangle** — search: the on-screen keyboard opens, **Cross** types,
+- **D-pad / left stick / arrows / wheel / screen edges**, move around the cross.
+- **Cross / Enter / click**, launch the highlighted app.
+- **Triangle**, search: the on-screen keyboard opens, **Cross** types,
   **Square** deletes, **L1/R1** move through the results, **Circle** closes.
   On a real keyboard, just start typing.
-- **PS/Guide button or Meta** — home overlay over the running app: switch or close
+- **PS/Guide button or Meta**, home overlay over the running app: switch or close
   apps, volume, brightness, power actions, quick settings.
-- **Circle / Back / Esc** — go back, one layer at a time.
-- **Text fields in apps** — with `plasma-keyboard` installed, a compact keyboard
+- **Circle / Back / Esc**, go back, one layer at a time.
+- **Text fields in apps**, with `plasma-keyboard` installed, a compact keyboard
   pops up on the focused field and the d-pad drives it.
 
 ### Gamepad
 
 Controllers just work: the session refreshes the pad mapping at every login and
-whenever a controller connects. Only the system input handler sees the mapping —
+whenever a controller connects. Only the system input handler sees the mapping,
 games always get the physical layout.
 
 By default the pointer sits on the **right** stick. Prefer it on the left? Flip
@@ -105,14 +102,6 @@ The XMB session never locks the screen by itself (no idle lock, no lock on resum
 and the power menu has no Lock entry — a password prompt is a dead end on a TV.
 Logging out still reaches the login screen: the overlay warns first, and rebooting
 autologs back in.
-
-
-## Settings
-
-Open the home overlay (PS/Guide, Meta, or hover the top edge) and pick
-*Settings → XMB settings*. The window is a faithful copy of Bigscreen's own TV
-settings — sidebar of sections, native delegates, fully driveable by pad or remote.
-Changes apply live.
 
 ## For contributors
 
