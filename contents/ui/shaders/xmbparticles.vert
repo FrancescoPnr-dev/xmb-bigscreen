@@ -2,27 +2,19 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only AND MIT
 //
-// XMB wave — vertex shader (Qt6 ShaderEffect + GridMesh).
+// XMB particles — vertex shader (Qt6 ShaderEffect + GridMesh).
 //
-// 1:1 translation of the linkev/PlayStation-3-XMB demo's `waveProg` VERTEX shader. The demo renders a
-// 100x100 grid (GL_TRIANGLE_STRIP) whose screen-Y is the wave displacement; here the
-// same grid is a Qt Quick GridMesh and this shader is the same per-vertex displacement.
-// This is the GPU-efficient method: the wave is computed per VERTEX (~10k), not per
-// screen pixel.
-//
-// The demo samples its displacement from a per-frame CPU-generated 256x64 R32F texture
-// (its writeDisplacementTexture routine: a sum of sine bands smoothed by a cubic
-// B-spline). A per-frame float texture can't be uploaded from pure QML, so we evaluate
-// the SAME field analytically in field() below — identical values (analytic eval is
-// already smooth, so the B-spline reconstruction is unnecessary), no per-pixel cost. The
-// negligible "reKernel" pseudo-random wander (gain 0.04 * blend 0.45 ≈ 1.8%) is omitted.
+// Same per-vertex displacement as xmbwave.vert (field + ffd + soft-clipped arch), so the
+// sparkle pass shares the wave's exact geometry: sparkles drawn in this mesh's uv space
+// are glued to the veil by construction. Only the z-detail step is omitted (it feeds the
+// wave's fresnel, which the sparkles don't use).
 
 #version 440
 
 layout(location = 0) in vec4 qt_Vertex;
 layout(location = 1) in vec2 qt_MultiTexCoord0;
 
-layout(location = 0) out vec3 vPos;   // displaced position -> fragment fresnel (demo vPos)
+layout(location = 0) out vec2 vUv;
 
 layout(std140, binding = 0) uniform buf {
     mat4 qt_Matrix;
@@ -35,7 +27,7 @@ layout(std140, binding = 0) uniform buf {
     float bandSecondaryFreq;
     float bandSecondaryAmp;
     float tension;
-    float splineLength;     // demo 'length'
+    float splineLength;
     float spacing;
     float perturbation;
     float perturbationScale;
@@ -49,20 +41,18 @@ layout(std140, binding = 0) uniform buf {
     float waveSoftClip;
     float damping;
     float ffdScale1X;
-    float ffdScale2Z;
     float ffdYAmp;
-    float ffdZAmp;
-    float zDetailScale;
-    float fresnelPower;
-    float fresnelScale;
-    float waveOpacity;
-    float brightness;
+    float pFlowSpeed;
+    float pOpacity;
+    float pSizeBase;
+    float pSizeVar;
+    float pDensity;
+    float pSpread;
 };
 
 const float PI = 3.14159265359;
 
-// Displacement field == the value baked into the demo's spline texture at (ux, z).
-// (the demo's writeDisplacementTexture control-point formula; cp blended reCore/legacy.)
+// Identical to xmbwave.vert field(): the displacement value of the demo's spline texture.
 float field(float ux, float z, float flow)
 {
     float rowPhase = flow * 0.25 + z * 1.7;
@@ -77,22 +67,19 @@ float field(float ux, float z, float flow)
 
 void main()
 {
-    // GridMesh gives qt_MultiTexCoord0 in [0,1]^2. Demo: aPos in [-1,1]^2, uv=(aPos+1)/2.
     vec2 uv = qt_MultiTexCoord0;
     float flow = time * flowSpeed * timeStep;
 
-    vec3 p = vec3(uv.x * 2.0 - 1.0, 0.0, uv.y * 2.0 - 1.0);   // p = (aPos.x, 0, aPos.y)
+    vec3 p = vec3(uv.x * 2.0 - 1.0, 0.0, uv.y * 2.0 - 1.0);
     float ux = uv.x;
     float z  = p.z;
 
-    // p.y = texture(uSplineTex, uv).r
-    p.y = field(ux, z, flow);
-
-    // free-form deformation (demo): ffd1.x = p.x*ffdScale1X (+0), ffd2.z = p.z*ffdScale2Z (+0)
+    // Widen the sparkle band: open the row fan around the veil centre-line by pSpread,
+    // so the cloud floats around the ribbon while staying locked to its motion.
+    float centreVal = field(ux, 0.0, flow);
+    p.y = centreVal + (field(ux, z, flow) - centreVal) * pSpread;
     p.y += sin(p.x * ffdScale1X + time * flowSpeed) * ffdYAmp;
-    p.z += cos(p.z * ffdScale2Z + time * flowSpeed) * ffdZAmp;
 
-    // soft-clipped overall sweep (the slow arch)
     float baseWave = cos(p.x * 2.0 - time * 0.5 * timeStep) * waveCosAmp + waveBias;
     baseWave *= (1.0 - damping);
     baseWave += tension * sin(p.x * splineLength + time * flowSpeed * timeStep * 0.25);
@@ -103,11 +90,6 @@ void main()
     totalWave = waveSoftClip * tanh(totalWave / max(waveSoftClip, 1e-4));
     p.y -= totalWave;
 
-    // depth detail (scrolling) — demo: p.z -= texture(uSplineTex, uv2).r * zDetailScale
-    float uv2x = fract(uv.x - time * flowSpeed * 0.04 * timeStep);
-    p.z -= field(uv2x, z, flow) * zDetailScale;
-
-    vPos = p;
-    // demo: gl_Position = vec4(p, 1.0) (clip space directly; screen-Y is the displacement)
+    vUv = uv;
     gl_Position = vec4(p.x, p.y, 0.0, 1.0);
 }

@@ -4,7 +4,7 @@
 //
 // XMB background gradient — fragment shader (fullscreen ShaderEffect).
 //
-// 1:1 translation of linkev/PlayStation-3-XMB spline.js `bgProg` fragment: a smoothstep gradient along
+// 1:1 translation of the linkev/PlayStation-3-XMB demo's `bgProg` fragment: a smoothstep gradient along
 // uDir between two colours over a [tMin, tMin+tSpan] range. Endpoints/dir/range are
 // computed CPU-side in QML (resolveBackgroundGradient). One cheap pass, no loops.
 

@@ -25,8 +25,9 @@ bake() {  # bake <source>
 }
 
 echo "Baking XMB shaders using $QSB"
-bake xmbwave.vert        # wave mesh vertex displacement (spline.js waveProg vertex)
-bake xmbwave.frag        # wave fresnel              (spline.js waveProg fragment)
-bake xmbgradient.frag    # background gradient       (spline.js bgProg)
+bake xmbwave.vert        # wave mesh vertex displacement
+bake xmbwave.frag        # wave fresnel
+bake xmbgradient.frag    # background gradient
+bake xmbparticles.vert   # sparkle mesh displacement (same field as the wave)
 bake xmbparticles.frag   # additive sparkles
 echo "OK"

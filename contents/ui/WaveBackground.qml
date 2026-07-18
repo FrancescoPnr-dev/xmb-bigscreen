@@ -107,6 +107,8 @@ Item {
     property real pSizeBase: 1.0
     property real pSizeVar: 1.5
     property real pDensity: 1.0
+    // How far the sparkle band opens around the veil (1 = the ribbon's own thickness).
+    property real pSpread: 2.6
 
     FrameAnimation {
         running: root.animating && root.visible
@@ -171,30 +173,45 @@ Item {
         property real brightness: root.brightness
     }
 
-    // Layer 3: additive sparkles.
+    // Layer 3: additive sparkles, rendered on the same displaced grid as the wave so
+    // they sit on the veil surface by construction (no centre-line approximation).
     ShaderEffect {
         anchors.fill: parent
         visible: root.particlesEnabled
         blending: true
+        cullMode: ShaderEffect.NoCulling
+        mesh: GridMesh { resolution: Qt.size(96, Math.max(8, root.rowCount)) }
+        vertexShader: "shaders/xmbparticles.vert.qsb"
         fragmentShader: "shaders/xmbparticles.frag.qsb"
+
         property real time: root.time
+        property real flowSpeed: root.flowSpeed
+        property real timeStep: root.timeStep
+        property real rePipelineBlend: root.rePipelineBlend
+        property real bandAmplitude: root.bandAmplitude
+        property real bandSecondaryFreq: root.bandSecondaryFreq
+        property real bandSecondaryAmp: root.bandSecondaryAmp
+        property real tension: root.tension
+        property real splineLength: root.splineLength
+        property real spacing: root.spacing
+        property real perturbation: root.perturbation
+        property real perturbationScale: root.perturbationScale
+        property real travelSpeed1: root.travelSpeed1
+        property real travelAmp1: root.travelAmp1
+        property real travelSpeed2: root.travelSpeed2
+        property real travelAmp2: root.travelAmp2
+        property real waveCosAmp: root.waveCosAmp
+        property real waveBias: root.waveBias
+        property real waveHeightScale: root.waveHeightScale
+        property real waveSoftClip: root.waveSoftClip
+        property real damping: root.damping
+        property real ffdScale1X: root.ffdScale1X
+        property real ffdYAmp: root.ffdYAmp
         property real pFlowSpeed: root.pFlowSpeed
         property real pOpacity: root.pOpacity
         property real pSizeBase: root.pSizeBase
         property real pSizeVar: root.pSizeVar
         property real pDensity: root.pDensity
-        // Wave centre-line params, shared so sparkles follow the veil.
-        property real flowSpeed: root.flowSpeed
-        property real timeStep: root.timeStep
-        property real rePipelineBlend: root.rePipelineBlend
-        property real bandAmplitude: root.bandAmplitude
-        property real waveCosAmp: root.waveCosAmp
-        property real waveBias: root.waveBias
-        property real waveHeightScale: root.waveHeightScale
-        property real waveSoftClip: root.waveSoftClip
-        property real tension: root.tension
-        property real splineLength: root.splineLength
-        property real ffdScale1X: root.ffdScale1X
-        property real ffdYAmp: root.ffdYAmp
+        property real pSpread: root.pSpread
     }
 }

@@ -23,6 +23,7 @@ SPDX-License-Identifier = "GPL-3.0-only"
 path = [
     "contents/ui/shaders/xmbgradient.frag.qsb",
     "contents/ui/shaders/xmbparticles.frag.qsb",
+    "contents/ui/shaders/xmbparticles.vert.qsb",
     "contents/ui/shaders/xmbwave.frag.qsb",
     "contents/ui/shaders/xmbwave.vert.qsb",
 ]
