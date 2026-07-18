@@ -176,9 +176,20 @@ Window {
                       && !ControllerHandler.ControllerHandlerStatus.inputManuallySuppressed
         applyPadPolicy()
     }
+    // Apps that linger in the background after their window closes get a real quit
+    // command, so Close on the card ends the whole process tree, not just the window.
+    readonly property var appQuitCommands: ({
+        "steam": "steam -shutdown",
+        "com.valvesoftware.Steam": "flatpak run com.valvesoftware.Steam -shutdown"
+    })
     function closeTask(row) {
         closePrompt = false
-        tasksModel.requestClose(tasksModel.makeModelIndex(row))
+        var idx = tasksModel.makeModelIndex(row)
+        var appId = String(tasksModel.data(idx, TaskManager.AbstractTasksModel.AppId) || "")
+        var quitCmd = appQuitCommands[appId.replace(/\.desktop$/, "")]
+        if (quitCmd && system)
+            system.runCommand(quitCmd)
+        tasksModel.requestClose(idx)
     }
     function activateTask(row) {
         tasksModel.requestActivate(tasksModel.makeModelIndex(row))

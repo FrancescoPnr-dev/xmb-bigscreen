@@ -80,6 +80,10 @@ Item {
             + "systemctl --user restart \"app-org.kde.plasma.bigscreen.inputhandler@*.service\"'")
     }
 
+    function runCommand(cmd) {
+        launcher.connectSource(cmd)
+    }
+
     // Bigscreen's own TV settings app; a kcmId deep-links a mediacenter module.
     function openSettings(kcmId) {
         launcher.connectSource(kcmId && kcmId.length > 0
