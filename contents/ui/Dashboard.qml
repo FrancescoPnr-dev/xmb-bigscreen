@@ -82,6 +82,11 @@ Item {
     property bool overlayActive: false
     signal overlayRequested()
 
+    // True while any app window is in the foreground: freezes the waves, the glow
+    // pulse and the clock, and fades the ambience so the shell idles under apps.
+    property bool paused: false
+    onPausedChanged: updateAmbient()
+
     // "" = system language; otherwise a code from the bundled catalogs.
     property string uiLanguage: ""
     onUiLanguageChanged: rebuildCategories()
@@ -112,10 +117,7 @@ Item {
     property bool ready: false
     Component.onCompleted: {
         content.forceActiveFocus()
-        if (ambientSoundSource.toString() !== "") {
-            ambientLoop.play()
-            ambientLevel = 1.0
-        }
+        updateAmbient()
         readyTimer.restart()
     }
     Timer {
@@ -129,12 +131,15 @@ Item {
     readonly property bool winActive: dashboard.Window.active
     onWinActiveChanged: if (winActive) content.forceActiveFocus()
 
-    // Covers ambience mode/file changes at runtime (mode 2 and mode 1 with no file both
-    // resolve to an empty source).
-    onAmbientSoundSourceChanged: {
-        if (ambientSoundSource.toString() !== "") {
+    // Covers ambience mode/file changes and the pause state (mode 2 and mode 1 with
+    // no file both resolve to an empty source); restart only on a source change so
+    // resuming from pause inside the fade window doesn't skip back to the start.
+    onAmbientSoundSourceChanged: updateAmbient(true)
+    function updateAmbient(restart) {
+        if (ambientSoundSource.toString() !== "" && !paused) {
             ambientStopTimer.stop()
-            ambientLoop.play()
+            if (restart || !ambientLoop.playing)
+                ambientLoop.play()
             ambientLevel = 1.0
         } else {
             ambientLevel = 0.0
@@ -278,7 +283,7 @@ Item {
             }
         }
         onLoaded: {
-            item.animating = Qt.binding(function() { return dashboard.visible })
+            item.animating = Qt.binding(function() { return dashboard.visible && !dashboard.paused })
             item.flowSpeed = Qt.binding(function() { return dashboard.waveFlowSpeed })
             item.bandAmplitude = Qt.binding(function() { return dashboard.waveBandAmplitude })
             item.waveHeightScale = Qt.binding(function() { return dashboard.waveHeightScale })
@@ -376,6 +381,7 @@ Item {
             categoryCenterY: content.barCenterY
             categoryIconSize: dashboard.categoryIconSize
             model: dashboard.appsModel
+            glowEnabled: !dashboard.paused
             z: 2
             // The favourites proxy has no trigger() — launch via the source model.
             launchHandler: (dashboard.currentCategory && dashboard.currentCategory.favorites)
@@ -438,6 +444,7 @@ Item {
         timeFormat: dashboard.clockTimeFormat
         dateFormat: dashboard.clockDateFormat
         showDate: dashboard.clockShowDate
+        paused: dashboard.paused
     }
 
     // Top-edge hover opens the system overlay, the mouse counterpart of the PS button.

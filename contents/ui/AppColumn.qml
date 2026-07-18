@@ -13,6 +13,7 @@ Item {
     property alias currentIndex: list.currentIndex
     property alias count: list.count
     property bool wheelLocked: false
+    property bool glowEnabled: true
 
     signal appLaunched()
     signal navigated()
@@ -96,7 +97,7 @@ Item {
             neighbourDistance: Math.abs(index - list.currentIndex)
             extraTranslateY: index < list.currentIndex ? -column.aboveGap : 0
             selectedScale: column.selectedAppScale
-            glowWhenSelected: true
+            glowWhenSelected: column.glowEnabled
 
             onClicked: column.launchCurrent()
         }

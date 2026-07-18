@@ -7,6 +7,7 @@ import QtQuick.Effects
 import org.kde.taskmanager as TaskManager
 import org.kde.layershell as LayerShell
 import org.kde.bigscreen as Bigscreen
+import org.kde.bigscreen.controllerhandler as ControllerHandler
 import org.kde.pipewire as PipeWire
 import org.kde.kirigami as Kirigami
 
@@ -104,9 +105,12 @@ Window {
     // Non-visual mirror of the open tasks; the uuid feeds the live preview stream.
     property var taskItems: []
     onTaskItemsChanged: {
-        if (taskItems.length === 0 && zone === "cards") {
-            closePrompt = false
-            zone = "band"
+        if (taskItems.length === 0) {
+            appWantsPad = false
+            if (zone === "cards") {
+                closePrompt = false
+                zone = "band"
+            }
         }
     }
     Instantiator {
@@ -114,6 +118,8 @@ Window {
         model: tasksModel
         delegate: QtObject {
             required property var model
+            readonly property bool minimized: model.IsMinimized === true
+            onMinimizedChanged: Qt.callLater(overlay.recountForeground)
         }
         onObjectAdded: Qt.callLater(overlay.rebuildTaskItems)
         onObjectRemoved: Qt.callLater(overlay.rebuildTaskItems)
@@ -130,6 +136,45 @@ Window {
                        uuid: ids && ids.length > 0 ? String(ids[0]) : "" })
         }
         taskItems = arr
+        recountForeground()
+    }
+    // A foreground app is any open window not minimized; drives the shell pause
+    // and the pad reclaim policy below.
+    property int foregroundTaskCount: 0
+    readonly property bool hasForegroundApp: foregroundTaskCount > 0
+    function recountForeground() {
+        var n = 0
+        for (var i = 0; i < taskSource.count; i++) {
+            var o = taskSource.objectAt(i)
+            if (o && !o.minimized)
+                n++
+        }
+        foregroundTaskCount = n
+    }
+
+    // The inputhandler mutes the pad (all but Guide) while an app like Steam holds
+    // the controller; reclaim it whenever the shell is what the user is driving,
+    // hand it back when a foreground app takes over again.
+    property bool appWantsPad: false
+    readonly property bool shellNeedsPad: visible || !hasForegroundApp
+    onShellNeedsPadChanged: applyPadPolicy()
+    function applyPadPolicy() {
+        var want = appWantsPad && !shellNeedsPad
+        if (ControllerHandler.ControllerHandlerStatus.inputSuppressed !== want)
+            ControllerHandler.ControllerHandlerStatus.inputSuppressed = want
+    }
+    Connections {
+        target: ControllerHandler.ControllerHandlerStatus
+        function onInputSuppressedChanged(suppressed, automatic) {
+            if (automatic)
+                overlay.appWantsPad = suppressed
+            overlay.applyPadPolicy()
+        }
+    }
+    Component.onCompleted: {
+        appWantsPad = ControllerHandler.ControllerHandlerStatus.inputSuppressed
+                      && !ControllerHandler.ControllerHandlerStatus.inputManuallySuppressed
+        applyPadPolicy()
     }
     function closeTask(row) {
         closePrompt = false

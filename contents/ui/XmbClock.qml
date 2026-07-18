@@ -11,6 +11,8 @@ Text {
     property int timeFormat: 0   // 0 system, 1 12h, 2 24h
     property int dateFormat: 0   // 0 system, 1 dd/mm, 2 mm/dd
     property bool showDate: true
+    property bool paused: false
+    onPausedChanged: if (!paused) now = new Date()
 
     text: {
         var d = clock.now
@@ -42,7 +44,7 @@ Text {
 
     Timer {
         interval: 1000
-        running: clock.visible
+        running: clock.visible && !clock.paused
         repeat: true
         onTriggered: clock.now = new Date()
     }

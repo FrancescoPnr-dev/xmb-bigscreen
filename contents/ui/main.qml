@@ -72,6 +72,7 @@ ContainmentItem {
         uiLanguage: Plasmoid.configuration.language
 
         overlayActive: homeOverlay.visible
+        paused: homeOverlay.hasForegroundApp
         onOverlayRequested: homeOverlay.showOverlay()
     }
 
@@ -105,6 +106,8 @@ ContainmentItem {
         function onCecControllerRemoved(name) { root.showOsd("input-tvremote-symbolic", i18n("Remote disconnected: %1", name)) }
         function onInputSuppressedChanged(suppressed, automatic) {
             if (!automatic) return
+            // No OSD when the shell is about to reclaim the pad right away.
+            if (suppressed && homeOverlay.shellNeedsPad) return
             root.showOsd("input-gamepad-symbolic",
                          suppressed ? i18n("An application is using the controller") : i18n("Controller back to the system"))
         }
