@@ -14,7 +14,8 @@ A console-like fullscreen launcher for KDE Plasma, inspired by the PlayStation 3
 
 ## Requirements
 
-- KDE Plasma **6.7+** with **plasma-bigscreen** so `sudo pacman -S plasma-bigscreen libcec` installed from your distro's
+- KDE Plasma 6.7+ with plasma-bigscreen and libcec installed from your distro's repositories:
+  `sudo pacman -S plasma-bigscreen libcec` installed from your distro's
   repositories (XMB BigScreen reuses its session backend: controller input,
   TV settings, environment).
 - The Qt6 Multimedia QML module, for the sounds. Most distros ship it with Plasma;
