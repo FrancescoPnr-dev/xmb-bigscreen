@@ -75,20 +75,27 @@ void main()
             vec2 cell = floor(gp) + vec2(float(ox), float(oy));
             vec2 rnd = hash22(cell);
 
-            // Depth cue per row: far rows (top) are smaller, dimmer and slower; near
-            // rows are bigger, brighter and drift faster, for a parallax feel.
+            // Depth-of-field per particle: focus blends row depth with a per-particle
+            // jitter, so crisp bright dots and soft faded ones mix on every plane.
             float depth = clamp((cell.y + 0.5) / cells.y, 0.0, 1.0);
-            float dSize  = mix(0.55, 1.6, depth);
-            float dGlow  = mix(0.35, 1.0, depth);
             float dDrift = mix(0.55, 1.45, depth);
+            float focus = clamp(mix(0.15, 1.0, depth) + (rnd.x - 0.5) * 0.5, 0.05, 1.0);
 
             vec2 pos = cell + vec2(fract(rnd.x + pt * dDrift * (rnd.x - 0.5) * 0.15),
                                    rnd.y + 0.10 * sin(pt * (rnd.y + 1.5) + rnd.x * 100.0));
             float d = length((gp - pos) / cpp);
-            float size = min((pSizeBase + rnd.y * pSizeVar) * 1.6 * dSize, maxRadius);
-            float dot1 = smoothstep(size, 0.0, d);
+
+            // Small cores; out-of-focus dots trade size for a wide dim halo, focused
+            // ones keep a tight bright core with a faint glow.
+            float core = (pSizeBase + rnd.y * pSizeVar) * 0.9;
+            float radius = min(core * mix(2.8, 1.0, focus), maxRadius);
+            float q = clamp(1.0 - d / radius, 0.0, 1.0);
+            float soft  = q * q * 0.30;
+            float sharp = smoothstep(0.55, 0.95, q) + q * q * 0.25;
+            float shape = mix(soft, sharp, focus);
+
             float tw = 0.5 + 0.5 * sin(pt * (1.0 + rnd.x * 2.0) + rnd.y * 6.2831);
-            spark += dot1 * tw * tw * dGlow;
+            spark += shape * tw * tw * mix(0.5, 1.2, focus);
         }
     }
 
