@@ -81,7 +81,6 @@ autologs back in.
   every push and pull request.
 
 ## Credits & licence
-[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-☕-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/francescopnr)
 
 - The wave background is a Qt/QML port of **[PlayStation-3-XMB]** by Mart (linkev),
   used under its MIT licence. That project in turn credits [Alphardex]'s CodePen
@@ -95,6 +94,8 @@ All the repo is licensed under **GPL-3.0** (see the `LICENSES/` folder).
 
 [PlayStation-3-XMB]: https://github.com/linkev/PlayStation-3-XMB
 [Alphardex]: https://codepen.io/alphardex/pen/poPZNwE
+
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-☕-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/francescopnr)
 
 
 <img width="1408" height="768" alt="5" src="https://github.com/user-attachments/assets/5ab9fe31-f96f-43e9-9fbc-7e72241cfa5b" />
