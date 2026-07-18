@@ -4,10 +4,10 @@
 """
 Generator for the dashboard's ambient background loop (contents/sounds/ambient-loop.wav).
 
-This is a DEVELOPMENT tool only: the plasmoid loads just the resulting .wav at
-runtime, so this script is never imported, executed, or shipped when the widget is
-installed (Plasma packages only metadata.json + contents/). Keep it here so the sound
-stays reproducible and diff-able.
+This is a DEVELOPMENT tool only: the shell loads just the resulting .wav at
+runtime, so this script is never imported, executed, or shipped when the shell is
+installed (the install ships only metadata.json + contents/). Keep it here so the
+sound stays reproducible and diff-able.
 
 Design notes
 ------------

@@ -18,7 +18,7 @@ for po in po/*.po; do
     msgfmt "$po" -o "contents/locale/$lang/LC_MESSAGES/$DOMAIN.mo"
 done
 
-# JS catalog for the in-widget language override.
+# JS catalog for the in-shell language override.
 python3 - <<'EOF'
 import glob, json, os, re
 

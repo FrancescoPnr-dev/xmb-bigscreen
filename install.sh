@@ -13,14 +13,15 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-PLASMOID="$PREFIX/share/plasma/plasmoids/org.kde.plasma.xmbbigscreen"
+# Plasma looks containments up under share/plasma/plasmoids/; the path is fixed API.
+HOMESCREEN="$PREFIX/share/plasma/plasmoids/org.kde.plasma.xmbbigscreen"
 SHELL_PKG="$PREFIX/share/plasma/shells/org.kde.plasma.xmbbigscreen"
 
-echo "homescreen containment -> $PLASMOID"
-rm -rf "$PLASMOID"
-install -d "$PLASMOID"
-install -m644 "$SRC/metadata.json" "$PLASMOID/metadata.json"
-cp -r "$SRC/contents" "$PLASMOID/"
+echo "homescreen containment -> $HOMESCREEN"
+rm -rf "$HOMESCREEN"
+install -d "$HOMESCREEN"
+install -m644 "$SRC/metadata.json" "$HOMESCREEN/metadata.json"
+cp -r "$SRC/contents" "$HOMESCREEN/"
 
 echo "shell profile       -> $SHELL_PKG"
 rm -rf "$SHELL_PKG"

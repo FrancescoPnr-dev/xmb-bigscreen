@@ -1,4 +1,4 @@
-# Italian translation of the XMB BigScreen plasmoid.
+# Italian translation of the XMB BigScreen shell.
 # Francesco Panarese <FrancescoPnr-dev@proton.me>, 2026.
 msgid ""
 msgstr ""

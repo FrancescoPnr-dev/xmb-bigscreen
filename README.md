@@ -41,8 +41,7 @@ Bigscreen's, the Wayland session and the pad-mapping tool. Remove everything wit
 > its own theme.
 
 > **Note:** the `tools/` and `po/` folders are development sources only (sound
-> generators, translation files, packaging). Nothing from them ever runs on
-> your machine.
+> generators, translation files). Nothing from them ever runs on your machine.
 
 ## Using it
 

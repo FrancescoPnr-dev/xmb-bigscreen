@@ -17,7 +17,7 @@ jobs:
         uses: fsfe/reuse-action@v5
 
       - name: Install tools
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq gettext libxml2-utils zip
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq gettext libxml2-utils
 
       - name: Validate metadata and config
         run: |
@@ -30,9 +30,14 @@ jobs:
             msgfmt --check --statistics "$po" -o /dev/null
           done
 
-      - name: Build package and check contents
+      - name: Test install into a staging prefix
         run: |
-          ./tools/make-package.sh
-          if unzip -l xmb-bigscreen-*.plasmoid | grep -qE " (tools|po)/| README| REUSE"; then
-            echo "dev files leaked into the package" && exit 1
+          sudo env PREFIX="$GITHUB_WORKSPACE/stage" ./install.sh
+          test -f stage/share/plasma/plasmoids/org.kde.plasma.xmbbigscreen/metadata.json
+          test -f stage/share/plasma/shells/org.kde.plasma.xmbbigscreen/metadata.json
+          test -x stage/bin/plasma-xmbbigscreen-wayland
+          test -f stage/share/wayland-sessions/plasma-xmbbigscreen-wayland.desktop
+          test -x stage/bin/xmb-bigscreen-stick-swap
+          if find stage -path "*xmbbigscreen*" | grep -qE "tools/|po/|README|REUSE"; then
+            echo "dev files leaked into the install" && exit 1
           fi

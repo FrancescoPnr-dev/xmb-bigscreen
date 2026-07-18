@@ -4,9 +4,9 @@
 """
 Generator for the navigation click (contents/sounds/nav-tick.wav).
 
-Development tool only: the plasmoid loads just the resulting .wav at runtime, so this
-script is never imported or shipped when the widget is installed (Plasma packages only
-metadata.json + contents/). Kept here so the sound stays reproducible and diff-able.
+Development tool only: the shell loads just the resulting .wav at runtime, so this
+script is never imported or shipped when the shell is installed (the install ships
+only metadata.json + contents/). Kept here so the sound stays reproducible and diff-able.
 
 The click is deliberately dry and rapid with NO tonal/harmonic content: a short
 band-limited noise snap that decays almost instantly (~1.2 ms). Original synthesis.

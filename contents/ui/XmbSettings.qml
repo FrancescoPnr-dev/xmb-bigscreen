@@ -19,7 +19,7 @@ import "i18n-catalogs.js" as Catalogs
 Window {
     id: win
 
-    // Injected by main.qml: the live plasmoid configuration object.
+    // Injected by main.qml: the live Plasmoid.configuration object.
     property var config: null
     property var translate: (s) => s
     signal iconThemeWriteRequested(string theme)

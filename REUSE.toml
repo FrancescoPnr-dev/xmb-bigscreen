@@ -12,7 +12,7 @@ path = ["contents/sounds/ambient-loop.wav", "contents/sounds/nav-tick.wav"]
 SPDX-FileCopyrightText = "2026 Francesco Panarese"
 SPDX-License-Identifier = "GPL-3.0-only"
 
-# Translations: po sources and the compiled catalogs shipped with the widget.
+# Translations: po sources and the compiled catalogs shipped with the shell.
 [[annotations]]
 path = ["po/**", "contents/locale/**"]
 SPDX-FileCopyrightText = "2026 Francesco Panarese"

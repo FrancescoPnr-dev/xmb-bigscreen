@@ -5,7 +5,7 @@
 #
 # Qt6 ShaderEffect cannot load a raw .vert/.frag — it needs baked .qsb. Re-run this after
 # EVERY shader edit, otherwise your changes will NOT show. The baked .qsb files are
-# committed and shipped (a Plasma plasmoid installs by copying files; no build step).
+# committed and shipped (the shell installs by copying files; no build step).
 #
 # Requires qsb from Qt6 (qtshadertools). On Arch it is /usr/lib/qt6/bin/qsb.
 set -euo pipefail
