@@ -28,10 +28,17 @@ audio_state_enter() {
 }
 
 audio_state_exit() {
+    # No parked desktop slot = enter never swapped (or we already unwound):
+    # swapping now would shove the desktop state into the XMB slot, so hands off.
+    [ -d "$wp_desktop" ] || return 0
     systemctl --user stop wireplumber 2>/dev/null
-    rm -rf "$wp_xmb"
-    [ -d "$wp_state" ] && mv "$wp_state" "$wp_xmb"
-    [ -d "$wp_desktop" ] && mv "$wp_desktop" "$wp_state"
+    # A crash mid-enter can leave no live dir; the parked XMB slot is then the
+    # only copy of the XMB state, so overwrite it only when there is a live dir.
+    if [ -d "$wp_state" ]; then
+        rm -rf "$wp_xmb"
+        mv "$wp_state" "$wp_xmb"
+    fi
+    mv "$wp_desktop" "$wp_state"
     # Restart only after the logout churn settles: a USB DAC re-probed too early
     # loses its analog profile. A dead user manager just means a fresh start instead.
     systemd-run --user --on-active=5 systemctl --user start wireplumber 2>/dev/null \
@@ -54,6 +61,37 @@ audio_wait_ready() {
         sleep 0.25
     done
 }
+
+# startplasma-waylandsession lives in a distro-specific libexecdir (Arch uses
+# /usr/lib, Fedora /usr/libexec): probe at runtime, and fail while the audio
+# state is still untouched instead of starting a session that cannot end cleanly.
+waylandsession=
+for dir in /usr/lib /usr/libexec /usr/lib64/libexec /usr/lib/libexec; do
+    if [ -x "$dir/startplasma-waylandsession" ]; then
+        waylandsession="$dir/startplasma-waylandsession"
+        break
+    fi
+done
+if [ -z "$waylandsession" ]; then
+    echo "xmb-bigscreen: startplasma-waylandsession not found in any known libexecdir" >&2
+    exit 1
+fi
+
+cleanup() {
+    # Both a signal trap and EXIT land here; the audio swap-back must run once.
+    [ -n "${cleanup_done:-}" ] && return
+    cleanup_done=1
+    audio_state_exit
+    stop_stale_inputhandlers
+}
+# Registered before audio_state_enter so a death mid-swap still unwinds; exit
+# converges from any partial state because the parked desktop dir is the marker.
+trap cleanup EXIT
+# An unhandled signal kills sh without running the EXIT trap: route the session
+# teardown signals through exit so cleanup still fires.
+trap 'exit 129' HUP
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 stop_stale_inputhandlers
 audio_state_enter
@@ -141,7 +179,6 @@ if [ -r "$xmb_icons" ]; then
 fi
 export XDG_CONFIG_DIRS="$xmb_conf:$XDG_CONFIG_DIRS"
 
-startplasma-wayland --xwayland --libinput --exit-with-session=/usr/lib/startplasma-waylandsession
-
-audio_state_exit
-stop_stale_inputhandlers
+startplasma-wayland --xwayland --libinput --exit-with-session="$waylandsession"
+# Teardown belongs to the EXIT trap; hand the session's own exit code upward.
+exit $?
