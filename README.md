@@ -43,21 +43,6 @@ Bigscreen's, the Wayland session and the pad-mapping tool. Remove everything wit
 > **Note:** the `tools/` and `po/` folders are development sources only (sound
 > generators, translation files). Nothing from them ever runs on your machine.
 
-## Using it
-
-The XMB is the session's homescreen always there, with apps launching on top.
-
-- **D-pad / left stick / arrows / wheel / screen edges**, move around the cross.
-- **Cross / Enter / click**, launch the highlighted app.
-- **Triangle**, search: the on-screen keyboard opens, **Cross** types,
-  **Square** deletes, **L1/R1** move through the results, **Circle** closes.
-  On a real keyboard, just start typing.
-- **PS/Guide button or Meta**, home overlay over the running app: switch or close
-  apps, volume, brightness, power actions, quick settings.
-- **Circle / Back / Esc**, go back, one layer at a time.
-- **Text fields in apps**, with `plasma-keyboard` installed, a compact keyboard
-  pops up on the focused field and the d-pad drives it.
-
 
 ### Autologin (couch mode)
 
