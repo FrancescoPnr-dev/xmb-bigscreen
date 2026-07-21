@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 [Desktop Entry]
-Exec=/usr/lib/plasma-dbus-run-session-if-needed /usr/bin/plasma-xmbbigscreen-wayland
+Exec=/usr/bin/plasma-xmbbigscreen-wayland
 TryExec=/usr/bin/plasma-xmbbigscreen-wayland
 DesktopNames=KDE
 Name=XMB BigScreen

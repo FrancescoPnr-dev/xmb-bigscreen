@@ -2,6 +2,18 @@
 # SPDX-FileCopyrightText: 2026 Francesco Panarese
 # SPDX-License-Identifier: GPL-3.0-only
 
+# A .desktop Exec line cannot probe the distro-specific libexecdir for the dbus
+# wrapper (Arch /usr/lib, Fedora /usr/libexec), so re-exec through it here; it
+# sets DBUS_SESSION_BUS_ADDRESS, making the second pass fall through. If nothing
+# is found just continue: dying pre-session strands the login manager.
+if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ]; then
+    for dir in /usr/lib /usr/libexec /usr/lib64/libexec /usr/lib/libexec; do
+        [ -x "$dir/plasma-dbus-run-session-if-needed" ] && \
+            exec "$dir/plasma-dbus-run-session-if-needed" "$0" "$@"
+    done
+    command -v dbus-run-session >/dev/null 2>&1 && exec dbus-run-session -- "$0" "$@"
+fi
+
 # WirePlumber keeps one per-user audio state: give each session its own slot and
 # swap on enter/exit; the parked desktop slot doubles as the crash marker.
 wp_state="${XDG_STATE_HOME:-$HOME/.local/state}/wireplumber"
