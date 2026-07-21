@@ -62,20 +62,17 @@ audio_wait_ready() {
     done
 }
 
-# startplasma-waylandsession lives in a distro-specific libexecdir (Arch uses
-# /usr/lib, Fedora /usr/libexec): probe at runtime, and fail while the audio
-# state is still untouched instead of starting a session that cannot end cleanly.
-waylandsession=
+# startplasma-waylandsession lives in a distro-specific libexecdir and Plasma
+# >= 6.7 dropped it entirely (systemd owns the session lifecycle): pass
+# --exit-with-session only where the helper still exists, and never fail here -
+# a pre-session exit strands the login manager on a dead VT with a black screen.
+session_flag=
 for dir in /usr/lib /usr/libexec /usr/lib64/libexec /usr/lib/libexec; do
     if [ -x "$dir/startplasma-waylandsession" ]; then
-        waylandsession="$dir/startplasma-waylandsession"
+        session_flag="--exit-with-session=$dir/startplasma-waylandsession"
         break
     fi
 done
-if [ -z "$waylandsession" ]; then
-    echo "xmb-bigscreen: startplasma-waylandsession not found in any known libexecdir" >&2
-    exit 1
-fi
 
 cleanup() {
     # Both a signal trap and EXIT land here; the audio swap-back must run once.
@@ -179,6 +176,8 @@ if [ -r "$xmb_icons" ]; then
 fi
 export XDG_CONFIG_DIRS="$xmb_conf:$XDG_CONFIG_DIRS"
 
-startplasma-wayland --xwayland --libinput --exit-with-session="$waylandsession"
+# $session_flag intentionally unquoted: empty must vanish, and the probed
+# paths are a fixed whitespace-free list.
+startplasma-wayland --xwayland --libinput $session_flag
 # Teardown belongs to the EXIT trap; hand the session's own exit code upward.
 exit $?
