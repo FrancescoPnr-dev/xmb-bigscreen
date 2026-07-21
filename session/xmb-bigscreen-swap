@@ -1,0 +1,39 @@
+#!/bin/sh
+# SPDX-FileCopyrightText: 2026 Francesco Panarese
+# SPDX-License-Identifier: GPL-3.0-only
+
+# Hot-swap the running plasmashell between the current shell and XMB without
+# logging out. Lite mode: none of the dedicated session's TV setup applies.
+xmb_shell=org.kde.plasma.xmbbigscreen
+state_file="${XDG_STATE_HOME:-$HOME/.local/state}/xmb-bigscreen-swap"
+
+# Inside the dedicated session the swap makes no sense and would strand the TV
+# on a desktop shell; its config cascade is the reliable marker.
+case ":$XDG_CONFIG_DIRS:" in
+    *xmb-bigscreen*)
+        echo "xmb-bigscreen-swap: this is the dedicated XMB session, log out instead" >&2
+        exit 1 ;;
+esac
+
+pid=$(pidof -s plasmashell) || {
+    echo "xmb-bigscreen-swap: no running plasmashell (is this a Plasma session?)" >&2
+    exit 1
+}
+
+# The running shell package is only knowable from plasmashell's own environment.
+current=$(tr '\0' '\n' < "/proc/$pid/environ" 2>/dev/null \
+    | sed -n 's/^PLASMA_DEFAULT_SHELL=//p')
+[ -n "$current" ] || current=org.kde.plasma.desktop
+
+if [ "$current" = "$xmb_shell" ]; then
+    target=$(cat "$state_file" 2>/dev/null)
+    [ -n "$target" ] || target=org.kde.plasma.desktop
+else
+    mkdir -p "${state_file%/*}"
+    printf '%s\n' "$current" > "$state_file"
+    target=$xmb_shell
+fi
+
+# setsid detaches the new shell so closing this terminal does not kill it.
+PLASMA_DEFAULT_SHELL=$target setsid plasmashell --replace >/dev/null 2>&1 &
+echo "Swapping shell: $current -> $target"

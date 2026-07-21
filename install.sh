@@ -34,6 +34,9 @@ install -Dm755 "$SRC/session/plasma-xmbbigscreen-wayland" "$PREFIX/bin/plasma-xm
 echo "wayland session     -> $PREFIX/share/wayland-sessions/plasma-xmbbigscreen-wayland.desktop"
 install -Dm644 "$SRC/session/plasma-xmbbigscreen-wayland.desktop" "$PREFIX/share/wayland-sessions/plasma-xmbbigscreen-wayland.desktop"
 
+echo "shell-swap tool     -> $PREFIX/bin/xmb-bigscreen-swap"
+install -Dm755 "$SRC/session/xmb-bigscreen-swap" "$PREFIX/bin/xmb-bigscreen-swap"
+
 echo "stick-swap tool     -> $PREFIX/bin/xmb-bigscreen-stick-swap"
 install -Dm755 "$SRC/session/xmb-bigscreen-stick-swap" "$PREFIX/bin/xmb-bigscreen-stick-swap"
 install -Dm644 "$SRC/session/inputhandler-stick-swap.conf" \
