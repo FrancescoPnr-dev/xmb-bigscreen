@@ -444,7 +444,10 @@ Item {
         timeFormat: dashboard.clockTimeFormat
         dateFormat: dashboard.clockDateFormat
         showDate: dashboard.clockShowDate
-        paused: dashboard.paused
+        // The overlay carries its own clock in the same corner; yield to it, and pause so
+        // the handler resnaps the time the moment the overlay closes.
+        visible: !dashboard.overlayActive
+        paused: dashboard.paused || dashboard.overlayActive
     }
 
     // Top-edge hover opens the system overlay, the mouse counterpart of the PS button.

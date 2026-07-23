@@ -28,16 +28,21 @@ Window {
     LayerShell.Window.keyboardInteractivity: LayerShell.Window.KeyboardInteractivityOnDemand
     LayerShell.Window.exclusionZone: -1
 
-    // Injected by main.qml: the shared backend gateway and the dashboard's tick sound.
+    // Injected by main.qml: the shared backend gateway, the dashboard's tick sound and
+    // the clock format, since the dashboard's own clock is hidden behind foreground apps.
     property var system: null
     property url navTickSource: ""
     property real navTickVolume: 0.5
+    property int clockTimeFormat: 0
+    property int clockDateFormat: 0
+    property bool clockShowDate: true
 
     signal configRequested()
 
     readonly property var session: system ? system.session : null
     readonly property int volPct: system ? system.volumePercent : -1
     readonly property int briPct: system ? system.brightnessPercent : -1
+    readonly property int batPct: system ? system.batteryPercent : -1
     readonly property int labelSize: Math.max(16, Math.round(height * 0.021))
 
     // Focus zone: the top band or the app cards. Up/down only ever moves zones;
@@ -418,6 +423,35 @@ Window {
                         else overlay.system.volumeStep(event.angleDelta.y > 0)
                     }
                 }
+            }
+        }
+
+        // Status only, never focusable, in the corner the centred band never reaches.
+        // The row closes up by itself where there is no internal battery.
+        Row {
+            id: statusRow
+            anchors.right: parent.right
+            anchors.rightMargin: Math.round(overlay.width * 0.03)
+            anchors.verticalCenter: band.verticalCenter
+            anchors.verticalCenterOffset: -Math.round(overlay.labelSize * 0.3)
+            spacing: Math.round(overlay.labelSize * 1.2)
+
+            XmbBattery {
+                anchors.verticalCenter: parent.verticalCenter
+                visible: overlay.batPct >= 0
+                percent: overlay.batPct
+                charging: overlay.system ? overlay.system.batteryCharging : false
+                pixelSize: overlay.labelSize
+            }
+
+            XmbClock {
+                anchors.verticalCenter: parent.verticalCenter
+                pixelSize: overlay.labelSize
+                timeFormat: overlay.clockTimeFormat
+                dateFormat: overlay.clockDateFormat
+                showDate: overlay.clockShowDate
+                // Idle while the overlay is down; it resnaps to now on the way back up.
+                paused: !overlay.visible
             }
         }
 

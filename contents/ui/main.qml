@@ -81,6 +81,9 @@ ContainmentItem {
         system: systemControl
         navTickSource: dashboard.navSoundSource
         navTickVolume: dashboard.navSoundVolume
+        clockTimeFormat: Plasmoid.configuration.clockTimeFormat
+        clockDateFormat: Plasmoid.configuration.clockDateFormat
+        clockShowDate: Plasmoid.configuration.clockShowDate
         onConfigRequested: xmbSettings.show()
     }
 

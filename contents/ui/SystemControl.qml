@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Francesco Panarese
 // SPDX-License-Identifier: GPL-3.0-only
-// Single gateway to the session backends: volume, brightness, OSD, power/session
-// actions, the Bigscreen settings app and sleep inhibition.
+// Single gateway to the session backends: volume, brightness, battery, OSD,
+// power/session actions, the Bigscreen settings app and sleep inhibition.
 import QtQuick
 import org.kde.plasma.plasma5support as P5Support
 import org.kde.plasma.private.sessions as Sessions
@@ -58,6 +58,17 @@ Item {
                 Math.max(0, Math.min(max, m.brightness + (up ? step : -step))))
         }
     }
+
+    // Battery: the model behind the Plasma battery applet, reached through a Loader so a
+    // private-API change degrades to "no battery" instead of taking the shell down.
+    Loader {
+        id: batterySource
+        source: Qt.resolvedUrl("XmbBatterySource.qml")
+        onStatusChanged: if (status === Loader.Error) console.warn("XMB: battery backend unavailable")
+    }
+    readonly property bool batteryAvailable: batterySource.item ? batterySource.item.available : false
+    readonly property int batteryPercent: batteryAvailable ? batterySource.item.percent : -1
+    readonly property bool batteryCharging: batteryAvailable && batterySource.item.pluggedIn
 
     // System OSD via the plasmashell osdService, shown over everything.
     function showOsd(icon, text) {
