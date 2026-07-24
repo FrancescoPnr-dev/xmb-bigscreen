@@ -16,6 +16,7 @@ Item {
     property int neighbourDistance: 0    // 0 = selected, 1 = adjacent, ...
     property bool labelBelow: true       // true: category style (label under icon), false: app style
     property bool interactive: true      // false: no hover cursor / no click (categories)
+    property bool pointerAwake: true     // false: no cursor at all, the pad is driving
 
     signal clicked()
 
@@ -126,7 +127,8 @@ Item {
         width: delegate.labelBelow ? delegate.width : appRow.width
         height: delegate.labelBelow ? delegate.height : appRow.height
         hoverEnabled: delegate.interactive
-        cursorShape: delegate.interactive ? Qt.PointingHandCursor : Qt.ArrowCursor
+        cursorShape: !delegate.pointerAwake ? Qt.BlankCursor
+            : delegate.interactive ? Qt.PointingHandCursor : Qt.ArrowCursor
         onClicked: if (delegate.interactive) delegate.clicked()
     }
 }

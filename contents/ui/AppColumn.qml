@@ -14,6 +14,8 @@ Item {
     property alias count: list.count
     property bool wheelLocked: false
     property bool glowEnabled: true
+    // False hides the cursor over the cells too, which set one of their own.
+    property bool pointerAwake: true
 
     signal appLaunched()
     signal navigated()
@@ -98,6 +100,7 @@ Item {
             extraTranslateY: index < list.currentIndex ? -column.aboveGap : 0
             selectedScale: column.selectedAppScale
             glowWhenSelected: column.glowEnabled
+            pointerAwake: column.pointerAwake
 
             onClicked: column.launchCurrent()
         }

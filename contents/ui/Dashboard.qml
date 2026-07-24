@@ -340,10 +340,22 @@ Item {
             onTapped: appColumn.launchCurrent()
         }
 
-        // Tracks the cursor for the category bar's edge hot zones (passive).
+        // Tracks the cursor for the category bar's edge hot zones (passive), and hides it
+        // while the pad drives: a handler on a full-screen item of its own would cut hover
+        // off from everything below it (Qt stops at the topmost hovered sibling).
         HoverHandler {
             id: pointerTracker
+            cursorShape: content.pointerAwake ? Qt.ArrowCursor : Qt.BlankCursor
         }
+
+        // The pointer acts only once it has really moved: a trackpad leaves the cursor
+        // parked where the swipe ended, and a parked cursor must not scroll the bar or
+        // reopen the overlay by itself. The first report only says where it already sits.
+        property bool pointerAwake: false
+        property bool pointerSeen: false
+        readonly property point pointerPos: pointerTracker.point.position
+        onPointerPosChanged: { pointerAwake = pointerSeen; pointerSeen = true }
+        function sleepPointer() { pointerAwake = false }
 
         CategoryBar {
             id: categoryBar
@@ -356,7 +368,7 @@ Item {
 
             pointerX: pointerTracker.point.position.x
             pointerY: pointerTracker.point.position.y
-            pointerActive: pointerTracker.hovered
+            pointerActive: pointerTracker.hovered && content.pointerAwake
             bandCenterY: content.barCenterY
             bandHeight: dashboard.hotZoneBandHeight
             hotZoneFractionLeft: dashboard.hotZoneFractionLeft
@@ -382,6 +394,7 @@ Item {
             categoryIconSize: dashboard.categoryIconSize
             model: dashboard.appsModel
             glowEnabled: !dashboard.paused
+            pointerAwake: content.pointerAwake
             z: 2
             // The favourites proxy has no trigger() — launch via the source model.
             launchHandler: (dashboard.currentCategory && dashboard.currentCategory.favorites)
@@ -393,16 +406,17 @@ Item {
                 : null
         }
 
-        Keys.onLeftPressed:  categoryBar.goPrev()
-        Keys.onRightPressed: categoryBar.goNext()
-        Keys.onUpPressed:    appColumn.up()
-        Keys.onDownPressed:  appColumn.down()
-        Keys.onReturnPressed: appColumn.launchCurrent()
-        Keys.onEnterPressed:  appColumn.launchCurrent()
+        Keys.onLeftPressed:  { content.sleepPointer(); categoryBar.goPrev() }
+        Keys.onRightPressed: { content.sleepPointer(); categoryBar.goNext() }
+        Keys.onUpPressed:    { content.sleepPointer(); appColumn.up() }
+        Keys.onDownPressed:  { content.sleepPointer(); appColumn.down() }
+        Keys.onReturnPressed: { content.sleepPointer(); appColumn.launchCurrent() }
+        Keys.onEnterPressed:  { content.sleepPointer(); appColumn.launchCurrent() }
 
         // Type-to-search: printable chars open the KRunner overlay seeded; pad Triangle
         // (KEY_GAMES: evdev 417, xkb 425) opens it empty with the on-screen keyboard.
         Keys.onPressed: (event) => {
+            content.sleepPointer()
             if (!searchOverlay.active
                     && (event.nativeScanCode === 417 || event.nativeScanCode === 425)) {
                 searchOverlay.start("")
@@ -458,7 +472,7 @@ Item {
         height: 8
         z: 90
         HoverHandler {
-            enabled: !searchOverlay.active && !dashboard.overlayActive
+            enabled: !searchOverlay.active && !dashboard.overlayActive && content.pointerAwake
             onHoveredChanged: if (hovered) dashboard.overlayRequested()
         }
     }
