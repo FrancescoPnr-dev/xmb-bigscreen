@@ -12,7 +12,11 @@ Row {
     property bool charging: false
     property int pixelSize: 22
 
-    height: Math.round(pixelSize * 1.4)
+    // The Breeze glyph is a horizontal battery filling little over half its box, so the
+    // box runs bigger than the text for the two to read at the same weight.
+    readonly property int iconSize: Math.round(pixelSize * 1.6)
+
+    height: Math.max(Math.round(pixelSize * 1.4), iconSize)
     spacing: Math.round(pixelSize * 0.35)
     opacity: 0.92
 
@@ -23,7 +27,7 @@ Row {
 
     Kirigami.Icon {
         anchors.verticalCenter: parent.verticalCenter
-        width: Math.round(battery.pixelSize * 1.15)
+        width: battery.iconSize
         height: width
         source: battery.iconName
         color: "white"
